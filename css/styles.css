@@ -343,6 +343,47 @@ nav.scrolled {
   box-shadow: 0 0 0 1px rgba(8, 145, 178, 0.12);
 }
 
+.nexevo-beta-callout {
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px 16px;
+  background: rgba(0, 115, 140, 0.08);
+  border: 1px solid #00738c;
+  border-radius: 8px;
+}
+
+.nexevo-beta-callout-text {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--color-text);
+  line-height: 1.45;
+}
+
+.nexevo-beta-cta-btn {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 16px;
+  background: transparent;
+  border: 2px solid #00738c;
+  border-radius: 8px;
+  color: #00738c;
+  font-weight: 700;
+  font-size: 0.8rem;
+  transition: background 0.2s, color 0.2s;
+  white-space: nowrap;
+}
+
+.nexevo-beta-cta-btn:hover {
+  background: #00738c;
+  color: #fff;
+}
+
 .nexevo-showcase-cta {
   margin-top: 20px;
   align-self: flex-start;
