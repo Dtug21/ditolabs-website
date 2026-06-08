@@ -266,14 +266,74 @@
     .card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 36px; transition: transform .25s, box-shadow .25s; position: relative; overflow: hidden; }
     .card-heading { margin-bottom: 16px; }
     .card-heading .card-title { margin-bottom: 0; }
-    .card-featured { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
+    .card-featured { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: stretch; }
     .card-featured .feat-list { margin-bottom: 0; }
     @media (min-width: 901px) {
       .card-featured .feat-list { display: grid; grid-template-columns: 1fr 1fr; gap: 9px 24px; }
     }
+    .nexevo-showcase {
+      border: none;
+      border-left: 6px solid var(--primary);
+      border-top: none;
+      box-shadow: 0 10px 30px rgba(0, 115, 140, 0.1);
+    }
+    .nexevo-showcase:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 14px 40px rgba(0, 115, 140, 0.14);
+    }
+    .nexevo-showcase-main { display: flex; flex-direction: column; }
+    .nexevo-metric { color: var(--primary); font-weight: 700; }
+    .nexevo-specs-panel {
+      background: #f8fbff;
+      border-radius: 12px;
+      padding: 24px 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .nexevo-showcase .feat-check.t {
+      background: rgba(8, 145, 178, 0.18);
+      color: var(--primary-h);
+      font-size: .65rem;
+      box-shadow: 0 0 0 1px rgba(8, 145, 178, 0.12);
+    }
+    .nexevo-showcase .feat-list li { align-items: flex-start; line-height: 1.45; }
+    .nexevo-showcase .card-footer { border-top: none; padding-top: 0; margin-top: 4px; }
+    .nexevo-showcase-cta { margin-top: 20px; align-self: flex-start; }
+    .farma-showcase {
+      border: none;
+      border-left: 6px solid var(--farmacheck);
+      border-top: none;
+      box-shadow: 0 10px 30px rgba(5, 150, 105, 0.1);
+    }
+    .farma-showcase:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 14px 40px rgba(5, 150, 105, 0.14);
+    }
+    .farma-showcase-main { display: flex; flex-direction: column; }
+    .farma-metric { color: var(--farmacheck); font-weight: 700; }
+    .farma-specs-panel {
+      background: #f4fbf7;
+      border-radius: 12px;
+      padding: 24px 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .farma-showcase .feat-check.g {
+      background: rgba(5, 150, 105, 0.18);
+      color: var(--farmacheck);
+      font-size: .65rem;
+      box-shadow: 0 0 0 1px rgba(5, 150, 105, 0.12);
+    }
+    .farma-showcase .feat-list li { align-items: flex-start; line-height: 1.45; }
+    .farma-showcase .card-footer { border-top: none; padding-top: 0; margin-top: 4px; }
+    .farma-showcase-cta { margin-top: 20px; align-self: flex-start; }
     .card:hover { transform: translateY(-5px); box-shadow: 0 20px 50px rgba(0,0,0,.07); }
     .card-accent-nexevo { border-top: 3px solid var(--nexevo); }
+    .card-accent-nexevo.nexevo-showcase { border-top: none; }
     .card-accent-farma  { border-top: 3px solid var(--farmacheck); }
+    .card-accent-farma.farma-showcase { border-top: none; }
     .card-glow-nex, .card-glow-far { position: absolute; top: 0; right: 0; width: 200px; height: 200px; border-radius: 50%; pointer-events: none; transition: opacity .3s; opacity: 0; }
     .card-glow-nex { background: radial-gradient(circle, rgba(14,165,233,.06), transparent); }
     .card-glow-far { background: radial-gradient(circle, rgba(5,150,105,.06), transparent); }
@@ -490,22 +550,22 @@
             <p>Por eso, desarrollamos soluciones tecnológicas desde adentro, creadas por un Enfermero profesional para sus colegas. Nuestro objetivo es claro: transformar la carga administrativa en procesos eficientes, elevar la calidad de nuestros registros y, sobre todo, disminuir drásticamente el tiempo que pasamos frente a la pantalla para devolvérselo al paciente.</p>
           </div>
           <div class="values-row">
-            <div class="val-item rv d1"><div class="val-emoji">🩺</div><div class="val-label">Foco clínico</div><div class="val-desc">Construido por quienes han estado al lado del paciente</div></div>
-            <div class="val-item rv d2"><div class="val-emoji">🔒</div><div class="val-label">Privacidad</div><div class="val-desc">Cumplimiento Ley 19.628 y estándares MINSAL</div></div>
-            <div class="val-item rv d1"><div class="val-emoji">⚡</div><div class="val-label">IA práctica</div><div class="val-desc">Tecnología que ahorra tiempo real en turno</div></div>
-            <div class="val-item rv d2"><div class="val-emoji">🇨🇱</div><div class="val-label">Hecho en Chile</div><div class="val-desc">Adaptado al contexto del sistema de salud nacional</div></div>
+            <div class="val-item rv d1"><div class="val-emoji">🩺</div><div class="val-label">ADN Clínico</div><div class="val-desc">Desarrollado a partir de la experiencia real en el flujo de trabajo hospitalario.</div></div>
+            <div class="val-item rv d2"><div class="val-emoji">🔒</div><div class="val-label">Privacidad y Seguridad</div><div class="val-desc">Cumplimiento estricto de la Ley 19.628 de protección de datos y normativas del MINSAL.</div></div>
+            <div class="val-item rv d1"><div class="val-emoji">⚡</div><div class="val-label">IA con Propósito</div><div class="val-desc">Automatización enfocada en reducir drásticamente las horas de documentación en cada turno.</div></div>
+            <div class="val-item rv d2"><div class="val-emoji">🇨🇱</div><div class="val-label">Hecho en Chile</div><div class="val-desc">Calibrado para la realidad, los protocolos y las exigencias del sistema de salud nacional.</div></div>
           </div>
         </div>
         <div class="founder-card rv d1">
           <div class="f-top">
-            <div class="f-avatar">DU</div>
+            <div class="f-avatar">DL</div>
             <div>
-              <div class="f-name">Diego Ulloa</div>
-              <div class="f-role">Fundador & CEO · Enfermero profesional</div>
+              <div class="f-name">Visión Clínica</div>
+              <div class="f-role">Equipo Dito Labs</div>
             </div>
           </div>
           <p class="f-quote">
-            "Cada registro clínico que tardaba 20 minutos en escribir era tiempo que no pasaba con el paciente. NexEvo nació de esa frustración y de la certeza de que la tecnología puede resolver esto."
+            "En Dito Labs cruzamos la evidencia científica con nuestra propia experiencia en los pasillos del hospital. Los datos globales indican que un profesional destina entre 2 y 4 horas de su turno a registros, y en Chile, solo el traspaso de pacientes consume hasta 90 minutos. Estos números validan lo que vivimos durante años: una carga administrativa que agota a los equipos y reduce el tiempo de cuidado directo. NexEvo nace de esta realidad: nuestra respuesta tecnológica para automatizar el trabajo pesado y devolverle ese tiempo al paciente."
           </p>
           <div class="f-company">
             <div class="f-co-line"><strong>Dito Labs SpA</strong> · RUT 78.424.665-5</div>
@@ -527,24 +587,28 @@
       </div>
 
       <div class="card-heading rv">
-        <h3 class="card-title">NexEvo</h3>
+        <h3 class="card-title">NexEvo - Registros clínicos de alto nivel</h3>
       </div>
 
-      <article class="card card-accent-nexevo card-featured rv d1">
+      <article class="card card-accent-nexevo card-featured nexevo-showcase rv d1">
         <div class="card-glow-nex"></div>
-        <div>
+        <div class="nexevo-showcase-main">
           <div class="card-top">
             <span class="badge">En desarrollo</span>
           </div>
-          <p class="card-text">Plataforma de documentación clínica asistida por IA. Convierte notas de voz en registros estructurados (SOAPIE, POR SISTEMAS) en segundos.</p>
+          <p class="card-text">Transformamos el dictado sobre la marcha en registros formales. Como Sistema de Soporte a Decisiones Clínicas (CDSS), NexEvo es una herramienta de asistencia diseñada bajo estrictas normativas chilenas (D.S. N° 41 y MINSAL). Al ser un instrumento de apoyo, procesa tus grabaciones anonimizando los datos del paciente desde el primer segundo, <strong class="nexevo-metric">reduciendo el tiempo de redacción hasta en un 80%</strong>. Recupera tus horas de atención directa con total respaldo legal.</p>
           <p class="card-footer">Dirigido a: <span>Enfermeros/as y médicos</span></p>
+          <a href="#" class="btn-primary nexevo-showcase-cta">Ver arquitectura técnica →</a>
         </div>
-        <ul class="feat-list">
-          <li><span class="feat-check t">✓</span>Generación automática SOAPIE y UPC</li>
-          <li><span class="feat-check t">✓</span>Dictado de voz con transcripción clínica</li>
-          <li><span class="feat-check t">✓</span>Diagnósticos NANDA integrados</li>
-          <li><span class="feat-check t">✓</span>Protección de datos según Ley 19.628</li>
-        </ul>
+        <div class="nexevo-specs-panel">
+          <ul class="feat-list">
+            <li><span class="feat-check t">✓</span>Estructuración de evoluciones adaptadas a las normativas chilenas actuales (SOAPIE, SISTEMA y más)</li>
+            <li><span class="feat-check t">✓</span>Filtro anti-alucinaciones que impide la invención de signos y cualquier variable no mencionada por el profesional</li>
+            <li><span class="feat-check t">✓</span>Privacidad por diseño: anonimiza nombres y RUTs al instante</li>
+            <li><span class="feat-check t">✓</span>Alta seguridad de datos: custodia local y encriptación avanzada</li>
+            <li><span class="feat-check t">✓</span>Generamos un resumen de turno de cada paciente evolucionado para agilizar las entregas de turno</li>
+          </ul>
+        </div>
       </article>
     </div>
   </section>
@@ -556,19 +620,24 @@
         <h3 class="card-title">FarmaCheck</h3>
       </div>
 
-      <article class="card card-accent-farma vision-card rv d1">
+      <article class="card card-accent-farma card-featured farma-showcase vision-card rv d1">
         <div class="card-glow-far"></div>
-        <div class="card-top">
-          <span class="badge green">Próximamente</span>
+        <div class="farma-showcase-main">
+          <div class="card-top">
+            <span class="badge green">Próximamente</span>
+          </div>
+          <p class="card-text">Un escudo clínico de bolsillo para la administración segura de medicamentos. FarmaCheck analiza combinaciones intravenosas en milisegundos para prevenir colisiones químicas, <strong class="farma-metric">operando de manera 100% offline</strong> para no depender del inestable Wi-Fi hospitalario.</p>
+          <p class="card-footer">Dirigido a: <span>Enfermeros/as en entorno hospitalario</span></p>
+          <a href="#" class="btn-primary farma-showcase-cta">Ver arquitectura técnica →</a>
         </div>
-        <p class="card-text">Verificador de incompatibilidades farmacológicas que funciona 100% sin conexión. Alertas en tiempo real para el profesional de atención directa.</p>
-        <ul class="feat-list">
-          <li><span class="feat-check g">✓</span>Detección de interacciones farmacológicas</li>
-          <li><span class="feat-check g">✓</span>Funcionamiento 100% offline</li>
-          <li><span class="feat-check g">✓</span>Generación de planes de cuidado</li>
-          <li><span class="feat-check g">✓</span>Base de datos ISP Chile actualizada</li>
-        </ul>
-        <p class="card-footer">Dirigido a: <span>Enfermeros/as en entorno hospitalario</span></p>
+        <div class="farma-specs-panel">
+          <ul class="feat-list">
+            <li><span class="feat-check g">✓</span>Motor de colisiones y filtro de alergias en tiempo real</li>
+            <li><span class="feat-check g">✓</span>Sistema visual de alertas (Crítico, Precaución, Monitoreo)</li>
+            <li><span class="feat-check g">✓</span>Calculadoras de alta precisión para drogas vasoactivas</li>
+            <li><span class="feat-check g">✓</span>Planes de acción de enfermería a pie de cama</li>
+          </ul>
+        </div>
       </article>
 
       <div id="vision" class="section-header vision-header rv d2">

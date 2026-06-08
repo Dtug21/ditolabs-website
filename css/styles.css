@@ -292,6 +292,127 @@ nav.scrolled {
   padding: 32px;
 }
 
+.card-featured {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: stretch;
+}
+
+.nexevo-showcase {
+  border: none;
+  border-left: 6px solid #0B6E84;
+  box-shadow: 0 10px 30px rgba(0, 115, 140, 0.1);
+}
+
+.nexevo-showcase:hover {
+  box-shadow: 0 14px 40px rgba(0, 115, 140, 0.14);
+}
+
+.nexevo-showcase-main {
+  display: flex;
+  flex-direction: column;
+}
+
+.nexevo-metric {
+  color: #0B6E84;
+  font-weight: 700;
+}
+
+.nexevo-specs-panel {
+  background: #f8fbff;
+  border-radius: 12px;
+  padding: 24px 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.nexevo-showcase .feat-check {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+  font-weight: 800;
+  flex-shrink: 0;
+  background: rgba(8, 145, 178, 0.18);
+  color: #0891B2;
+  box-shadow: 0 0 0 1px rgba(8, 145, 178, 0.12);
+}
+
+.nexevo-showcase-cta {
+  margin-top: 20px;
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 13px 26px;
+  border-radius: 10px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  background: #0B6E84;
+  color: #fff;
+  box-shadow: 0 4px 18px rgba(11, 110, 132, 0.28);
+  transition: background 0.2s, transform 0.2s;
+}
+
+.nexevo-showcase-cta:hover {
+  background: #0891B2;
+  transform: translateY(-2px);
+}
+
+.farma-showcase {
+  border: none;
+  border-left: 6px solid #059669;
+  box-shadow: 0 10px 30px rgba(5, 150, 105, 0.1);
+}
+
+.farma-showcase:hover {
+  box-shadow: 0 14px 40px rgba(5, 150, 105, 0.14);
+}
+
+.farma-showcase-main {
+  display: flex;
+  flex-direction: column;
+}
+
+.farma-metric {
+  color: #059669;
+  font-weight: 700;
+}
+
+.farma-specs-panel {
+  background: #f4fbf7;
+  border-radius: 12px;
+  padding: 24px 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.farma-showcase .feat-check {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.65rem;
+  font-weight: 800;
+  flex-shrink: 0;
+  background: rgba(5, 150, 105, 0.18);
+  color: #059669;
+  box-shadow: 0 0 0 1px rgba(5, 150, 105, 0.12);
+}
+
+.farma-showcase-cta {
+  margin-top: 20px;
+  align-self: flex-start;
+}
+
 .card-top {
   display: flex;
   align-items: center;
