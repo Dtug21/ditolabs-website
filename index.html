@@ -546,6 +546,23 @@
       background: rgba(244, 251, 253, 0.95);
       backdrop-filter: blur(16px);
       border-bottom: 1px solid var(--border);
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px 16px;
+    }
+    .arch-modal-head-text { flex: 1 1 200px; min-width: 0; }
+    .arch-draw-tools { display: flex; gap: 8px; flex-shrink: 0; }
+    .arch-draw-btn {
+      font-size: .75rem; font-weight: 600;
+      padding: 6px 12px; border-radius: 8px;
+      border: 1px solid var(--border); background: var(--white);
+      color: var(--text); cursor: pointer; font-family: inherit;
+      transition: background .2s, color .2s, border-color .2s;
+    }
+    .arch-draw-btn:hover { border-color: rgba(14, 165, 233, 0.35); color: var(--nexevo); }
+    .arch-draw-btn.is-active {
+      background: var(--nexevo); color: #fff; border-color: var(--nexevo);
     }
     .arch-modal-head::after {
       content: '';
@@ -568,6 +585,7 @@
       display: none;
     }
     .arch-flow-stage {
+      position: relative;
       overflow: visible;
       background:
         linear-gradient(rgba(8, 145, 178, 0.04) 1px, transparent 1px),
@@ -576,7 +594,7 @@
       background-size: 32px 32px, 32px 32px, 100% 100%;
       border: none;
       border-radius: 0;
-      padding: 20px 32px 8px;
+      padding: 20px 32px 24px;
     }
     .arch-flow-track {
       display: grid;
@@ -584,6 +602,8 @@
       gap: 20px 16px;
       list-style: none;
       align-items: start;
+      max-width: 1200px;
+      margin: 0 auto;
     }
     .arch-flow-node {
       display: flex;
@@ -599,6 +619,12 @@
       border: 1px solid rgba(14, 165, 233, 0.24);
       display: flex; align-items: center; justify-content: center;
       font-size: .75rem; font-weight: 800; flex-shrink: 0;
+    }
+    .arch-step-label {
+      font-size: .8rem;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.3;
     }
     .arch-flow-slot {
       position: relative;
@@ -648,6 +674,40 @@
     .arch-flow-slot--half .arch-flow-half-frame img {
       transform: translateY(-50%);
     }
+    .arch-flow-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 3;
+      overflow: visible;
+    }
+    .arch-flow-path {
+      fill: none;
+      stroke: var(--nexevo);
+      stroke-width: 2.5;
+      stroke-linecap: round;
+      opacity: 0.9;
+    }
+    .arch-flow-dot {
+      fill: var(--nexevo);
+      opacity: 0.9;
+    }
+    .arch-draw-canvas {
+      position: absolute;
+      inset: 0;
+      z-index: 10;
+      pointer-events: none;
+    }
+    .arch-flow-stage.is-drawing .arch-draw-canvas {
+      pointer-events: auto;
+      cursor: crosshair;
+    }
+    .arch-flow-stage.is-drawing .arch-flow-track,
+    .arch-flow-stage.is-drawing .arch-flow-svg {
+      pointer-events: none;
+    }
     .arch-modal-foot {
       margin: 0;
       padding: 20px 32px 28px;
@@ -671,6 +731,7 @@
       .arch-modal-close { right: 14px; }
       .arch-flow-track { grid-template-columns: 1fr; gap: 18px; }
       .arch-flow-stage { padding: 20px 16px 8px; }
+      .arch-flow-svg { display: none; }
       .arch-flow-slot img,
       .arch-flow-slot video { max-width: min(78%, 300px); }
       .arch-modal-foot { padding: 16px 16px 24px; }
@@ -1013,11 +1074,27 @@
   <div class="arch-modal-panel">
     <button type="button" class="arch-modal-close" data-arch-close aria-label="Cerrar">×</button>
     <header class="arch-modal-head">
-      <span class="arch-modal-tag">NexEvo · CDSS</span>
-      <h2 class="arch-modal-title" id="nexevoArchTitle">Flujo de la aplicación</h2>
-      <p class="arch-modal-lead">Recorrido del pipeline clínico asistido por IA — desde la captura en turno hasta la telemetría de gestión. Alineado a normativa chilena (D.S. N° 41 y MINSAL).</p>
+      <div class="arch-modal-head-text">
+        <span class="arch-modal-tag">NexEvo · CDSS</span>
+        <h2 class="arch-modal-title" id="nexevoArchTitle">Flujo de la aplicación</h2>
+        <p class="arch-modal-lead">Recorrido del pipeline clínico asistido por IA — desde la captura en turno hasta la telemetría de gestión. Alineado a normativa chilena (D.S. N° 41 y MINSAL).</p>
+      </div>
+      <div class="arch-draw-tools">
+        <button type="button" class="arch-draw-btn" id="archDrawToggle" aria-pressed="false">✏️ Dibujar</button>
+        <button type="button" class="arch-draw-btn" id="archDrawClear" hidden>Limpiar</button>
+      </div>
     </header>
     <div class="arch-flow-stage" id="nexevoAppFlow">
+      <svg class="arch-flow-svg" id="archFlowSvg" aria-hidden="true">
+        <defs>
+          <marker id="archArrowHead" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
+            <path d="M0,0 L8,4 L0,8 Z" fill="var(--nexevo)"/>
+          </marker>
+        </defs>
+        <circle id="archLink0203Dot" class="arch-flow-dot" r="4"/>
+        <path id="archLink0203" class="arch-flow-path" marker-end="url(#archArrowHead)"/>
+      </svg>
+      <canvas class="arch-draw-canvas" id="archDrawCanvas" aria-hidden="true"></canvas>
       <ol class="arch-flow-track">
         <li class="arch-flow-node">
           <div class="arch-flow-node-head">
@@ -1030,6 +1107,7 @@
         <li class="arch-flow-node">
           <div class="arch-flow-node-head">
             <span class="arch-step-num">02</span>
+            <span class="arch-step-label">Pantalla principal NexEvo.</span>
           </div>
           <div class="arch-flow-slot">
             <img src="img/nexevo-camas.png" alt="NexEvo — listado de camas y notas clínicas">
@@ -1056,7 +1134,7 @@
             <span class="arch-step-num">05</span>
           </div>
           <div class="arch-flow-slot">
-            <img src="img/nexevo-notas-turno.png" alt="NexEvo — pre-entrega de turno con notas clínicas">
+            <img src="img/nexevo-ajustes.png" alt="NexEvo — ajustes y plantillas clínicas">
           </div>
         </li>
         <li class="arch-flow-node">
@@ -1064,7 +1142,7 @@
             <span class="arch-step-num">06</span>
           </div>
           <div class="arch-flow-slot">
-            <img src="img/nexevo-ajustes.png" alt="NexEvo — ajustes y plantillas clínicas">
+            <img src="img/nexevo-escuchando-nota.png" alt="NexEvo — modo capacitación escuchando nota clínica">
           </div>
         </li>
         <li class="arch-flow-node">
@@ -1114,7 +1192,7 @@
             <span class="arch-step-num">12</span>
           </div>
           <div class="arch-flow-slot">
-            <img src="img/nexevo-pacientes.png" alt="NexEvo — pacientes activos con notas de turno">
+            <img src="img/nexevo-estadisticas.png" alt="NexEvo — estadísticas e impacto del turno">
           </div>
         </li>
         <li class="arch-flow-node">
@@ -1135,6 +1213,14 @@
             <div class="arch-flow-half-frame">
               <img src="img/nexevo-evolucion-systems-guardar.png" alt="NexEvo — evolución SYSTEMS y guardar en resumen de turno">
             </div>
+          </div>
+        </li>
+        <li class="arch-flow-node">
+          <div class="arch-flow-node-head">
+            <span class="arch-step-num">15</span>
+          </div>
+          <div class="arch-flow-slot">
+            <img src="img/nexevo-estadisticas-sbar.png" alt="NexEvo — eficiencia de turno y resumen traspaso SBAR">
           </div>
         </li>
       </ol>
@@ -1226,12 +1312,146 @@
     document.documentElement.style.setProperty('--nav-height', `${nav.offsetHeight}px`);
   }
 
+  function rectInStage(el, stage) {
+    const er = el.getBoundingClientRect();
+    const sr = stage.getBoundingClientRect();
+    return {
+      left: er.left - sr.left,
+      right: er.right - sr.left,
+      top: er.top - sr.top,
+      width: er.width,
+      height: er.height
+    };
+  }
+
+  function syncArchFlowArrows() {
+    const stage = document.getElementById('nexevoAppFlow');
+    const svg = document.getElementById('archFlowSvg');
+    const path = document.getElementById('archLink0203');
+    const dot = document.getElementById('archLink0203Dot');
+    const nodes = stage?.querySelectorAll('.arch-flow-node');
+    if (!stage || !svg || !path || !dot || !nodes || nodes.length < 3) return;
+    if (window.innerWidth <= 900) {
+      path.setAttribute('d', '');
+      dot.setAttribute('cx', '-100');
+      return;
+    }
+
+    const fromSlot = nodes[1].querySelector('.arch-flow-slot');
+    const toSlot = nodes[2].querySelector('.arch-flow-slot');
+    if (!fromSlot || !toSlot) return;
+
+    const from = rectInStage(fromSlot, stage);
+    const to = rectInStage(toSlot, stage);
+    const w = stage.offsetWidth;
+    const h = stage.offsetHeight;
+
+    const x1 = from.right - 4;
+    const y1 = from.top + from.height * 0.25;
+    const x2 = to.left + 4;
+    const y2 = to.top + to.height * 0.11;
+    const cx = (x1 + x2) / 2;
+
+    svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
+    path.setAttribute('d', `M ${x1} ${y1} Q ${cx} ${y1} ${x2} ${y2}`);
+    dot.setAttribute('cx', x1);
+    dot.setAttribute('cy', y1);
+  }
+
+  const archFlowStage = document.getElementById('nexevoAppFlow');
+  const archDrawCanvas = document.getElementById('archDrawCanvas');
+  const archDrawToggle = document.getElementById('archDrawToggle');
+  const archDrawClear = document.getElementById('archDrawClear');
+  const drawCtx = archDrawCanvas?.getContext('2d');
+  let drawStroke = false;
+  let drawMode = false;
+  let drawLastX = 0;
+  let drawLastY = 0;
+
+  function syncArchDrawCanvas() {
+    if (!archDrawCanvas || !archFlowStage || !drawCtx) return;
+    const w = archFlowStage.offsetWidth;
+    const h = archFlowStage.offsetHeight;
+    if (archDrawCanvas.width === w && archDrawCanvas.height === h) return;
+    const snapshot = archDrawCanvas.width ? archDrawCanvas.toDataURL() : '';
+    archDrawCanvas.width = w;
+    archDrawCanvas.height = h;
+    drawCtx.lineCap = 'round';
+    drawCtx.lineJoin = 'round';
+    drawCtx.lineWidth = 2.5;
+    drawCtx.strokeStyle = '#0EA5E9';
+    if (snapshot) {
+      const img = new Image();
+      img.onload = () => drawCtx.drawImage(img, 0, 0, w, h);
+      img.src = snapshot;
+    }
+  }
+
+  function setArchDrawMode(on) {
+    drawMode = on;
+    archFlowStage?.classList.toggle('is-drawing', on);
+    archDrawToggle?.classList.toggle('is-active', on);
+    archDrawToggle?.setAttribute('aria-pressed', on ? 'true' : 'false');
+    if (archDrawClear) archDrawClear.hidden = !on;
+  }
+
+  function drawPos(e) {
+    const rect = archDrawCanvas.getBoundingClientRect();
+    const x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
+    const y = (e.touches ? e.touches[0].clientY : e.clientY) - rect.top;
+    return { x, y };
+  }
+
+  function drawStart(e) {
+    if (!drawMode || !drawCtx) return;
+    e.preventDefault();
+    drawStroke = true;
+    const p = drawPos(e);
+    drawLastX = p.x;
+    drawLastY = p.y;
+  }
+
+  function drawMove(e) {
+    if (!drawStroke || !drawCtx) return;
+    e.preventDefault();
+    const p = drawPos(e);
+    drawCtx.beginPath();
+    drawCtx.moveTo(drawLastX, drawLastY);
+    drawCtx.lineTo(p.x, p.y);
+    drawCtx.stroke();
+    drawLastX = p.x;
+    drawLastY = p.y;
+  }
+
+  function drawEnd() {
+    drawStroke = false;
+  }
+
+  archDrawToggle?.addEventListener('click', () => setArchDrawMode(!drawMode));
+  archDrawClear?.addEventListener('click', () => {
+    if (!drawCtx || !archDrawCanvas) return;
+    drawCtx.clearRect(0, 0, archDrawCanvas.width, archDrawCanvas.height);
+  });
+  archDrawCanvas?.addEventListener('mousedown', drawStart);
+  archDrawCanvas?.addEventListener('mousemove', drawMove);
+  archDrawCanvas?.addEventListener('mouseup', drawEnd);
+  archDrawCanvas?.addEventListener('mouseleave', drawEnd);
+  archDrawCanvas?.addEventListener('touchstart', drawStart, { passive: false });
+  archDrawCanvas?.addEventListener('touchmove', drawMove, { passive: false });
+  archDrawCanvas?.addEventListener('touchend', drawEnd);
+
   function openNexevoArch() {
     nav.classList.add('solid');
     syncArchModalOffset();
     requestAnimationFrame(() => {
       syncArchModalOffset();
-      requestAnimationFrame(syncArchModalOffset);
+      syncArchFlowArrows();
+      syncArchDrawCanvas();
+      requestAnimationFrame(() => {
+        syncArchModalOffset();
+        syncArchFlowArrows();
+        syncArchDrawCanvas();
+      });
     });
     nexevoArchModal.classList.add('is-open');
     nexevoArchModal.setAttribute('aria-hidden', 'false');
@@ -1240,6 +1460,7 @@
   }
 
   function closeNexevoArch() {
+    setArchDrawMode(false);
     nexevoArchModal.classList.remove('is-open');
     nexevoArchModal.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
@@ -1252,11 +1473,20 @@
     el.addEventListener('click', closeNexevoArch);
   });
   document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && nexevoArchModal.classList.contains('is-open')) closeNexevoArch();
+    if (e.key !== 'Escape' || !nexevoArchModal.classList.contains('is-open')) return;
+    if (drawMode) { setArchDrawMode(false); return; }
+    closeNexevoArch();
   });
   window.addEventListener('resize', () => {
-    if (nexevoArchModal.classList.contains('is-open')) syncArchModalOffset();
+    if (nexevoArchModal.classList.contains('is-open')) {
+      syncArchModalOffset();
+      syncArchFlowArrows();
+      syncArchDrawCanvas();
+    }
   });
+  nexevoArchModal.querySelector('.arch-modal-panel')?.addEventListener('scroll', () => {
+    if (nexevoArchModal.classList.contains('is-open')) syncArchFlowArrows();
+  }, { passive: true });
 </script>
 </body>
 </html>
