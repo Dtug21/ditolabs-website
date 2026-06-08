@@ -17,13 +17,90 @@ html {
   scroll-behavior: smooth;
 }
 
+html {
+  background-color: #F8FAFB;
+  background-image:
+    radial-gradient(ellipse 70% 55% at 92% 8%, rgba(8, 145, 178, 0.035) 0%, transparent 65%),
+    linear-gradient(rgba(8, 145, 178, 0.028) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(8, 145, 178, 0.028) 1px, transparent 1px),
+    linear-gradient(rgba(11, 110, 132, 0.012) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(11, 110, 132, 0.012) 1px, transparent 1px);
+  background-size: 100% 100%, 40px 40px, 40px 40px, 200px 200px, 200px 200px;
+  background-position: center, center, center, center, center;
+  background-attachment: fixed;
+}
+
+html::before,
+html::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+html::before {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    transparent 44%,
+    rgba(8, 145, 178, 0.015) 48%,
+    rgba(14, 165, 233, 0.045) 50%,
+    rgba(8, 145, 178, 0.015) 52%,
+    transparent 56%,
+    transparent 100%
+  );
+  background-size: 300% 100%;
+  animation: pageDataScanH 16s ease-in-out infinite;
+}
+
+html::after {
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    transparent 46%,
+    rgba(11, 110, 132, 0.012) 49%,
+    rgba(14, 165, 233, 0.038) 50%,
+    rgba(11, 110, 132, 0.012) 51%,
+    transparent 54%,
+    transparent 100%
+  );
+  background-size: 100% 300%;
+  animation: pageDataScanV 20s ease-in-out infinite;
+  animation-delay: 8s;
+}
+
+@keyframes pageDataScanH {
+  0%, 90%, 100% { background-position: 130% 0; opacity: 0; }
+  12% { opacity: 0.35; }
+  50% { background-position: -40% 0; opacity: 0.3; }
+  62% { opacity: 0; }
+}
+
+@keyframes pageDataScanV {
+  0%, 92%, 100% { background-position: 0 130%; opacity: 0; }
+  14% { opacity: 0.3; }
+  52% { background-position: 0 -40%; opacity: 0.28; }
+  64% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html::before,
+  html::after {
+    animation: none;
+    opacity: 0;
+  }
+}
+
 body {
   margin: 0;
   font-family: 'Inter', sans-serif;
   font-size: 16px;
   line-height: 1.6;
   color: var(--color-text);
-  background: var(--color-bg);
+  background: transparent;
+  position: relative;
+  z-index: 1;
 }
 
 body, input, select, textarea, button {
@@ -116,12 +193,15 @@ nav.scrolled {
 }
 
 .hero {
+  position: relative;
+  isolation: isolate;
   min-height: 100vh;
   display: grid;
   place-items: center;
   padding: 80px 0;
-  background: linear-gradient(180deg, var(--color-primary), #0f3f70);
-  color: var(--color-white);
+  color: var(--color-text);
+  overflow: hidden;
+  background: transparent;
 }
 
 .hero-inner {
@@ -142,7 +222,7 @@ nav.scrolled {
 .hero-text {
   max-width: 680px;
   margin: 0 auto 32px;
-  color: rgba(255, 255, 255, 0.88);
+  color: var(--color-muted);
 }
 
 .hero-actions {

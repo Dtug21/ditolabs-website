@@ -26,8 +26,64 @@
 
     /* ── RESET & BASE ── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; font-size: 16px; }
-    body { font-family: 'Outfit', sans-serif; background: var(--bg); color: var(--text); -webkit-font-smoothing: antialiased; }
+    html {
+      scroll-behavior: smooth; scroll-padding-top: 80px; font-size: 16px;
+      background-color: #F8FAFB;
+      background-image:
+        radial-gradient(ellipse 70% 55% at 92% 8%, rgba(8, 145, 178, 0.035) 0%, transparent 65%),
+        linear-gradient(rgba(8, 145, 178, 0.028) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(8, 145, 178, 0.028) 1px, transparent 1px),
+        linear-gradient(rgba(11, 110, 132, 0.012) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(11, 110, 132, 0.012) 1px, transparent 1px);
+      background-size: 100% 100%, 40px 40px, 40px 40px, 200px 200px, 200px 200px;
+      background-position: center, center, center, center, center;
+      background-attachment: fixed;
+    }
+    html::before,
+    html::after {
+      content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    }
+    html::before {
+      background: linear-gradient(
+        90deg,
+        transparent 0%, transparent 44%,
+        rgba(8, 145, 178, 0.015) 48%,
+        rgba(14, 165, 233, 0.045) 50%,
+        rgba(8, 145, 178, 0.015) 52%,
+        transparent 56%, transparent 100%
+      );
+      background-size: 300% 100%;
+      animation: pageDataScanH 16s ease-in-out infinite;
+    }
+    html::after {
+      background: linear-gradient(
+        180deg,
+        transparent 0%, transparent 46%,
+        rgba(11, 110, 132, 0.012) 49%,
+        rgba(14, 165, 233, 0.038) 50%,
+        rgba(11, 110, 132, 0.012) 51%,
+        transparent 54%, transparent 100%
+      );
+      background-size: 100% 300%;
+      animation: pageDataScanV 20s ease-in-out infinite;
+      animation-delay: 8s;
+    }
+    @keyframes pageDataScanH {
+      0%, 90%, 100% { background-position: 130% 0; opacity: 0; }
+      12% { opacity: 0.35; }
+      50% { background-position: -40% 0; opacity: 0.3; }
+      62% { opacity: 0; }
+    }
+    @keyframes pageDataScanV {
+      0%, 92%, 100% { background-position: 0 130%; opacity: 0; }
+      14% { opacity: 0.3; }
+      52% { background-position: 0 -40%; opacity: 0.28; }
+      64% { opacity: 0; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html::before, html::after { animation: none; opacity: 0; }
+    }
+    body { font-family: 'Outfit', sans-serif; color: var(--text); background: transparent; position: relative; z-index: 1; -webkit-font-smoothing: antialiased; }
     img { display: block; max-width: 100%; }
     a { text-decoration: none; }
     button { font: inherit; }
@@ -47,7 +103,9 @@
       box-shadow: 0 1px 0 var(--border);
       padding: 12px 0;
     }
-    .nav-inner { display: flex; align-items: center; justify-content: space-between; }
+    .nav-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    .nav-start { display: flex; align-items: center; gap: 16px; }
+    .nav-inner .hero-badge { margin-bottom: 0; animation: none; opacity: 1; }
     .logo {
       display: flex; align-items: center; gap: 10px; color: var(--text);
       font-weight: 700; font-size: 1.05rem; letter-spacing: -.2px;
@@ -74,10 +132,10 @@
 
     /* ── HERO ── */
     .hero {
-      position: relative; min-height: 100vh;
+      position: relative; min-height: 100vh; isolation: isolate;
       display: flex; align-items: center; overflow: hidden;
-      background: linear-gradient(160deg, #E8F8FC 0%, var(--bg) 55%, #EDF7F4 100%);
       padding-top: 88px;
+      background: transparent;
     }
     .ecg-wrap {
       position: absolute; bottom: 18%; left: 0; right: 0;
@@ -121,13 +179,16 @@
     .highlight { color: var(--primary); background: linear-gradient(90deg, var(--primary), var(--primary-h)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
     .hero-text {
       font-size: 1.1rem; color: var(--muted); line-height: 1.7; font-weight: 400;
-      max-width: 440px; margin-bottom: 40px;
+      max-width: 440px; margin-bottom: 0;
       animation: slideUp .7s .3s ease forwards; opacity: 0;
     }
+    .hero-side { display: flex; flex-direction: column; gap: 24px; }
     .hero-actions {
-      display: flex; gap: 12px; flex-wrap: wrap;
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
       animation: slideUp .7s .45s ease forwards; opacity: 0;
     }
+    .hero-actions .btn-primary { width: 100%; max-width: 280px; justify-content: center; }
+    .hero-actions .btn-secondary { width: 100%; max-width: 200px; justify-content: center; }
     .btn-primary, .btn-secondary {
       display: inline-flex; align-items: center; gap: 7px; padding: 13px 26px; border-radius: 10px; font-size: .9rem; font-weight: 600; transition: all .2s;
     }
@@ -137,20 +198,38 @@
     .btn-secondary:hover { border-color: var(--primary-h); color: var(--primary-h); background: rgba(8,145,178,.05); }
 
     .hero-visual { animation: slideUp .7s .3s ease forwards; opacity: 0; }
-    .hero-card { background: var(--white); border: 1px solid var(--border); border-radius: 20px; padding: 32px; box-shadow: 0 12px 48px rgba(11,110,132,.08); position: relative; overflow: hidden; }
-    .hero-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: linear-gradient(90deg, var(--nexevo), var(--primary-h), var(--farmacheck)); }
+    .hero-card-slider { position: relative; min-height: 267px; }
+    .hero-card { background: var(--white); border: 1px solid var(--border); border-radius: 20px; padding: 32px; box-shadow: 0 12px 48px rgba(11,110,132,.08); position: absolute; inset: 0; overflow: hidden; opacity: 0; transform: translateY(14px); transition: opacity .55s ease, transform .55s ease; pointer-events: none; }
+    .hero-card.active { opacity: 1; transform: translateY(0); pointer-events: auto; }
+    .hero-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
+    .hero-card.nex::before { background: linear-gradient(90deg, var(--nexevo), var(--primary-h)); }
+    .hero-card.far::before { background: linear-gradient(90deg, var(--farmacheck), #10B981); }
     .hc-top { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
-    .hc-icon { width: 42px; height: 42px; background: linear-gradient(135deg, var(--primary), var(--primary-h)); border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; }
+    .hc-icon { width: 42px; height: 42px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
+    .hc-icon.nex { background: linear-gradient(135deg, var(--primary), var(--primary-h)); }
+    .hc-icon.far { background: linear-gradient(135deg, var(--farmacheck), #10B981); }
     .hc-name { font-weight: 700; font-size: .95rem; }
     .hc-sub { font-size: .75rem; color: var(--muted); margin-top: 2px; }
     .hc-wave { height: 56px; margin-bottom: 20px; display: flex; align-items: center; }
     .hc-wave svg { width: 100%; height: 100%; }
     .wave-path { fill: none; stroke: var(--primary-h); stroke-width: 1.8; opacity: .6; stroke-linecap: round; }
+    .wave-path.far { stroke: var(--farmacheck); }
     .hc-chips { display: flex; flex-wrap: wrap; gap: 8px; }
     .chip { display: inline-flex; align-items: center; gap: 5px; padding: 4px 12px; border-radius: 100px; font-size: .72rem; font-weight: 600; }
     .chip.teal { background: rgba(14,165,233,.1); color: var(--nexevo); border: 1px solid rgba(14,165,233,.2); }
     .chip.green { background: rgba(5,150,105,.1); color: var(--farmacheck); border: 1px solid rgba(5,150,105,.2); }
     .chip.gray { background: rgba(11,110,132,.07); color: var(--primary); border: 1px solid rgba(11,110,132,.15); }
+    .hero-slider-btn {
+      position: absolute; right: 16px; top: 50%; z-index: 5;
+      width: 44px; height: 44px; border-radius: 50%;
+      border: 1.5px solid var(--border); background: var(--white);
+      box-shadow: 0 4px 18px rgba(11,110,132,.14);
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem; color: var(--primary);
+      transform: translateY(-50%);
+      transition: transform .2s, box-shadow .2s, background .2s, color .2s;
+    }
+    .hero-slider-btn:hover { background: var(--bg); color: var(--primary-h); box-shadow: 0 6px 24px rgba(11,110,132,.2); transform: translateY(-50%) scale(1.08); }
 
     @keyframes slideUp { from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:translateY(0)} }
 
@@ -158,7 +237,7 @@
     .div-ecg { width: 100%; display: block; opacity: .12; }
 
     .section { padding: 90px 0; }
-    .bg-soft { background: var(--white); }
+    .bg-soft { background: transparent; }
     .section-header { max-width: 680px; margin-bottom: 56px; }
     .s-tag { display: inline-block; font-size: .72rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--primary-h); margin-bottom: 12px; }
     .section-title { font-size: clamp(1.7rem, 3vw, 2.4rem); font-weight: 800; line-height: 1.2; letter-spacing: -.025em; margin-bottom: 14px; }
@@ -253,6 +332,7 @@
       .hero-inner, .about-content, .grid-2, .vision-grid, .card-featured { grid-template-columns: 1fr; }
       .hero-visual { display: none; }
       .nav-links { display: none; }
+      .nav-inner .hero-badge { display: none; }
       .burger { display: flex; }
       .vision-item.span-2 { grid-column: span 1; }
       .contact-card { padding: 40px 24px; }
@@ -279,10 +359,16 @@
 <!-- NAV -->
 <nav id="nav">
   <div class="container nav-inner">
-    <a href="#" class="logo">
-      <span class="logo-mark">D</span>
-      <span>Dito Labs</span>
-    </a>
+    <div class="nav-start">
+      <a href="#" class="logo">
+        <span class="logo-mark">D</span>
+        <span>Dito Labs</span>
+      </a>
+      <div class="hero-badge">
+        <div class="badge-dot"></div>
+        Healthtech · Chile · 2026
+      </div>
+    </div>
     <ul class="nav-links">
       <li><a href="#nosotros">Nosotros</a></li>
       <li><a href="#proyectos">Proyectos</a></li>
@@ -325,42 +411,65 @@
 
     <div class="container hero-inner">
       <div>
-        <div class="hero-badge">
-          <div class="badge-dot"></div>
-          Healthtech · Chile · 2026
-        </div>
         <h1 class="hero-title">
-          Tecnología clínica<br>para quienes<br>
-          <span class="highlight">cuidan</span>
+          Menos tiempo frente a la pantalla,<br>
+          <span class="highlight">más tiempo para cuidar.</span>
         </h1>
         <p class="hero-text">
-          Desarrollamos software que optimiza el trabajo de los profesionales de salud en Chile.
+          Desarrollamos asistentes digitales que automatizan el trabajo pesado. Olvídate del tipeo interminable; nuestras herramientas estructuran tus notas clínicas en segundos, devolviéndote el tiempo para enfocarte en el paciente.
         </p>
+      </div>
+      <div class="hero-side">
+      <div class="hero-visual">
+        <div class="hero-card-slider" id="heroSlider">
+          <div class="hero-card nex active">
+            <div class="hc-top">
+              <div class="hc-icon nex">📋</div>
+              <div>
+                <div class="hc-name">NexEvo · Registro activo</div>
+                <div class="hc-sub">Escuchando y estructurando tu evolución...</div>
+              </div>
+            </div>
+            <div class="hc-wave">
+              <svg viewBox="0 0 320 56" xmlns="http://www.w3.org/2000/svg">
+                <path class="wave-path" d="M0,28 L40,28 L50,28 L56,18 L62,36 L66,10 L70,44 L74,28 L90,28 Q103,18 114,28 L180,28 L186,18 L192,36 L196,10 L200,44 L204,28 L220,28 Q233,18 244,28 L320,28"/>
+              </svg>
+            </div>
+            <div class="hc-chips">
+              <span class="chip teal">✓ SOAPIE generado</span>
+              <span class="chip green">✓ NANDA integrado</span>
+              <span class="chip gray">🔒 Datos protegidos</span>
+              <span class="chip teal">🎤 Voz → Texto</span>
+            </div>
+            <button class="hero-slider-btn" type="button" aria-label="Siguiente producto">→</button>
+          </div>
+
+          <div class="hero-card far">
+            <div class="hc-top">
+              <div class="hc-icon far">💊</div>
+              <div>
+                <div class="hc-name">FarmaCheck · Seguridad Farmacológica</div>
+                <div class="hc-sub">Verificando interacciones…</div>
+              </div>
+            </div>
+            <div class="hc-wave">
+              <svg viewBox="0 0 320 56" xmlns="http://www.w3.org/2000/svg">
+                <path class="wave-path far" d="M0,28 L30,28 L38,22 L46,34 L52,14 L58,40 L64,28 L100,28 Q112,20 122,28 L170,28 L178,16 L186,38 L192,12 L198,42 L204,28 L240,28 Q252,20 262,28 L320,28"/>
+              </svg>
+            </div>
+            <div class="hc-chips">
+              <span class="chip green">✓ Interacciones detectadas</span>
+              <span class="chip green">✓ 100% offline</span>
+              <span class="chip gray">⚡ Alerta en tiempo real</span>
+              <span class="chip teal">🇨🇱 Base ISP Chile</span>
+            </div>
+            <button class="hero-slider-btn" type="button" aria-label="Siguiente producto">→</button>
+          </div>
+        </div>
+      </div>
         <div class="hero-actions">
           <a href="#proyectos" class="btn-primary">Conoce nuestros proyectos →</a>
           <a href="#contacto" class="btn-secondary">Contacto</a>
-        </div>
-      </div>
-      <div class="hero-visual">
-        <div class="hero-card">
-          <div class="hc-top">
-            <div class="hc-icon">📋</div>
-            <div>
-              <div class="hc-name">NexEvo · Registro activo</div>
-              <div class="hc-sub">Generando nota SOAPIE…</div>
-            </div>
-          </div>
-          <div class="hc-wave">
-            <svg viewBox="0 0 320 56" xmlns="http://www.w3.org/2000/svg">
-              <path class="wave-path" d="M0,28 L40,28 L50,28 L56,18 L62,36 L66,10 L70,44 L74,28 L90,28 Q103,18 114,28 L180,28 L186,18 L192,36 L196,10 L200,44 L204,28 L220,28 Q233,18 244,28 L320,28"/>
-            </svg>
-          </div>
-          <div class="hc-chips">
-            <span class="chip teal">✓ SOAPIE generado</span>
-            <span class="chip green">✓ NANDA integrado</span>
-            <span class="chip gray">🔒 Datos protegidos</span>
-            <span class="chip teal">🎤 Voz → Texto</span>
-          </div>
         </div>
       </div>
     </div>
@@ -372,14 +481,13 @@
       <div class="section-header rv">
         <span class="s-tag">Nosotros</span>
         <h2 class="section-title">Diseñado desde adentro</h2>
-        <p class="section-subtitle">Dito Labs SpA es una startup healthtech chilena fundada por Diego Ulloa, enfermero con experiencia en múltiples entornos hospitalarios.</p>
       </div>
 
       <div class="about-content">
         <div>
           <div class="about-text rv">
-            <p>Creemos que los profesionales de salud merecen herramientas diseñadas desde adentro — por alguien que conoce el flujo real del trabajo clínico.</p>
-            <p>Cada decisión de producto nace desde la experiencia directa en pabellones, urgencias y unidades de cuidado intensivo del sistema de salud chileno.</p>
+            <p>Dito Labs SpA es una startup healthtech chilena que nace de la experiencia real en los pasillos del hospital. Entendemos a la perfección la intensidad de las unidades de hospitalizados y el flujo de trabajo clínico de un turno.</p>
+            <p>Por eso, desarrollamos soluciones tecnológicas desde adentro, creadas por un Enfermero profesional para sus colegas. Nuestro objetivo es claro: transformar la carga administrativa en procesos eficientes, elevar la calidad de nuestros registros y, sobre todo, disminuir drásticamente el tiempo que pasamos frente a la pantalla para devolvérselo al paciente.</p>
           </div>
           <div class="values-row">
             <div class="val-item rv d1"><div class="val-emoji">🩺</div><div class="val-label">Foco clínico</div><div class="val-desc">Construido por quienes han estado al lado del paciente</div></div>
@@ -393,7 +501,7 @@
             <div class="f-avatar">DU</div>
             <div>
               <div class="f-name">Diego Ulloa</div>
-              <div class="f-role">Fundador & CEO · Enfermero Universitario</div>
+              <div class="f-role">Fundador & CEO · Enfermero profesional</div>
             </div>
           </div>
           <p class="f-quote">
@@ -442,7 +550,7 @@
   </section>
 
   <!-- VISION -->
-  <section id="vision" class="section">
+  <section class="section">
     <div class="container">
       <div class="card-heading rv">
         <h3 class="card-title">FarmaCheck</h3>
@@ -463,7 +571,7 @@
         <p class="card-footer">Dirigido a: <span>Enfermeros/as en entorno hospitalario</span></p>
       </article>
 
-      <div class="section-header vision-header rv d2">
+      <div id="vision" class="section-header vision-header rv d2">
         <span class="s-tag">Visión</span>
         <h2 class="section-title">Hacia dónde vamos</h2>
         <p class="section-subtitle">Queremos que los registros clínicos en Chile sean completos, legalmente respaldados e interconectados.</p>
@@ -529,6 +637,20 @@
     if (e.isIntersecting) { e.target.classList.add('show'); io.unobserve(e.target); }
   }), { threshold: 0.12 });
   document.querySelectorAll('.rv').forEach(el => io.observe(el));
+
+  const heroSlides = document.querySelectorAll('#heroSlider .hero-card');
+  const heroBtns = document.querySelectorAll('#heroSlider .hero-slider-btn');
+  let heroIndex = 0;
+
+  function nextHeroSlide() {
+    heroSlides[heroIndex].classList.remove('active');
+    heroIndex = (heroIndex + 1) % heroSlides.length;
+    heroSlides[heroIndex].classList.add('active');
+  }
+
+  if (heroSlides.length > 1) {
+    heroBtns.forEach(btn => btn.addEventListener('click', nextHeroSlide));
+  }
 </script>
 </body>
 </html>
