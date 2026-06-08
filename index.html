@@ -302,7 +302,14 @@
       font-size: .65rem;
       box-shadow: 0 0 0 1px rgba(8, 145, 178, 0.12);
     }
-    .nexevo-showcase .feat-list li { align-items: flex-start; line-height: 1.45; }
+    .nexevo-showcase .feat-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .nexevo-showcase .feat-list li { align-items: flex-start; line-height: 1.5; }
+    .nexevo-showcase .feat-list .feat-text { flex: 1; min-width: 0; }
+    .nexevo-showcase .feat-check.t { margin-top: 2px; }
     .nexevo-showcase .card-footer { border-top: none; padding-top: 0; margin-top: 4px; }
     .nexevo-showcase-cta { margin-top: 20px; align-self: flex-start; }
     .nexevo-beta-callout {
@@ -365,7 +372,14 @@
       font-size: .65rem;
       box-shadow: 0 0 0 1px rgba(5, 150, 105, 0.12);
     }
-    .farma-showcase .feat-list li { align-items: flex-start; line-height: 1.45; }
+    .farma-showcase .feat-list {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+    .farma-showcase .feat-list li { align-items: flex-start; line-height: 1.5; }
+    .farma-showcase .feat-list .feat-text { flex: 1; min-width: 0; }
+    .farma-showcase .feat-check.g { margin-top: 2px; }
     .farma-showcase .card-footer { border-top: none; padding-top: 0; margin-top: 4px; }
     .farma-showcase-cta { margin-top: 20px; align-self: flex-start; }
     .card:hover { transform: translateY(-5px); box-shadow: 0 20px 50px rgba(0,0,0,.07); }
@@ -668,11 +682,12 @@
         </div>
         <div class="nexevo-specs-panel">
           <ul class="feat-list">
-            <li><span class="feat-check t">✓</span>Estructuración de evoluciones adaptadas a las normativas chilenas actuales (SOAPIE, SISTEMA y más)</li>
-            <li><span class="feat-check t">✓</span>Filtro anti-alucinaciones que impide la invención de signos y cualquier variable no mencionada por el profesional</li>
-            <li><span class="feat-check t">✓</span>Privacidad por diseño: anonimiza nombres y RUTs al instante</li>
-            <li><span class="feat-check t">✓</span>Alta seguridad de datos: custodia local y encriptación avanzada</li>
-            <li><span class="feat-check t">✓</span>Generamos un resumen de turno de cada paciente evolucionado para agilizar las entregas de turno</li>
+            <li><span class="feat-check t">✓</span><span class="feat-text">Estructuración de evoluciones adaptadas a las normativas chilenas actuales (SOAPIE, SISTEMA y más)</span></li>
+            <li><span class="feat-check t">✓</span><span class="feat-text">Filtro anti-alucinaciones que impide la invención de signos y cualquier variable no mencionada por el profesional</span></li>
+            <li><span class="feat-check t">✓</span><span class="feat-text">Privacidad por diseño: anonimiza nombres y RUTs al instante</span></li>
+            <li><span class="feat-check t">✓</span><span class="feat-text">Alta seguridad de datos: custodia local y encriptación avanzada</span></li>
+            <li><span class="feat-check t">✓</span><span class="feat-text">Generamos un resumen de turno de cada paciente evolucionado para agilizar las entregas de turno</span></li>
+            <li><span class="feat-check t">✓</span><span class="feat-text">Panel de ROI y Telemetría: Calcula las horas de registro ahorradas frente al tipeo tradicional. Cada profesional visualiza su tiempo recuperado en su celular, generando data estadística en tiempo real para reportes de gestión.</span></li>
           </ul>
         </div>
       </article>
@@ -698,10 +713,10 @@
         </div>
         <div class="farma-specs-panel">
           <ul class="feat-list">
-            <li><span class="feat-check g">✓</span>Motor de colisiones y filtro de alergias en tiempo real</li>
-            <li><span class="feat-check g">✓</span>Sistema visual de alertas (Crítico, Precaución, Monitoreo)</li>
-            <li><span class="feat-check g">✓</span>Calculadoras de alta precisión para drogas vasoactivas</li>
-            <li><span class="feat-check g">✓</span>Planes de acción de enfermería a pie de cama</li>
+            <li><span class="feat-check g">✓</span><span class="feat-text">Motor de colisiones y filtro de alergias en tiempo real</span></li>
+            <li><span class="feat-check g">✓</span><span class="feat-text">Sistema visual de alertas (Crítico, Precaución, Monitoreo)</span></li>
+            <li><span class="feat-check g">✓</span><span class="feat-text">Calculadoras de alta precisión para drogas vasoactivas</span></li>
+            <li><span class="feat-check g">✓</span><span class="feat-text">Planes de acción de enfermería a pie de cama</span></li>
           </ul>
         </div>
       </article>
