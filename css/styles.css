@@ -1162,6 +1162,24 @@ footer { background: var(--text); color: rgba(255,255,255,.5); padding: 40px 0; 
 }
 .timeline-desc strong { color: var(--text); }
 
+/* Links legales de NexEvo dentro de su card */
+.nexevo-legal-links {
+  margin-top: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  font-size: .78rem;
+}
+.nexevo-legal-label { color: var(--muted); font-weight: 600; }
+.nexevo-legal-link {
+  color: var(--primary-h);
+  font-weight: 700;
+  text-decoration: none;
+}
+.nexevo-legal-link:hover { text-decoration: underline; color: var(--primary); }
+.nexevo-legal-sep { color: var(--muted); opacity: .5; }
+
 /* ── PÁGINAS LEGALES ── */
 .legal-body { background: var(--bg); }
 .legal-main { padding: 120px 0 80px; }
