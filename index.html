@@ -452,22 +452,41 @@
           </div>
         </div>
 
-        <div class="contact-gform-wrap">
-          <iframe
-            src="https://docs.google.com/forms/d/e/1FAIpQLSeRxV1txwKuzoPMOklAvRUqAsSqXBmLpq6Ndn-VsdRttK2pww/viewform?embedded=true"
-            class="contact-gform"
-            frameborder="0"
-            marginheight="0"
-            marginwidth="0"
-            title="Formulario de contacto — Dito Labs"
-            loading="lazy">
-            Cargando formulario…
-          </iframe>
+        <div class="contact-survey-cta">
+          <div class="contact-survey-icon">📋</div>
+          <h3 class="contact-survey-title">Encuesta de Diagnóstico</h3>
+          <p class="contact-survey-text">Ayúdanos a construir mejores herramientas clínicas. Responde nuestra encuesta — toma menos de 3 minutos — y si quieres, déjanos tu correo para participar en las pruebas Beta.</p>
+          <button type="button" class="contact-survey-btn" id="gformOpen">Responder encuesta →</button>
+          <span class="contact-survey-note">Se abre sobre esta página · Sin spam</span>
         </div>
       </div>
     </div>
   </section>
 </main>
+
+<div class="gform-modal" id="gformModal" role="dialog" aria-modal="true" aria-labelledby="gformModalTitle" aria-hidden="true">
+  <div class="gform-modal-backdrop" data-gform-close></div>
+  <div class="gform-modal-panel">
+    <header class="gform-modal-head">
+      <div>
+        <span class="gform-modal-tag">Dito Labs</span>
+        <h2 class="gform-modal-title" id="gformModalTitle">Encuesta de Diagnóstico</h2>
+      </div>
+      <button type="button" class="gform-modal-close" data-gform-close aria-label="Cerrar">×</button>
+    </header>
+    <div class="gform-modal-body">
+      <iframe
+        data-src="https://docs.google.com/forms/d/e/1FAIpQLSeRxV1txwKuzoPMOklAvRUqAsSqXBmLpq6Ndn-VsdRttK2pww/viewform?embedded=true"
+        class="gform-modal-iframe"
+        frameborder="0"
+        marginheight="0"
+        marginwidth="0"
+        title="Encuesta de Diagnóstico — Dito Labs">
+        Cargando formulario…
+      </iframe>
+    </div>
+  </div>
+</div>
 
 <div class="arch-modal" id="nexevoArchModal" role="dialog" aria-modal="true" aria-labelledby="nexevoArchTitle" aria-hidden="true">
   <div class="arch-modal-backdrop" data-arch-close></div>

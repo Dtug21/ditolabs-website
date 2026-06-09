@@ -797,20 +797,134 @@ h1.hero-title {
   flex-direction: column;
   gap: 16px;
 }
-/* Google Form embed */
-.contact-gform-wrap {
+/* CTA de encuesta (abre modal con Google Form) */
+.contact-survey-cta {
   flex: 1 1 0;
   min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 12px;
+  padding: 36px 32px;
   border-radius: 16px;
-  overflow: hidden;
-  background: #fff;
-  border: 1px solid var(--border);
+  background: linear-gradient(145deg, #ffffff 0%, #f2fafc 100%);
+  border: 1px solid rgba(11,110,132,.14);
   box-shadow: 0 2px 16px rgba(11,110,132,.07);
 }
-.contact-gform {
+.contact-survey-icon { font-size: 1.9rem; }
+.contact-survey-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: -.02em;
+  color: var(--text);
+}
+.contact-survey-text {
+  font-size: .92rem;
+  line-height: 1.6;
+  color: var(--muted);
+}
+.contact-survey-btn {
+  margin-top: 6px;
+  padding: 13px 26px;
+  border: none;
+  border-radius: 999px;
+  background: var(--primary);
+  color: #fff;
+  font-family: inherit;
+  font-size: .95rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .2s ease, transform .2s ease, box-shadow .2s ease;
+  box-shadow: 0 4px 14px rgba(11,110,132,.25);
+}
+.contact-survey-btn:hover {
+  background: var(--primary-h);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(11,110,132,.32);
+}
+.contact-survey-note {
+  font-size: .74rem;
+  color: var(--muted);
+  opacity: .8;
+}
+
+/* Modal del Google Form */
+.gform-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .3s ease, visibility .3s ease;
+}
+.gform-modal.is-open { opacity: 1; visibility: visible; }
+.gform-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(12,26,36,.55);
+  backdrop-filter: blur(5px);
+}
+.gform-modal-panel {
+  position: relative;
+  z-index: 1;
+  width: min(720px, 100%);
+  height: min(86vh, 860px);
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px;
+  overflow: hidden;
+  background: var(--bg);
+  box-shadow: 0 24px 64px rgba(8,47,73,.35);
+  transform: translateY(14px) scale(.98);
+  transition: transform .3s cubic-bezier(.2,.7,.3,1);
+}
+.gform-modal.is-open .gform-modal-panel { transform: translateY(0) scale(1); }
+.gform-modal-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 20px;
+  background: var(--white);
+  border-bottom: 2px solid var(--primary);
+}
+.gform-modal-tag {
+  display: block;
+  font-size: .66rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--primary-h);
+}
+.gform-modal-title {
+  font-size: 1.05rem;
+  font-weight: 800;
+  letter-spacing: -.02em;
+}
+.gform-modal-close {
+  flex: 0 0 auto;
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 1.3rem;
+  line-height: 1;
+  cursor: pointer;
+  transition: color .2s, border-color .2s, background .2s;
+}
+.gform-modal-close:hover { color: var(--primary); border-color: rgba(11,110,132,.3); background: var(--white); }
+.gform-modal-body { flex: 1 1 0; min-height: 0; background: #fff; }
+.gform-modal-iframe {
   display: block;
   width: 100%;
-  height: 680px;
+  height: 100%;
   border: none;
 }
 .form-row {

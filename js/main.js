@@ -100,7 +100,31 @@ document.addEventListener('keydown', e => {
 
 window.addEventListener('resize', syncNavHeight, { passive: true });
 
-// ── FORMULARIO DE CONTACTO (Google Forms iframe — sin lógica JS necesaria) ──
+// ── ENCUESTA (Google Form en modal) ──
+const gformModal = document.getElementById('gformModal');
+const gformOpen  = document.getElementById('gformOpen');
+const gformIframe = gformModal?.querySelector('.gform-modal-iframe');
+
+function openGform() {
+  if (gformIframe && !gformIframe.src) gformIframe.src = gformIframe.dataset.src;
+  gformModal.classList.add('is-open');
+  gformModal.setAttribute('aria-hidden', 'false');
+  document.body.style.overflow = 'hidden';
+  gformModal.querySelector('.gform-modal-close').focus();
+}
+
+function closeGform() {
+  gformModal.classList.remove('is-open');
+  gformModal.setAttribute('aria-hidden', 'true');
+  document.body.style.overflow = '';
+  gformOpen?.focus();
+}
+
+gformOpen?.addEventListener('click', openGform);
+gformModal?.querySelectorAll('[data-gform-close]').forEach(el => el.addEventListener('click', closeGform));
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape' && gformModal?.classList.contains('is-open')) closeGform();
+});
 
 // ── FLOW TOOLTIPS (tap en móvil) ──
 const flowImgs = document.querySelectorAll('.flow-card-img');
