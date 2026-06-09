@@ -277,6 +277,7 @@ h1.hero-title {
 .div-ecg { width: 100%; display: block; opacity: .12; }
 
 .section { padding: 90px 0; }
+.section-tight { padding-top: 0; }
 .bg-soft { background: transparent; }
 .section-header { max-width: 680px; margin-bottom: 56px; }
 .s-tag { display: inline-block; font-size: .72rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--primary-h); margin-bottom: 12px; }
