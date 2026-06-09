@@ -8,804 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <style>
-    /* ── TOKENS ── */
-    :root {
-      --primary:    #0B6E84;
-      --primary-h:  #0891B2;
-      --nexevo:     #0EA5E9;
-      --farmacheck: #059669;
-      --bg:         #F4FBFD;
-      --bg-alt:     #EAF6F9;
-      --white:      #FFFFFF;
-      --text:       #0C1A24;
-      --muted:      #556B7A;
-      --border:     #C8E8F0;
-      --radius:     14px;
-      --nav-height: 64px;
-    }
-
-    /* ── RESET & BASE ── */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html {
-      scroll-behavior: smooth; scroll-padding-top: 80px; font-size: 16px;
-      background-color: #F8FAFB;
-      background-image:
-        radial-gradient(ellipse 70% 55% at 92% 8%, rgba(8, 145, 178, 0.035) 0%, transparent 65%),
-        linear-gradient(rgba(8, 145, 178, 0.028) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(8, 145, 178, 0.028) 1px, transparent 1px),
-        linear-gradient(rgba(11, 110, 132, 0.012) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(11, 110, 132, 0.012) 1px, transparent 1px);
-      background-size: 100% 100%, 40px 40px, 40px 40px, 200px 200px, 200px 200px;
-      background-position: center, center, center, center, center;
-      background-attachment: fixed;
-    }
-    html::before,
-    html::after {
-      content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 0;
-    }
-    html::before {
-      background: linear-gradient(
-        90deg,
-        transparent 0%, transparent 44%,
-        rgba(8, 145, 178, 0.015) 48%,
-        rgba(14, 165, 233, 0.045) 50%,
-        rgba(8, 145, 178, 0.015) 52%,
-        transparent 56%, transparent 100%
-      );
-      background-size: 300% 100%;
-      animation: pageDataScanH 16s ease-in-out infinite;
-    }
-    html::after {
-      background: linear-gradient(
-        180deg,
-        transparent 0%, transparent 46%,
-        rgba(11, 110, 132, 0.012) 49%,
-        rgba(14, 165, 233, 0.038) 50%,
-        rgba(11, 110, 132, 0.012) 51%,
-        transparent 54%, transparent 100%
-      );
-      background-size: 100% 300%;
-      animation: pageDataScanV 20s ease-in-out infinite;
-      animation-delay: 8s;
-    }
-    @keyframes pageDataScanH {
-      0%, 90%, 100% { background-position: 130% 0; opacity: 0; }
-      12% { opacity: 0.35; }
-      50% { background-position: -40% 0; opacity: 0.3; }
-      62% { opacity: 0; }
-    }
-    @keyframes pageDataScanV {
-      0%, 92%, 100% { background-position: 0 130%; opacity: 0; }
-      14% { opacity: 0.3; }
-      52% { background-position: 0 -40%; opacity: 0.28; }
-      64% { opacity: 0; }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      html::before, html::after { animation: none; opacity: 0; }
-    }
-    body { font-family: 'Outfit', sans-serif; color: var(--text); background: transparent; position: relative; z-index: 1; -webkit-font-smoothing: antialiased; }
-    img { display: block; max-width: 100%; }
-    a { text-decoration: none; }
-    button { font: inherit; }
-
-    /* ── LAYOUT ── */
-    .container { max-width: 1140px; margin: 0 auto; padding: 0 28px; }
-
-    /* ── NAV ── */
-    nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 1200;
-      padding: 18px 0;
-      transition: background .3s, box-shadow .3s, padding .3s;
-    }
-    nav.solid {
-      background: rgba(244,251,253,.95);
-      backdrop-filter: blur(16px);
-      box-shadow: 0 1px 0 var(--border);
-      padding: 12px 0;
-    }
-    .nav-inner { display: flex; align-items: center; justify-content: space-between; gap: 16px; }
-    .nav-start { display: flex; align-items: center; gap: 16px; }
-    .nav-inner .hero-badge { margin-bottom: 0; animation: none; opacity: 1; }
-    .logo {
-      display: flex; align-items: center; gap: 10px; color: var(--text);
-      font-weight: 700; font-size: 1.05rem; letter-spacing: -.2px;
-    }
-    .logo-mark {
-      width: 34px; height: 34px; border-radius: 9px;
-      background: linear-gradient(135deg, var(--primary), var(--primary-h));
-      display: flex; align-items: center; justify-content: center;
-      color: #fff; font-weight: 800; font-size: .95rem;
-    }
-    .nav-links { display: flex; align-items: center; gap: 8px; list-style: none; }
-    .nav-links a {
-      color: var(--muted); font-size: .875rem; font-weight: 500;
-      padding: 7px 14px; border-radius: 8px; transition: color .2s, background .2s;
-    }
-    .nav-links a:hover { color: var(--primary); background: var(--bg-alt); }
-    .nav-links .nav-cta {
-      color: var(--white) !important; background: var(--primary);
-      font-weight: 600; transition: background .2s, transform .15s;
-    }
-    .nav-links .nav-cta:hover { background: var(--primary-h); transform: translateY(-1px); }
-    .nav-dropdown { position: relative; }
-    .nav-dropdown-toggle {
-      display: inline-flex; align-items: center; gap: 5px;
-      color: var(--muted); font-size: .875rem; font-weight: 500;
-      padding: 7px 14px; border-radius: 8px; border: none; background: none;
-      cursor: pointer; font-family: inherit;
-      transition: color .2s, background .2s;
-    }
-    .nav-dropdown-toggle:hover,
-    .nav-dropdown.is-open .nav-dropdown-toggle {
-      color: var(--primary); background: var(--bg-alt);
-    }
-    .nav-dropdown-chevron {
-      font-size: .65rem; opacity: .7;
-      transition: transform .2s;
-    }
-    .nav-dropdown.is-open .nav-dropdown-chevron { transform: rotate(180deg); }
-    .nav-dropdown-menu {
-      position: absolute; top: calc(100% + 8px); left: 0; min-width: 200px;
-      list-style: none; margin: 0; padding: 6px;
-      background: rgba(255, 255, 255, 0.98);
-      backdrop-filter: blur(12px);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      box-shadow: 0 12px 32px rgba(11, 110, 132, 0.14);
-      opacity: 0; visibility: hidden; transform: translateY(-6px);
-      transition: opacity .2s, transform .2s, visibility .2s;
-      z-index: 1300;
-    }
-    .nav-dropdown.is-open .nav-dropdown-menu {
-      opacity: 1; visibility: visible; transform: translateY(0);
-    }
-    .nav-dropdown-menu a {
-      display: block; padding: 9px 12px; border-radius: 8px;
-      color: var(--text); font-size: .84rem; font-weight: 600;
-      transition: background .2s, color .2s;
-    }
-    .nav-dropdown-menu a:hover {
-      background: var(--bg-alt); color: var(--primary);
-    }
-    .nav-dropdown-menu .dd-tag {
-      display: block; font-size: .68rem; font-weight: 500;
-      color: var(--muted); margin-top: 1px;
-    }
-    .burger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; background: none; border: none; }
-    .burger span { width: 22px; height: 2px; background: var(--text); border-radius: 2px; transition: all .3s; }
-
-    /* ── HERO ── */
-    .hero {
-      position: relative; min-height: 100vh; isolation: isolate;
-      display: flex; align-items: center; overflow: hidden;
-      padding-top: 88px;
-      background: transparent;
-    }
-    .ecg-wrap {
-      position: absolute; bottom: 18%; left: 0; right: 0;
-      pointer-events: none; opacity: 0;
-      animation: ecgFadeIn .6s ease .8s forwards;
-    }
-    @keyframes ecgFadeIn { to { opacity: .07; } }
-    .ecg-path {
-      fill: none; stroke: var(--primary); stroke-width: 1.8;
-      stroke-linecap: round; stroke-linejoin: round;
-      stroke-dasharray: 4200; stroke-dashoffset: 4200;
-      animation: ecgDraw 5s cubic-bezier(.4,0,.2,1) .8s forwards;
-    }
-    @keyframes ecgDraw { to { stroke-dashoffset: 0; } }
-
-    .blob { position: absolute; border-radius: 50%; filter: blur(80px); pointer-events: none; animation: blobFloat 8s ease-in-out infinite alternate; }
-    .blob-1 { width: 520px; height: 520px; top: -120px; right: -80px; background: rgba(8,145,178,.07); }
-    .blob-2 { width: 380px; height: 380px; bottom: -80px; left: -60px; background: rgba(5,150,105,.05); animation-delay: 2s; }
-    @keyframes blobFloat { 0%{transform:translate(0,0) scale(1)} 100%{transform:translate(20px,-20px) scale(1.06)} }
-
-    .hero-inner {
-      position: relative; z-index: 2;
-      display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center;
-      width: 100%;
-    }
-    .hero-badge {
-      display: inline-flex; align-items: center; gap: 8px;
-      background: rgba(11,110,132,.08); border: 1px solid rgba(11,110,132,.18);
-      color: var(--primary); padding: 5px 14px; border-radius: 100px;
-      font-size: .75rem; font-weight: 600; letter-spacing: .5px; margin-bottom: 28px;
-      animation: slideUp .7s ease forwards; opacity: 0;
-    }
-    .badge-dot { width: 6px; height: 6px; background: var(--primary-h); border-radius: 50%; animation: pulse 1.8s ease infinite; }
-    @keyframes pulse { 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.6);opacity:.5} }
-
-    h1.hero-title {
-      font-size: clamp(2.6rem, 5vw, 4.2rem); font-weight: 800;
-      line-height: 1.08; letter-spacing: -.03em; color: var(--text); margin-bottom: 22px;
-      animation: slideUp .7s .15s ease forwards; opacity: 0;
-    }
-    .highlight { color: var(--primary); background: linear-gradient(90deg, var(--primary), var(--primary-h)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
-    .hero-text {
-      font-size: 1.1rem; color: var(--muted); line-height: 1.7; font-weight: 400;
-      max-width: 440px; margin-bottom: 0;
-      animation: slideUp .7s .3s ease forwards; opacity: 0;
-    }
-    .hero-side { display: flex; flex-direction: column; gap: 24px; }
-    .hero-actions {
-      display: flex; flex-direction: column; align-items: center; gap: 10px;
-      animation: slideUp .7s .45s ease forwards; opacity: 0;
-    }
-    .hero-actions .btn-primary { width: 100%; max-width: 280px; justify-content: center; }
-    .hero-actions .btn-secondary { width: 100%; max-width: 200px; justify-content: center; }
-    .btn-primary, .btn-secondary {
-      display: inline-flex; align-items: center; gap: 7px; padding: 13px 26px; border-radius: 10px; font-size: .9rem; font-weight: 600; transition: all .2s;
-      border: none; cursor: pointer;
-    }
-    .btn-primary { background: var(--primary); color: #fff; box-shadow: 0 4px 18px rgba(11,110,132,.28); }
-    .btn-primary:hover { background: var(--primary-h); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(8,145,178,.3); }
-    .btn-secondary { background: transparent; color: var(--primary); border: 1.5px solid rgba(11,110,132,.3); }
-    .btn-secondary:hover { border-color: var(--primary-h); color: var(--primary-h); background: rgba(8,145,178,.05); }
-
-    .hero-visual { animation: slideUp .7s .3s ease forwards; opacity: 0; }
-    .hero-card-slider { position: relative; min-height: 267px; }
-    .hero-card { background: var(--white); border: 1px solid var(--border); border-radius: 20px; padding: 32px; box-shadow: 0 12px 48px rgba(11,110,132,.08); position: absolute; inset: 0; overflow: hidden; opacity: 0; transform: translateY(14px); transition: opacity .55s ease, transform .55s ease; pointer-events: none; }
-    .hero-card.active { opacity: 1; transform: translateY(0); pointer-events: auto; }
-    .hero-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; }
-    .hero-card.nex::before { background: linear-gradient(90deg, var(--nexevo), var(--primary-h)); }
-    .hero-card.far::before { background: linear-gradient(90deg, var(--farmacheck), #10B981); }
-    .hero-card.soon::before { background: linear-gradient(90deg, var(--primary), var(--primary-h)); }
-    .hc-top { display: flex; align-items: center; gap: 12px; margin-bottom: 24px; }
-    .hc-icon { width: 42px; height: 42px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0; }
-    .hc-icon.nex { background: linear-gradient(135deg, var(--primary), var(--primary-h)); }
-    .hc-icon.far { background: linear-gradient(135deg, var(--farmacheck), #10B981); }
-    .hc-icon.soon { background: linear-gradient(135deg, var(--muted), var(--primary)); }
-    .hc-name { font-weight: 700; font-size: .95rem; }
-    .hc-sub { font-size: .75rem; color: var(--muted); margin-top: 2px; }
-    .hc-wave { height: 56px; margin-bottom: 20px; display: flex; align-items: center; }
-    .hc-wave svg { width: 100%; height: 100%; }
-    .wave-path { fill: none; stroke: var(--primary-h); stroke-width: 1.8; opacity: .6; stroke-linecap: round; }
-    .wave-path.far { stroke: var(--farmacheck); }
-    .wave-path.soon { stroke: var(--primary); opacity: 1; animation: orbitWavePulse 2.5s ease-in-out infinite; }
-    @keyframes orbitWavePulse { 0%, 100% { opacity: 1; } 50% { opacity: .5; } }
-    .hero-card.soon .hc-sub { line-height: 1.55; }
-    .hc-chips { display: flex; flex-wrap: wrap; gap: 8px; }
-    .chip { display: inline-flex; align-items: center; gap: 5px; padding: 4px 12px; border-radius: 100px; font-size: .72rem; font-weight: 600; }
-    .chip.teal { background: rgba(14,165,233,.1); color: var(--nexevo); border: 1px solid rgba(14,165,233,.2); }
-    .chip.green { background: rgba(5,150,105,.1); color: var(--farmacheck); border: 1px solid rgba(5,150,105,.2); }
-    .chip.gray { background: rgba(11,110,132,.07); color: var(--primary); border: 1px solid rgba(11,110,132,.15); }
-    .hero-slider-btn {
-      position: absolute; right: 16px; top: 50%; z-index: 5;
-      width: 44px; height: 44px; border-radius: 50%;
-      border: 1.5px solid var(--border); background: var(--white);
-      box-shadow: 0 4px 18px rgba(11,110,132,.14);
-      cursor: pointer; display: flex; align-items: center; justify-content: center;
-      font-size: 1.2rem; color: var(--primary);
-      transform: translateY(-50%);
-      transition: transform .2s, box-shadow .2s, background .2s, color .2s;
-    }
-    .hero-slider-btn:hover { background: var(--bg); color: var(--primary-h); box-shadow: 0 6px 24px rgba(11,110,132,.2); transform: translateY(-50%) scale(1.08); }
-
-    @keyframes slideUp { from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:translateY(0)} }
-
-    .section-divider { padding: 0; overflow: hidden; }
-    .div-ecg { width: 100%; display: block; opacity: .12; }
-
-    .section { padding: 90px 0; }
-    .bg-soft { background: transparent; }
-    .section-header { max-width: 680px; margin-bottom: 56px; }
-    .s-tag { display: inline-block; font-size: .72rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--primary-h); margin-bottom: 12px; }
-    .section-title { font-size: clamp(1.7rem, 3vw, 2.4rem); font-weight: 800; line-height: 1.2; letter-spacing: -.025em; margin-bottom: 14px; }
-    .section-subtitle { color: var(--muted); font-size: 1rem; line-height: 1.75; }
-
-    .about-content { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: start; }
-    .about-text p { color: var(--muted); font-size: .975rem; line-height: 1.8; margin-bottom: 14px; }
-    .about-text p:last-child { margin-bottom: 0; }
-    .values-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 28px; }
-    .val-item { background: var(--bg); border: 1px solid var(--border); border-radius: 12px; padding: 16px; }
-    .val-emoji { font-size: 1.3rem; margin-bottom: 7px; }
-    .val-label { font-size: .82rem; font-weight: 700; margin-bottom: 3px; }
-    .val-desc { font-size: .75rem; color: var(--muted); line-height: 1.5; }
-    .founder-card { background: var(--white); border: 1px solid var(--border); border-radius: 18px; padding: 30px; box-shadow: 0 8px 32px rgba(11,110,132,.07); position: relative; overflow: hidden; }
-    .founder-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: linear-gradient(to bottom, var(--primary), var(--primary-h)); }
-    .f-top { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; padding-left: 12px; }
-    .f-avatar { width: 50px; height: 50px; background: linear-gradient(135deg, var(--primary), var(--primary-h)); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.1rem; color: #fff; flex-shrink: 0; }
-    .f-name { font-weight: 700; font-size: .95rem; }
-    .f-role { font-size: .75rem; color: var(--primary-h); margin-top: 2px; }
-    .f-quote { font-size: .875rem; color: var(--muted); line-height: 1.75; font-style: italic; padding-left: 12px; border-left: 2px solid var(--border); margin-left: 12px; }
-    .f-company { margin-top: 20px; padding: 14px 14px 14px 24px; background: var(--bg); border-radius: 10px; }
-    .f-co-line { font-size: .78rem; color: var(--muted); line-height: 1.9; }
-    .f-co-line strong { color: var(--text); }
-
-    .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-    .card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 36px; transition: transform .25s, box-shadow .25s; position: relative; overflow: hidden; }
-    .card-heading { margin-bottom: 16px; }
-    .card-heading .card-title { margin-bottom: 0; }
-    .card-featured { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: stretch; }
-    .card-featured .feat-list { margin-bottom: 0; }
-    @media (min-width: 901px) {
-      .card-featured .feat-list { display: grid; grid-template-columns: 1fr 1fr; gap: 9px 24px; }
-    }
-    .nexevo-showcase {
-      border: none;
-      border-left: 6px solid var(--primary);
-      border-top: none;
-      box-shadow: 0 10px 30px rgba(0, 115, 140, 0.1);
-    }
-    .nexevo-showcase:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 14px 40px rgba(0, 115, 140, 0.14);
-    }
-    .nexevo-showcase-main { display: flex; flex-direction: column; }
-    .nexevo-metric { color: var(--primary); font-weight: 700; }
-    .nexevo-specs-panel {
-      background: #f8fbff;
-      border-radius: 12px;
-      padding: 24px 28px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-    .nexevo-showcase .feat-check.t {
-      background: rgba(8, 145, 178, 0.18);
-      color: var(--primary-h);
-      font-size: .65rem;
-      box-shadow: 0 0 0 1px rgba(8, 145, 178, 0.12);
-    }
-    .nexevo-showcase .feat-list {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-    .nexevo-showcase .feat-list li { align-items: flex-start; line-height: 1.5; }
-    .nexevo-showcase .feat-list .feat-text { flex: 1; min-width: 0; }
-    .nexevo-showcase .feat-check.t { margin-top: 2px; }
-    .nexevo-showcase .card-footer { border-top: none; padding-top: 0; margin-top: 4px; }
-    .nexevo-showcase-cta { margin-top: 20px; align-self: flex-start; }
-    .nexevo-beta-callout {
-      margin-top: 16px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 16px;
-      padding: 12px 16px;
-      background: rgba(0, 115, 140, 0.08);
-      border: 1px solid #00738c;
-      border-radius: 8px;
-    }
-    .nexevo-beta-callout-text {
-      margin: 0;
-      font-size: .85rem;
-      font-weight: 600;
-      color: var(--text);
-      line-height: 1.45;
-    }
-    .nexevo-beta-cta-btn {
-      flex-shrink: 0;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 8px 16px;
-      background: transparent;
-      border: 2px solid #00738c;
-      border-radius: 8px;
-      color: #00738c;
-      font-weight: 700;
-      font-size: .8rem;
-      transition: background .2s, color .2s;
-      white-space: nowrap;
-    }
-    .nexevo-beta-cta-btn:hover { background: #00738c; color: #fff; }
-    .farma-showcase {
-      border: none;
-      border-left: 6px solid var(--farmacheck);
-      border-top: none;
-      box-shadow: 0 10px 30px rgba(5, 150, 105, 0.1);
-    }
-    .farma-showcase:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 14px 40px rgba(5, 150, 105, 0.14);
-    }
-    .farma-showcase-main { display: flex; flex-direction: column; }
-    .farma-metric { color: var(--farmacheck); font-weight: 700; }
-    .farma-specs-panel {
-      background: #f4fbf7;
-      border-radius: 12px;
-      padding: 24px 28px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-    .farma-showcase .feat-check.g {
-      background: rgba(5, 150, 105, 0.18);
-      color: var(--farmacheck);
-      font-size: .65rem;
-      box-shadow: 0 0 0 1px rgba(5, 150, 105, 0.12);
-    }
-    .farma-showcase .feat-list {
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-    .farma-showcase .feat-list li { align-items: flex-start; line-height: 1.5; }
-    .farma-showcase .feat-list .feat-text { flex: 1; min-width: 0; }
-    .farma-showcase .feat-check.g { margin-top: 2px; }
-    .farma-showcase .card-footer { border-top: none; padding-top: 0; margin-top: 4px; }
-    .farma-showcase-cta { margin-top: 20px; align-self: flex-start; }
-    .card:hover { transform: translateY(-5px); box-shadow: 0 20px 50px rgba(0,0,0,.07); }
-    .card-accent-nexevo { border-top: 3px solid var(--nexevo); }
-    .card-accent-nexevo.nexevo-showcase { border-top: none; }
-    .card-accent-farma  { border-top: 3px solid var(--farmacheck); }
-    .card-accent-farma.farma-showcase { border-top: none; }
-    .card-glow-nex, .card-glow-far { position: absolute; top: 0; right: 0; width: 200px; height: 200px; border-radius: 50%; pointer-events: none; transition: opacity .3s; opacity: 0; }
-    .card-glow-nex { background: radial-gradient(circle, rgba(14,165,233,.06), transparent); }
-    .card-glow-far { background: radial-gradient(circle, rgba(5,150,105,.06), transparent); }
-    .card:hover .card-glow-nex, .card:hover .card-glow-far { opacity: 1; }
-    .card-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
-    .badge { display: inline-block; padding: 3px 10px; border-radius: 100px; font-size: .68rem; font-weight: 700; letter-spacing: .3px; background: rgba(14,165,233,.1); color: var(--nexevo); border: 1px solid rgba(14,165,233,.2); }
-    .badge.green { background: rgba(5,150,105,.1); color: var(--farmacheck); border-color: rgba(5,150,105,.2); }
-    .prod-label { font-size: .82rem; font-weight: 800; letter-spacing: .5px; }
-    .prod-label.nex { color: var(--nexevo); }
-    .prod-label.far { color: var(--farmacheck); }
-    .card-title { font-size: 1.5rem; font-weight: 800; letter-spacing: -.02em; margin-bottom: 12px; }
-    .card-text { color: var(--muted); font-size: .9rem; line-height: 1.7; margin-bottom: 24px; }
-    .feat-list { list-style: none; display: flex; flex-direction: column; gap: 9px; margin-bottom: 28px; }
-    .feat-list li { display: flex; align-items: center; gap: 9px; font-size: .84rem; color: var(--text); }
-    .feat-check { width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: .6rem; font-weight: 800; flex-shrink: 0; }
-    .feat-check.t { background: rgba(14,165,233,.12); color: var(--nexevo); }
-    .feat-check.g { background: rgba(5,150,105,.12); color: var(--farmacheck); }
-    .card-footer { font-size: .75rem; color: var(--muted); font-weight: 500; padding-top: 18px; border-top: 1px solid var(--border); }
-    .card-footer span { font-weight: 600; color: var(--text); }
-
-    .vision-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
-    .vision-card { margin-bottom: 48px; }
-    .vision-header { margin-bottom: 40px; }
-    .vision-item { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius); padding: 28px; display: flex; gap: 18px; align-items: flex-start; transition: border-color .2s, box-shadow .2s; }
-    .vision-item:hover { border-color: rgba(11,110,132,.3); box-shadow: 0 8px 28px rgba(11,110,132,.06); }
-    .vision-num { font-size: 2rem; font-weight: 800; color: var(--border); line-height: 1; flex-shrink: 0; font-variant-numeric: tabular-nums; }
-    .vision-text h4 { font-size: .95rem; font-weight: 700; margin-bottom: 6px; }
-    .vision-text p { font-size: .83rem; color: var(--muted); line-height: 1.6; }
-    .vision-item.span-2 { grid-column: span 2; }
-
-    .contact-card { background: linear-gradient(135deg, #E4F5FA 0%, #F0FBF7 100%); border: 1px solid var(--border); border-radius: 20px; padding: 60px 48px; text-align: center; position: relative; overflow: hidden; }
-    .contact-card::before { content: ''; position: absolute; top: -60px; right: -60px; width: 240px; height: 240px; border-radius: 50%; background: rgba(8,145,178,.06); pointer-events: none; }
-    .contact-card h2 { font-size: clamp(1.4rem,2.5vw,2rem); font-weight: 800; letter-spacing: -.02em; max-width: 640px; margin: 0 auto 16px; }
-    .contact-text { color: var(--muted); font-size: .975rem; line-height: 1.7; }
-    .contact-cta { display: inline-flex; align-items: center; gap: 8px; background: var(--primary); color: #fff; padding: 14px 30px; border-radius: 10px; font-weight: 700; font-size: .95rem; margin-top: 28px; transition: background .2s, transform .15s; box-shadow: 0 4px 18px rgba(11,110,132,.25); }
-    .contact-cta:hover { background: var(--primary-h); transform: translateY(-2px); }
-
-    footer { background: var(--text); color: rgba(255,255,255,.5); padding: 40px 0; }
-    .footer-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
-    .footer-brand { display: flex; align-items: center; gap: 10px; }
-    .footer-brand .logo-mark { background: rgba(255,255,255,.15); font-size: .85rem; width: 30px; height: 30px; }
-    .footer-brand span:last-child { color: rgba(255,255,255,.7); font-weight: 600; font-size: .9rem; }
-    .footer-legal { font-size: .78rem; }
-
-    .rv { opacity: 0; transform: translateY(24px); transition: opacity .65s ease, transform .65s ease; }
-    .rv.d1 { transition-delay: .1s; } .rv.d2 { transition-delay: .2s; } .rv.d3 { transition-delay: .3s; }
-    .rv.show { opacity: 1; transform: translateY(0); }
-
-    .mobile-nav { display: none; position: fixed; inset: 0; z-index: 800; background: rgba(244,251,253,.97); backdrop-filter: blur(20px); flex-direction: column; align-items: center; justify-content: center; gap: 28px; }
-    .mobile-nav.open { display: flex; }
-    .mobile-nav a { font-size: 1.6rem; font-weight: 700; color: var(--text); }
-    .mobile-nav a:hover { color: var(--primary); }
-    .mobile-nav-projects { display: flex; flex-direction: column; align-items: center; gap: 12px; }
-    .mobile-nav-projects > span { font-size: 1.6rem; font-weight: 700; color: var(--text); }
-    .mobile-nav-sub { display: flex; flex-direction: column; align-items: center; gap: 10px; }
-    .mobile-nav-sub a { font-size: 1.1rem; font-weight: 600; color: var(--muted); }
-    .mobile-nav-sub a:hover { color: var(--primary); }
-    .mobile-close { position: absolute; top: 22px; right: 26px; background: none; border: none; font-size: 1.4rem; cursor: pointer; color: var(--muted); }
-
-    .arch-modal {
-      position: fixed;
-      top: var(--nav-height);
-      left: 0;
-      right: 0;
-      bottom: 0;
-      z-index: 1100;
-      display: flex;
-      flex-direction: column;
-      opacity: 0;
-      visibility: hidden;
-      transition: opacity .3s ease, visibility .3s ease;
-    }
-    .arch-modal.is-open { opacity: 1; visibility: visible; }
-    .arch-modal-backdrop {
-      position: absolute; inset: 0;
-      background: rgba(12, 26, 36, 0.45);
-      backdrop-filter: blur(4px);
-    }
-    .arch-modal-panel {
-      position: relative; z-index: 1;
-      width: 100%;
-      height: 100%;
-      overflow-x: hidden;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
-      overscroll-behavior: contain;
-      scroll-behavior: smooth;
-      background: var(--bg);
-      border: none;
-      border-radius: 0;
-      padding: 0;
-      box-shadow: none;
-    }
-    .arch-modal-close {
-      position: fixed;
-      top: calc(var(--nav-height) + 12px);
-      right: 20px;
-      width: 40px; height: 40px; border-radius: 50%;
-      border: 1px solid var(--border); background: var(--white);
-      color: var(--muted); font-size: 1.4rem; line-height: 1;
-      cursor: pointer; display: flex; align-items: center; justify-content: center;
-      transition: background .2s, color .2s, border-color .2s;
-      z-index: 1210;
-      box-shadow: 0 4px 14px rgba(11, 110, 132, 0.12);
-    }
-    .arch-modal-close:hover { background: var(--bg); color: var(--primary); border-color: rgba(11, 110, 132, 0.25); }
-    .arch-modal-head {
-      position: relative;
-      margin: 0;
-      padding: 8px 72px 8px 32px;
-      background: rgba(244, 251, 253, 0.95);
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid var(--border);
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: 8px 16px;
-    }
-    .arch-modal-head-text { flex: 1 1 200px; min-width: 0; }
-    .arch-modal-head::after {
-      content: '';
-      position: absolute;
-      left: 0; right: 0; bottom: 0;
-      height: 3px;
-      background: linear-gradient(90deg, var(--nexevo), var(--primary-h));
-    }
-    .arch-modal-tag {
-      display: inline-block; margin-bottom: 2px;
-      font-size: .68rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase;
-      color: var(--primary-h);
-    }
-    .arch-modal-title {
-      font-size: 1.15rem;
-      font-weight: 800; letter-spacing: -.02em;
-      margin-bottom: 0;
-    }
-    .arch-modal-lead {
-      display: none;
-    }
-    .arch-flow-stage {
-      position: relative;
-      overflow: visible;
-      background:
-        linear-gradient(rgba(8, 145, 178, 0.04) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(8, 145, 178, 0.04) 1px, transparent 1px),
-        linear-gradient(180deg, #f8fbff 0%, #f4fbfd 100%);
-      background-size: 32px 32px, 32px 32px, 100% 100%;
-      border: none;
-      border-radius: 0;
-      padding: 20px 32px 80px;
-    }
-    .arch-flow-track {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px 16px;
-      list-style: none;
-      align-items: start;
-      max-width: 1200px;
-      margin: 0 auto;
-    }
-    .arch-flow-track.is-free-layout {
-      display: block;
-      position: relative;
-    }
-    @media (min-width: 901px) {
-      .arch-flow-track:not(.is-free-layout) {
-        visibility: hidden;
-      }
-      .arch-flow-stage:not(.is-layout-ready) .arch-draw-canvas {
-        opacity: 0;
-      }
-    }
-    .arch-flow-track.is-free-layout .arch-flow-node {
-      position: absolute;
-      margin: 0;
-      box-sizing: border-box;
-      z-index: 1;
-    }
-    .arch-flow-track.is-free-layout .arch-flow-node-head--over-pair {
-      position: absolute;
-      top: 0;
-      z-index: 2;
-      margin-bottom: 0;
-      justify-content: center;
-      text-align: center;
-    }
-    .arch-flow-track.is-free-layout .arch-flow-node--pair-lead .arch-flow-slot,
-    .arch-flow-track.is-free-layout .arch-flow-node--pair-follow .arch-flow-slot {
-      margin-top: 36px;
-    }
-    .arch-flow-track.is-free-layout .arch-flow-slot img,
-    .arch-flow-track.is-free-layout .arch-flow-slot video {
-      -webkit-user-drag: none;
-      user-select: none;
-      pointer-events: none;
-    }
-    .arch-flow-node {
-      display: flex;
-      flex-direction: column;
-    }
-    .arch-flow-node-head {
-      display: flex; align-items: center; gap: 10px;
-      margin-bottom: 12px;
-    }
-    .arch-flow-node--pair-lead {
-      position: relative;
-    }
-    .arch-flow-node-head--over-pair {
-      position: absolute;
-      top: 0;
-      left: 0;
-      z-index: 2;
-      width: calc(200% + 16px);
-      margin-bottom: 0;
-      justify-content: center;
-    }
-    .arch-flow-node--pair-follow .arch-flow-node-head {
-      visibility: hidden;
-      height: 0;
-      margin: 0;
-      overflow: hidden;
-    }
-    .arch-flow-node--pair-lead .arch-flow-slot,
-    .arch-flow-node--pair-follow .arch-flow-slot {
-      margin-top: 48px;
-    }
-    .arch-flow-node--pair-row-align {
-      align-self: center;
-    }
-    .arch-flow-node--col-3 {
-      grid-column: 3;
-    }
-    .arch-flow-node--col-3 .arch-flow-node-head {
-      display: none;
-    }
-    .arch-flow-node--center {
-      grid-column: 1 / -1;
-      justify-self: center;
-      width: min(375px, 100%);
-    }
-    .arch-step-label {
-      font-size: .8rem;
-      font-weight: 600;
-      color: var(--text);
-      line-height: 1.3;
-    }
-    .arch-flow-slot {
-      position: relative;
-      width: 100%;
-      height: auto;
-      background: var(--white);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      overflow: visible;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 14px;
-    }
-    .arch-flow-slot:empty {
-      min-height: 200px;
-    }
-    .arch-flow-slot img,
-    .arch-flow-slot video {
-      width: auto;
-      max-width: min(72%, 280px);
-      height: auto;
-      display: block;
-      object-fit: contain;
-      border-radius: 10px;
-      box-shadow: 0 6px 20px rgba(11, 110, 132, 0.1);
-    }
-    .arch-flow-slot--tall {
-      align-items: flex-start;
-      overflow: visible;
-    }
-    .arch-flow-slot--tall img {
-      width: 100%;
-      max-width: min(88%, 300px);
-      height: auto;
-      max-height: none;
-      object-fit: contain;
-    }
-    .arch-flow-slot--half-top .arch-flow-half-frame,
-    .arch-flow-slot--half .arch-flow-half-frame {
-      overflow: hidden;
-      width: min(72%, 280px);
-      aspect-ratio: 248 / 269;
-      border-radius: 10px;
-      box-shadow: 0 6px 20px rgba(11, 110, 132, 0.1);
-      line-height: 0;
-    }
-    .arch-flow-slot--half-top .arch-flow-half-frame img,
-    .arch-flow-slot--half .arch-flow-half-frame img {
-      width: 100%;
-      max-width: none;
-      height: auto;
-      display: block;
-      object-fit: unset;
-      border-radius: 0;
-      box-shadow: none;
-    }
-    .arch-flow-slot--half .arch-flow-half-frame img {
-      transform: translateY(-50%);
-    }
-    .arch-draw-canvas {
-      position: absolute;
-      inset: 0;
-      z-index: 10;
-      pointer-events: none;
-    }
-    .arch-modal-foot {
-      margin: 0;
-      padding: 20px 32px 28px;
-      border-top: 1px solid var(--border);
-      background: var(--white);
-      font-size: .76rem; color: var(--muted); line-height: 1.5;
-    }
-
-    @media (max-width: 900px) {
-      .hero-inner, .about-content, .grid-2, .vision-grid, .card-featured { grid-template-columns: 1fr; }
-      .hero-visual { display: none; }
-      .nav-links { display: none; }
-      .nav-inner .hero-badge { display: none; }
-      .burger { display: flex; }
-      .vision-item.span-2 { grid-column: span 1; }
-      .contact-card { padding: 40px 24px; }
-      .footer-inner { flex-direction: column; text-align: center; }
-      .nexevo-beta-callout { flex-direction: column; align-items: stretch; text-align: center; }
-      .nexevo-beta-cta-btn { align-self: center; }
-      .arch-modal-head { padding: 12px 60px 12px 16px; }
-      .arch-modal-close { right: 14px; }
-      .arch-flow-track { grid-template-columns: 1fr; gap: 18px; }
-      .arch-flow-node-head--over-pair {
-        position: static;
-        width: auto;
-        margin-bottom: 12px;
-        justify-content: flex-start;
-      }
-      .arch-flow-node--pair-follow .arch-flow-node-head {
-        visibility: visible;
-        height: auto;
-        overflow: visible;
-      }
-      .arch-flow-node--pair-lead .arch-flow-slot,
-      .arch-flow-node--pair-follow .arch-flow-slot {
-        margin-top: 0;
-      }
-      .arch-flow-node--pair-row-align {
-        align-self: auto;
-      }
-      .arch-flow-node--col-3 {
-        grid-column: auto;
-      }
-      .arch-flow-node--center {
-        grid-column: auto;
-        justify-self: stretch;
-        width: auto;
-      }
-      .arch-flow-stage { padding: 20px 16px 8px; }
-      .arch-flow-slot--tall img {
-        max-width: min(92%, 320px);
-      }
-      .arch-flow-slot img,
-      .arch-flow-slot video { max-width: min(78%, 300px); }
-      .arch-modal-foot { padding: 16px 16px 24px; }
-    }
-    @media (max-width: 520px) {
-      .values-row { grid-template-columns: 1fr; }
-      h1.hero-title { font-size: 2.4rem; }
-      .hero { padding-top: 68px; }
-    }
-  </style>
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
 
@@ -1036,7 +239,11 @@
             <span class="badge">Fase Beta 🚀</span>
           </div>
           <p class="card-text">Transformamos el dictado sobre la marcha en registros formales. Como Sistema de Soporte a Decisiones Clínicas (CDSS), NexEvo es una herramienta de asistencia diseñada bajo estrictas normativas chilenas (D.S. N° 41 y MINSAL). Al ser un instrumento de apoyo, procesa tus grabaciones anonimizando los datos del paciente desde el primer segundo, <strong class="nexevo-metric">reduciendo el tiempo de redacción hasta en un 80%</strong>. Recupera tus horas de atención directa con total respaldo legal.</p>
-          <p class="card-footer">Dirigido a: <span>Enfermeros/as y médicos</span></p>
+          <p class="card-footer">Dirigido a: <span>Enfermeras/os</span></p>
+          <div class="nexevo-coming-proto">
+            <span class="nexevo-proto-dot" aria-hidden="true"></span>
+            <p>Próximamente — estamos explorando nuevos protocolos de evolución para ayudar a más profesionales de salud a optimizar y mejorar sus registros clínicos.</p>
+          </div>
           <button type="button" class="btn-primary nexevo-showcase-cta" id="nexevoArchOpen" aria-haspopup="dialog">Ver arquitectura técnica →</button>
           <div class="nexevo-beta-callout">
             <p class="nexevo-beta-callout-text">🧪 Programa Beta: ¿Quieres probar NexEvo en tu próximo turno?</p>
@@ -1084,10 +291,53 @@
         </div>
       </article>
 
-      <div id="orbita" class="card-heading rv d1">
-        <h3 class="card-title">Proyecto Órbita (En fase de diseño)</h3>
-      </div>
-      <p class="section-subtitle rv d1">Imagina un entorno donde NexEvo y FarmaCheck convergen. Estamos diseñando la plataforma centralizada definitiva para la gestión del cuidado: donde cada evento, evolución e indicación fluyen en una sola pantalla inteligente y sin fricciones.</p>
+      <article id="orbita" class="orbita-card rv d1">
+        <div class="orbita-noise" aria-hidden="true"></div>
+
+        <div class="orbita-top">
+          <span class="orbita-tag">
+            <span class="orbita-tag-dot"></span>
+            En desarrollo · No anunciado
+          </span>
+          <span class="orbita-codename">PROYECTO ÓRBITA</span>
+        </div>
+
+        <div class="orbita-body">
+          <h3 class="orbita-title">
+            Algo está cambiando.<br>
+            <span class="orbita-title-accent">El hospital aún no lo sabe.</span>
+          </h3>
+          <p class="orbita-desc">
+            Hay problemas en el sistema de salud que llevan décadas sin resolverse. No por falta de tecnología — sino porque nadie había estado lo suficientemente cerca del problema como para diseñar la solución correcta.
+          </p>
+          <p class="orbita-desc">
+            Órbita es lo que viene después de NexEvo y FarmaCheck. No es una mejora. Es una reingeniería completa de cómo los profesionales de salud viven, documentan y entregan su turno.
+          </p>
+
+          <div class="orbita-specs">
+            <div class="orbita-spec-item orbita-spec-redacted">
+              <span class="orbita-spec-label">Módulo central</span>
+              <span class="orbita-spec-value redacted">████████████████</span>
+            </div>
+            <div class="orbita-spec-item orbita-spec-redacted">
+              <span class="orbita-spec-label">Integración</span>
+              <span class="orbita-spec-value redacted">████████ · ████████████</span>
+            </div>
+            <div class="orbita-spec-item orbita-spec-redacted">
+              <span class="orbita-spec-label">Objetivo clínico</span>
+              <span class="orbita-spec-value redacted">██████████████████████████</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="orbita-footer">
+          <a href="#contacto" class="orbita-cta">¿Quieres saber más de este proyecto? →</a>
+          <div class="orbita-eta-wrap">
+            <span class="orbita-eta-badge">Fase inicial</span>
+            <span class="orbita-eta">Próximamente — aún estamos construyendo este proyecto desde cero.</span>
+          </div>
+        </div>
+      </article>
 
       <div id="vision" class="section-header vision-header rv d2">
         <span class="s-tag">Visión</span>
@@ -1125,9 +375,56 @@
   <section id="contacto" class="section bg-soft">
     <div class="container">
       <div class="contact-card rv">
-        <h2>¿Eres profesional de salud y quieres probar nuestras herramientas antes que nadie?</h2>
-        <p class="contact-text">Escríbenos y te conectamos con nuestro equipo. Estamos buscando profesionales para pilotos tempranos de NexEvo y FarmaCheck.</p>
-        <a href="mailto:contacto@ditolabs.cl" class="contact-cta">✉️ contacto@ditolabs.cl</a>
+        <div class="contact-card-left">
+          <span class="contact-tag">Contacto</span>
+          <h2 class="contact-title">¿Quieres contactarnos?</h2>
+          <p class="contact-text">Algunos de nuestros proyectos se encuentran en fase de pruebas. Si quieres ser parte de ellas o simplemente tienes una pregunta, completa el formulario y nuestro equipo se pondrá en contacto a la brevedad.</p>
+          <div class="contact-pilots">
+            <div class="contact-pilot-item">
+              <span class="pilot-badge teal">Beta activa</span>
+              <span class="pilot-name">NexEvo</span>
+            </div>
+            <div class="contact-pilot-item">
+              <span class="pilot-badge gray">Próximamente</span>
+              <span class="pilot-name">FarmaCheck</span>
+            </div>
+            <div class="contact-pilot-item">
+              <span class="pilot-badge violet">Fase inicial</span>
+              <span class="pilot-name">Proyecto Órbita</span>
+            </div>
+          </div>
+        </div>
+
+        <form class="contact-form" id="contactForm" novalidate>
+          <div class="form-row">
+            <div class="form-group">
+              <label for="cf-name">Nombre</label>
+              <input type="text" id="cf-name" name="nombre" placeholder="Tu nombre" autocomplete="given-name" required>
+            </div>
+            <div class="form-group">
+              <label for="cf-email">Correo electrónico</label>
+              <input type="email" id="cf-email" name="email" placeholder="tu@correo.cl" autocomplete="email" required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="cf-project">¿Qué te interesa?</label>
+            <select id="cf-project" name="proyecto">
+              <option value="" disabled selected>Selecciona un proyecto</option>
+              <option value="nexevo">NexEvo — Quiero participar en el piloto Beta</option>
+              <option value="farmacheck">FarmaCheck — Quiero ser notificado cuando esté disponible</option>
+              <option value="orbita">Proyecto Órbita — Quiero saber más</option>
+              <option value="general">Consulta general</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="cf-msg">Mensaje <span class="form-optional">(opcional)</span></label>
+            <textarea id="cf-msg" name="mensaje" rows="3" placeholder="Cuéntanos algo sobre tu contexto clínico o tu consulta…"></textarea>
+          </div>
+          <div class="form-footer">
+            <button type="submit" class="contact-submit-btn">Enviar mensaje →</button>
+            <span class="form-privacy">Nuestro equipo te responde a la brevedad. Sin spam.</span>
+          </div>
+        </form>
       </div>
     </div>
   </section>
@@ -1141,115 +438,245 @@
       <div class="arch-modal-head-text">
         <span class="arch-modal-tag">NexEvo · CDSS</span>
         <h2 class="arch-modal-title" id="nexevoArchTitle">Flujo de la aplicación</h2>
-        <p class="arch-modal-lead">Recorrido del pipeline clínico asistido por IA — desde la captura en turno hasta la telemetría de gestión. Alineado a normativa chilena (D.S. N° 41 y MINSAL).</p>
       </div>
     </header>
-    <div class="arch-flow-stage" id="nexevoAppFlow">
-      <canvas class="arch-draw-canvas" id="archDrawCanvas" aria-hidden="true"></canvas>
-      <ol class="arch-flow-track">
-        <li class="arch-flow-node">
-          <div class="arch-flow-node-head">
-            <span class="arch-step-label">Pantalla Inicio NexEvo</span>
-          </div>
-          <div class="arch-flow-slot" data-slot="splash">
-            <img src="img/nexevo-splash.png" alt="NexEvo — pantalla de inicio">
-          </div>
-        </li>
-        <li class="arch-flow-node">
-          <div class="arch-flow-node-head">
-            <span class="arch-step-label">Pantalla principal NexEvo.</span>
-          </div>
-          <div class="arch-flow-slot" data-slot="camas">
-            <img src="img/nexevo-camas.png" alt="NexEvo — listado de camas y notas clínicas">
-          </div>
-        </li>
-        <li class="arch-flow-node">
-          <div class="arch-flow-node-head">
-            <span class="arch-step-label">Ayuda en la valoración clínica</span>
-          </div>
-          <div class="arch-flow-slot" data-slot="asistente">
-            <img src="img/nexevo-asistente-valoracion.png" alt="NexEvo — asistente de valoración clínica">
-          </div>
-        </li>
-        <li class="arch-flow-node">
-          <div class="arch-flow-node-head">
-            <span class="arch-step-label">Pacientes con Notas activas</span>
-          </div>
-          <div class="arch-flow-slot" data-slot="resumen-turno">
-            <img src="img/nexevo-resumen-turno.png" alt="NexEvo — resumen de turno con pacientes activos">
-          </div>
-        </li>
-        <li class="arch-flow-node">
-          <div class="arch-flow-node-head">
-            <span class="arch-step-label">Configuraciones del sistema</span>
-          </div>
-          <div class="arch-flow-slot" data-slot="ajustes">
-            <img src="img/nexevo-ajustes.png" alt="NexEvo — ajustes y plantillas clínicas">
-          </div>
-        </li>
-        <li class="arch-flow-node">
-          <div class="arch-flow-node-head">
-            <span class="arch-step-label">Nota de voz rápida</span>
-          </div>
-          <div class="arch-flow-slot" data-slot="nota-voz">
-            <img src="img/nexevo-escuchando-nota.png" alt="NexEvo — modo capacitación escuchando nota clínica">
-          </div>
-        </li>
-        <li class="arch-flow-node arch-flow-node--pair-lead">
-          <div class="arch-flow-node-head arch-flow-node-head--over-pair">
-            <span class="arch-step-label">Centro Inteligente de notas turno</span>
-          </div>
-          <div class="arch-flow-slot" data-slot="trayectoria">
-            <img src="img/nexevo-trayectoria.png" alt="NexEvo — trayectoria del turno y generar evolución">
-          </div>
-        </li>
-        <li class="arch-flow-node arch-flow-node--pair-follow">
-          <div class="arch-flow-slot" data-slot="cama-22b">
-            <img src="img/nexevo-cama-22b.png" alt="NexEvo — trayectoria del turno Cama 22-B">
-          </div>
-        </li>
-        <li class="arch-flow-node">
-          <div class="arch-flow-node-head">
-            <span class="arch-step-label">Centro Inteligente Notas Pendientes</span>
-          </div>
-          <div class="arch-flow-slot arch-flow-slot--half-top" data-slot="notas-pendientes">
-            <div class="arch-flow-half-frame">
-              <img src="img/nexevo-notas-pendientes.png" alt="NexEvo — notas pendientes con sugerencia de cama">
+
+    <div class="flow-grid-wrap">
+
+      <!-- Sección 1: Inicio y navegación -->
+      <div class="flow-section">
+        <span class="flow-section-label">Inicio y navegación</span>
+        <ol class="flow-grid">
+          <li class="flow-card">
+            <div class="flow-card-caption">
+              <strong>Inicio</strong>
+              <span>Pantalla de bienvenida de la app</span>
             </div>
-          </div>
-        </li>
-        <li class="arch-flow-node arch-flow-node--col-3">
-          <div class="arch-flow-slot arch-flow-slot--half-top" data-slot="estadisticas">
-            <div class="arch-flow-half-frame">
-              <img src="img/nexevo-estadisticas.png" alt="NexEvo — estadísticas e impacto del turno">
+            <div class="flow-card-img" tabindex="0">
+              <img src="img/nexevo-splash.png" alt="Pantalla de inicio NexEvo">
+              <span class="flow-step">1</span>
+              <div class="flow-tip" role="tooltip">
+                <strong>Punto de entrada</strong>
+                <p>El profesional abre NexEvo al iniciar su turno. Acceso rápido y sin fricción, optimizado para uso en planta con una sola mano.</p>
+              </div>
             </div>
-          </div>
-        </li>
-        <li class="arch-flow-node">
-          <div class="arch-flow-node-head">
-            <span class="arch-step-label">Evolución generada formato SOAPIE</span>
-          </div>
-          <div class="arch-flow-slot" data-slot="evolucion-soapie">
-            <img src="img/nexevo-evolucion-systems.png" alt="NexEvo — evolución SYSTEMS Cama 22-B">
-          </div>
-        </li>
-        <li class="arch-flow-node">
-          <div class="arch-flow-node-head">
-            <span class="arch-step-label">Evolución generada formato Sistemas</span>
-          </div>
-          <div class="arch-flow-slot" data-slot="evolucion-sistemas">
-            <img src="img/nexevo-evolucion.png" alt="NexEvo — evolución MINSAL con borrador CDSS">
-          </div>
-        </li>
-        <li class="arch-flow-node arch-flow-node--center">
-          <div class="arch-flow-slot arch-flow-slot--half" data-slot="evolucion-guardar">
-            <div class="arch-flow-half-frame">
-              <img src="img/nexevo-evolucion-guardar.png" alt="NexEvo — evolución MINSAL y guardar en resumen de turno">
+          </li>
+          <li class="flow-card">
+            <div class="flow-card-caption">
+              <strong>Camas activas</strong>
+              <span>Vista principal con todas las camas del turno</span>
             </div>
-          </div>
-        </li>
-      </ol>
+            <div class="flow-card-img" tabindex="0">
+              <img src="img/nexevo-camas.png" alt="Listado de camas activas">
+              <span class="flow-step">2</span>
+              <div class="flow-tip" role="tooltip">
+                <strong>Mapa del turno</strong>
+                <p>Todas las camas asignadas en una sola vista. Cada tarjeta muestra el conteo de notas y el último registro, para priorizar de un vistazo qué paciente necesita atención.</p>
+              </div>
+            </div>
+          </li>
+          <li class="flow-card">
+            <div class="flow-card-caption">
+              <strong>Asistente de valoración</strong>
+              <span>Guía inteligente para la valoración inicial del paciente</span>
+            </div>
+            <div class="flow-card-img" tabindex="0">
+              <img src="img/nexevo-asistente-valoracion.png" alt="Asistente de valoración clínica">
+              <span class="flow-step">3</span>
+              <div class="flow-tip" role="tooltip">
+                <strong>Guía estructurada ABCDE</strong>
+                <p>Acompaña la valoración inicial paso a paso: primera mirada del entorno, valoración física por sistemas y planificación de cuidados. Reduce omisiones clínicas.</p>
+              </div>
+            </div>
+          </li>
+        </ol>
+      </div>
+
+      <!-- Sección 2: Captura de información clínica -->
+      <div class="flow-section">
+        <span class="flow-section-label">Captura de información clínica</span>
+        <ol class="flow-grid">
+          <li class="flow-card">
+            <div class="flow-card-caption">
+              <strong>Pacientes activos</strong>
+              <span>Resumen visual de todos los pacientes con notas en curso</span>
+            </div>
+            <div class="flow-card-img" tabindex="0">
+              <img src="img/nexevo-resumen-turno.png" alt="Resumen de turno con pacientes activos">
+              <span class="flow-step">4</span>
+              <div class="flow-tip" role="tooltip">
+                <strong>Pacientes en curso</strong>
+                <p>Resumen de los pacientes con notas activas durante el turno. Permite retomar cualquier registro en progreso sin perder el contexto clínico.</p>
+              </div>
+            </div>
+          </li>
+          <li class="flow-card">
+            <div class="flow-card-caption">
+              <strong>Configuraciones</strong>
+              <span>Plantillas clínicas y ajustes del sistema</span>
+            </div>
+            <div class="flow-card-img" tabindex="0">
+              <img src="img/nexevo-ajustes.png" alt="Configuraciones y plantillas">
+              <span class="flow-step">5</span>
+              <div class="flow-tip" role="tooltip">
+                <strong>Plantillas y preferencias</strong>
+                <p>Elige el formato clínico (SOAPIE, por Sistemas o Libre), activa el modo capacitación y administra tus datos. Adaptable a cada protocolo institucional.</p>
+              </div>
+            </div>
+          </li>
+          <li class="flow-card">
+            <div class="flow-card-caption">
+              <strong>Nota de voz</strong>
+              <span>Dictado en tiempo real — voz convertida a texto clínico estructurado</span>
+            </div>
+            <div class="flow-card-img" tabindex="0">
+              <img src="img/nexevo-escuchando-nota.png" alt="Dictado de nota clínica">
+              <span class="flow-step">6</span>
+              <div class="flow-tip" role="tooltip">
+                <strong>Dictado por voz</strong>
+                <p>El profesional habla con naturalidad y la IA transcribe en tiempo real. Censura automáticamente datos identificatorios y estructura la nota clínica.</p>
+              </div>
+            </div>
+          </li>
+        </ol>
+      </div>
+
+      <!-- Sección 3: Centro inteligente de turno -->
+      <div class="flow-section">
+        <span class="flow-section-label">Centro inteligente de turno</span>
+        <ol class="flow-grid">
+          <li class="flow-card">
+            <div class="flow-card-caption">
+              <strong>Vista por cama</strong>
+              <span>Detalle completo del paciente — historial del turno</span>
+            </div>
+            <div class="flow-card-img" tabindex="0">
+              <img src="img/nexevo-cama-22b.png" alt="Vista detalle Cama 22-B">
+              <span class="flow-step">7</span>
+              <div class="flow-tip" role="tooltip">
+                <strong>Detalle por paciente</strong>
+                <p>Toda la actividad clínica de una cama concentrada: dictado, notas y bloqueo activo de datos identificatorios según Ley 20.584.</p>
+              </div>
+            </div>
+          </li>
+          <li class="flow-card">
+            <div class="flow-card-caption">
+              <strong>Trayectoria del turno</strong>
+              <span>Línea de tiempo clínica con opción de generar evolución</span>
+            </div>
+            <div class="flow-card-img" tabindex="0">
+              <img src="img/nexevo-trayectoria.png" alt="Trayectoria del turno por cama">
+              <span class="flow-step">8</span>
+              <div class="flow-tip" role="tooltip">
+                <strong>Línea de tiempo clínica</strong>
+                <p>Cronología de todos los eventos del turno por cama. Con un toque genera la evolución completa a partir de las notas acumuladas.</p>
+              </div>
+            </div>
+          </li>
+          <li class="flow-card">
+            <div class="flow-card-caption">
+              <strong>Notas pendientes</strong>
+              <span>Centro de notas con sugerencia de cama prioritaria</span>
+            </div>
+            <div class="flow-card-img" tabindex="0">
+              <img src="img/nexevo-notas-pendientes.png" alt="Notas pendientes">
+              <span class="flow-step">9</span>
+              <div class="flow-tip" role="tooltip">
+                <strong>Bandeja inteligente</strong>
+                <p>Centraliza las notas sin asignar y sugiere automáticamente a qué cama corresponde cada una. Nada se pierde entre el dictado y la ficha.</p>
+              </div>
+            </div>
+          </li>
+        </ol>
+      </div>
+
+      <!-- Sección 4: Evolución clínica y cierre de turno -->
+      <div class="flow-section">
+        <span class="flow-section-label">Evolución clínica y cierre de turno</span>
+        <ol class="flow-grid">
+          <li class="flow-card">
+            <div class="flow-card-caption">
+              <strong>Evolución SOAPIE</strong>
+              <span>Nota clínica generada automáticamente por IA</span>
+            </div>
+            <div class="flow-card-img" tabindex="0">
+              <img src="img/nexevo-evolucion-systems.png" alt="Evolución formato SOAPIE">
+              <span class="flow-step">10</span>
+              <div class="flow-tip" role="tooltip">
+                <strong>Evolución SOAPIE</strong>
+                <p>Nota clínica completa generada por IA en formato Subjetivo-Objetivo-Análisis-Plan-Implementación-Evaluación. Siempre marcada como borrador para validación humana.</p>
+              </div>
+            </div>
+          </li>
+          <li class="flow-card">
+            <div class="flow-card-caption">
+              <strong>Evolución por Sistemas</strong>
+              <span>Formato alternativo MINSAL con revisión antes de guardar</span>
+            </div>
+            <div class="flow-card-img" tabindex="0">
+              <img src="img/nexevo-evolucion.png" alt="Evolución formato por Sistemas">
+              <span class="flow-step">11</span>
+              <div class="flow-tip" role="tooltip">
+                <strong>Evolución por Sistemas</strong>
+                <p>Formato alternativo alineado a MINSAL, organizado por sistemas fisiológicos. El profesional revisa y edita antes de guardar en la ficha oficial.</p>
+              </div>
+            </div>
+          </li>
+          <li class="flow-card">
+            <div class="flow-card-caption">
+              <strong>Aviso legal</strong>
+              <span>Responsabilidad profesional — D.S. N° 41 y NGA N° 19 MINSAL</span>
+            </div>
+            <div class="flow-card-img" tabindex="0">
+              <img src="img/nexevo-aviso-legal.png" alt="Aviso legal — borrador clínico CDSS">
+              <span class="flow-step">12</span>
+              <div class="flow-tip" role="tooltip">
+                <strong>Responsabilidad profesional</strong>
+                <p>NexEvo es un sistema de apoyo a la decisión clínica (CDSS). Todo contenido es borrador: el profesional valida y firma. Alineado al D.S. N° 41 y NGA N° 19 del MINSAL.</p>
+              </div>
+            </div>
+          </li>
+          <li class="flow-card">
+            <div class="flow-card-caption">
+              <strong>ROI &amp; Estadísticas</strong>
+              <span>Tiempo ahorrado vs. tipeo tradicional — datos en tiempo real</span>
+            </div>
+            <div class="flow-card-img">
+              <img src="img/nexevo-estadisticas-impacto.jpg" alt="Estadísticas e Impacto del turno">
+              <span class="flow-step">13</span>
+            </div>
+          </li>
+
+          <!-- Callout ROI explicativo -->
+          <li class="flow-roi-note" aria-label="Impacto clínico del turno">
+            <div class="flow-roi-header">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="9" stroke="var(--primary)" stroke-width="1.5"/><path d="M 10 6 L 10 10.5 M 10 13 L 10 14" stroke="var(--primary)" stroke-width="2" stroke-linecap="round"/></svg>
+              <strong>¿Cuánto tiempo recupera NexEvo?</strong>
+            </div>
+            <div class="flow-roi-metrics">
+              <div class="flow-roi-metric">
+                <span class="flow-roi-value">180 min</span>
+                <span class="flow-roi-label">recuperados por turno, reinvertidos en cuidado directo</span>
+              </div>
+              <div class="flow-roi-metric">
+                <span class="flow-roi-value">~10 min</span>
+                <span class="flow-roi-label">por evolución clínica completa generada con IA</span>
+              </div>
+              <div class="flow-roi-metric">
+                <span class="flow-roi-value">82%</span>
+                <span class="flow-roi-label">más eficiente que el promedio de la industria</span>
+              </div>
+            </div>
+            <p class="flow-roi-desc">
+              Sin app: 144–250 min de documentación manual por turno. Con NexEvo: menos de 30 min. El tiempo que no se gasta en tipear se gasta en el paciente.
+            </p>
+            <div class="flow-roi-source">Fuente: Hendrich et al. 2008 — 767 enfermeras, 36 hospitales</div>
+          </li>
+        </ol>
+      </div>
+
     </div>
+
     <p class="arch-modal-foot">NexEvo es un instrumento de apoyo a la decisión clínica. La validación final del registro corresponde siempre al profesional de salud.</p>
   </div>
 </div>
@@ -1265,479 +692,8 @@
   </div>
 </footer>
 
-<script>
-  const nav = document.getElementById('nav');
-  window.addEventListener('scroll', () => nav.classList.toggle('solid', scrollY > 60), {passive:true});
-
-  const navProyectosDropdown = document.getElementById('navProyectosDropdown');
-  const navProyectosToggle = document.getElementById('navProyectosToggle');
-
-  function closeNavProyectosDropdown() {
-    navProyectosDropdown?.classList.remove('is-open');
-    navProyectosToggle?.setAttribute('aria-expanded', 'false');
-  }
-
-  navProyectosToggle?.addEventListener('click', e => {
-    e.stopPropagation();
-    const open = navProyectosDropdown.classList.toggle('is-open');
-    navProyectosToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
-  });
-
-  navProyectosDropdown?.querySelectorAll('.nav-dropdown-menu a').forEach(link => {
-    link.addEventListener('click', closeNavProyectosDropdown);
-  });
-
-  document.addEventListener('click', e => {
-    if (!navProyectosDropdown?.contains(e.target)) closeNavProyectosDropdown();
-  });
-
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape') closeNavProyectosDropdown();
-  });
-
-  function openMobile() { document.getElementById('mobileNav').classList.add('open'); document.body.style.overflow='hidden'; }
-  function closeMobile() { document.getElementById('mobileNav').classList.remove('open'); document.body.style.overflow=''; }
-
-  const io = new IntersectionObserver(entries => entries.forEach(e => {
-    if (e.isIntersecting) { e.target.classList.add('show'); io.unobserve(e.target); }
-  }), { threshold: 0.12 });
-  document.querySelectorAll('.rv').forEach(el => io.observe(el));
-
-  const heroSlides = document.querySelectorAll('#heroSlider .hero-card');
-  const heroBtns = document.querySelectorAll('#heroSlider .hero-slider-btn');
-  let heroIndex = 0;
-
-  function setHeroSlide(index) {
-    if (!heroSlides.length) return;
-    heroSlides[heroIndex].classList.remove('active');
-    heroIndex = ((index % heroSlides.length) + heroSlides.length) % heroSlides.length;
-    heroSlides[heroIndex].classList.add('active');
-  }
-
-  function nextHeroSlide() {
-    setHeroSlide(heroIndex + 1);
-  }
-
-  if (heroSlides.length > 1) {
-    heroBtns.forEach(btn => btn.addEventListener('click', nextHeroSlide));
-  }
-
-  const heroSlideByHash = { nexevo: 0, farmacheck: 1, orbita: 2 };
-  document.querySelectorAll('a[href^="#"]').forEach(link => {
-    const id = link.getAttribute('href').slice(1);
-    if (id in heroSlideByHash) {
-      link.addEventListener('click', () => setHeroSlide(heroSlideByHash[id]));
-    }
-  });
-
-  const nexevoArchModal = document.getElementById('nexevoArchModal');
-  const nexevoArchOpen = document.getElementById('nexevoArchOpen');
-
-  function syncArchModalOffset() {
-    document.documentElement.style.setProperty('--nav-height', `${nav.offsetHeight}px`);
-  }
-
-  const archFlowStage = document.getElementById('nexevoAppFlow');
-  const archFlowTrack = archFlowStage?.querySelector('.arch-flow-track');
-  const archDrawCanvas = document.getElementById('archDrawCanvas');
-  const drawCtx = archDrawCanvas?.getContext('2d');
-  const ARCH_LAYOUT_BUILTIN = {"nodes":{"splash":{"left":-0.17286084701815038,"top":16,"width":32.4114088159032},"camas":{"left":33.96715643906656,"top":16,"width":32.4114088159032},"asistente":{"left":69.40363007778738,"top":16,"width":32.4114088159032},"resumen-turno":{"left":-0.08643042350907519,"top":655,"width":32.4114088159032},"ajustes":{"left":33.88072601555748,"top":656,"width":32.4114088159032},"nota-voz":{"left":69.57649092480554,"top":654,"width":32.4114088159032},"trayectoria":{"left":0,"top":1296,"width":32.4114088159032},"cama-22b":{"left":33.96715643906656,"top":1324,"width":32.4114088159032},"notas-pendientes":{"left":69.57649092480554,"top":1433,"width":32.4114088159032},"estadisticas":{"left":69.83578219533275,"top":1964,"width":32.4114088159032},"evolucion-soapie":{"left":-0.25929127052722556,"top":1937,"width":32.4114088159032},"evolucion-sistemas":{"left":33.62143474503025,"top":1936,"width":32.4114088159032},"evolucion-guardar":{"left":16.681071737251514,"top":2606,"width":31.287813310285223}},"arrows":[{"x1f":0.5864739928849304,"y1f":0.05654755017343904,"cxf":0.6470980024058149,"cyf":0.051003813594317805,"x2f":0.7687208704443079,"y2f":0.07706877167988106},{"x1f":0.5777827088452089,"y1f":0.18202392013544766,"cxf":0.6261234234234234,"cyf":0.17834000660720184,"x2f":0.8390471437346437,"y2f":0.22019119590353484},{"x1f":0.19351521038083536,"y1f":0.38342717831185996,"cxf":0.12238795300982802,"cyf":0.3909065246118269,"x2f":0.27982215141277644,"y2f":0.43811938594317806},{"x1f":0.8099635890151515,"y1f":0.3061798222249752,"cxf":0.6641215397215398,"cyf":0.3217407664354146,"x2f":0.687917077446765,"y2f":0.41861431698050877}]};
-  let archArrowCoords = null;
-
-  function resetArchLayoutFromCode() {
-    archArrowCoords = null;
-  }
-
-  function archFreeLayoutEnabled() {
-    return window.matchMedia('(min-width: 901px)').matches;
-  }
-
-  function archSlotIdForNode(node) {
-    return node?.querySelector('.arch-flow-slot[data-slot]')?.dataset.slot || null;
-  }
-
-  function applyArchNodeLayout(layout) {
-    if (!archFlowTrack || !layout) return;
-    archFlowTrack.classList.add('is-free-layout');
-    archFlowTrack.querySelectorAll('.arch-flow-node').forEach(node => {
-      const pos = layout[archSlotIdForNode(node)];
-      if (!pos) return;
-      node.style.left = `${pos.left}%`;
-      node.style.top = `${pos.top}px`;
-      node.style.width = `${pos.width}%`;
-    });
-    syncArchTrackMinHeight();
-  }
-
-  function syncPairLeadHead() {
-    if (!archFlowTrack?.classList.contains('is-free-layout')) return;
-    const lead = flowCellBySlot('trayectoria');
-    const follow = flowCellBySlot('cama-22b');
-    const head = lead?.querySelector('.arch-flow-node-head--over-pair');
-    if (!lead || !follow || !head) return;
-    const spanLeft = Math.min(lead.offsetLeft, follow.offsetLeft);
-    const spanRight = Math.max(lead.offsetLeft + lead.offsetWidth, follow.offsetLeft + follow.offsetWidth);
-    head.style.left = `${spanLeft - lead.offsetLeft}px`;
-    head.style.width = `${spanRight - spanLeft}px`;
-  }
-
-  function syncArchTrackMinHeight() {
-    if (!archFlowTrack?.classList.contains('is-free-layout')) return;
-    syncPairLeadHead();
-    let maxBottom = 0;
-    archFlowTrack.querySelectorAll('.arch-flow-node').forEach(node => {
-      maxBottom = Math.max(maxBottom, node.offsetTop + node.offsetHeight);
-    });
-    archFlowTrack.style.minHeight = `${maxBottom + 32}px`;
-    syncArchDrawCanvas();
-  }
-
-  function clearArchFreeLayoutStyles() {
-    if (!archFlowTrack) return;
-    archFlowTrack.classList.remove('is-free-layout');
-    archFlowTrack.style.minHeight = '';
-    archFlowStage?.classList.remove('is-layout-ready');
-    archFlowTrack.querySelectorAll('.arch-flow-node').forEach(node => {
-      node.style.left = '';
-      node.style.top = '';
-      node.style.width = '';
-      const head = node.querySelector('.arch-flow-node-head--over-pair');
-      if (head) {
-        head.style.left = '';
-        head.style.width = '';
-      }
-    });
-  }
-
-  function commitArchLayoutToView() {
-    if (!archFlowTrack || !archFreeLayoutEnabled()) return;
-    applyArchNodeLayout(ARCH_LAYOUT_BUILTIN.nodes);
-    syncArchTrackMinHeight();
-    reloadArchArrows();
-    syncArchDrawCanvas();
-    archFlowStage?.classList.add('is-layout-ready');
-  }
-
-  function whenArchFlowImagesReady(callback) {
-    const imgs = archFlowTrack?.querySelectorAll('img') || [];
-    let pending = 0;
-    imgs.forEach(img => { if (!img.complete) pending++; });
-    if (!pending) {
-      callback();
-      return;
-    }
-    const done = () => {
-      pending--;
-      if (pending <= 0) callback();
-    };
-    imgs.forEach(img => {
-      if (!img.complete) {
-        img.addEventListener('load', done, { once: true });
-        img.addEventListener('error', done, { once: true });
-      }
-    });
-  }
-
-  function ensureArchFreeLayout() {
-    if (!archFlowTrack) return;
-    if (!archFreeLayoutEnabled()) {
-      clearArchFreeLayoutStyles();
-      return;
-    }
-    commitArchLayoutToView();
-  }
-
-  function stageClientWidth() {
-    return archFlowStage?.clientWidth || archFlowStage?.offsetWidth || 0;
-  }
-
-  function flowSlotById(slotId) {
-    if (!archFlowStage || !slotId) return null;
-    return archFlowStage.querySelector(`.arch-flow-slot[data-slot="${slotId}"]`);
-  }
-
-  function flowCellBySlot(slotId) {
-    return flowSlotById(slotId)?.closest('.arch-flow-node') || null;
-  }
-
-  const ARCH_GUIDE_ARROWS = [
-    {
-      from: { slot: 'camas', fx: 0.7763, fy: 0.1873 },
-      curve: { slot: 'camas', fx: 0.9737, fy: 0.1578 },
-      to: { slot: 'asistente', fx: 0.2763, fy: 0.2965 }
-    },
-    {
-      from: { slot: 'camas', fx: 0.748, fy: 0.855 },
-      curve: { trackFx: 0.6331, trackFy: 0.1776 },
-      to: { slotHead: 'nota-voz', fx: 0.5, fy: -0.45 }
-    },
-    {
-      from: { slot: 'resumen-turno', fx: 0.5474, fy: 0.8034 },
-      curve: { slot: 'resumen-turno', fx: 0.3158, fy: 0.8432 },
-      to: { slotHead: 'cama-22b', fx: -0.2222, fy: -0.0946 }
-    },
-    {
-      from: { slot: 'nota-voz', fx: 0.4053, fy: 0.3941 },
-      curve: { trackFx: 0.6732, trackFy: 0.3259 },
-      to: { slot: 'nota-voz', fx: 0.0079, fy: 0.9924 }
-    }
-  ];
-
-  function resolveAnchor(anchor) {
-    if (!anchor || !archFlowStage) return null;
-    const sr = archFlowStage.getBoundingClientRect();
-
-    if (anchor.slot != null) {
-      const slot = flowSlotById(anchor.slot);
-      if (!slot) return null;
-      const r = slot.getBoundingClientRect();
-      return {
-        x: (r.left - sr.left) + anchor.fx * r.width,
-        y: (r.top - sr.top) + anchor.fy * r.height
-      };
-    }
-
-    if (anchor.slotHead != null) {
-      const cell = flowCellBySlot(anchor.slotHead);
-      const target = cell?.querySelector('.arch-flow-node-head') || flowSlotById(anchor.slotHead);
-      if (!target) return null;
-      const r = target.getBoundingClientRect();
-      return {
-        x: (r.left - sr.left) + anchor.fx * r.width,
-        y: (r.top - sr.top) + anchor.fy * r.height
-      };
-    }
-
-    if (anchor.trackFx != null) {
-      const track = archFlowStage.querySelector('.arch-flow-track');
-      if (!track) return null;
-      const r = track.getBoundingClientRect();
-      return {
-        x: (r.left - sr.left) + anchor.trackFx * r.width,
-        y: (r.top - sr.top) + anchor.trackFy * r.height
-      };
-    }
-
-    return null;
-  }
-
-  function anchorsToArrow(anchors) {
-    const from = resolveAnchor(anchors.from);
-    const curve = resolveAnchor(anchors.curve);
-    const to = resolveAnchor(anchors.to);
-    if (!from || !curve || !to) return null;
-    return { x1: from.x, y1: from.y, cx: curve.x, cy: curve.y, x2: to.x, y2: to.y };
-  }
-
-  function arrowsFromAnchors() {
-    return ARCH_GUIDE_ARROWS.map(anchorsToArrow).filter(Boolean);
-  }
-
-  function archStageSize() {
-    return {
-      w: stageClientWidth() || 1,
-      h: archFlowStage?.offsetHeight || 1
-    };
-  }
-
-  function denormalizeArchArrow(norm) {
-    const { w, h } = archStageSize();
-    return {
-      x1: norm.x1f * w, y1: norm.y1f * h,
-      cx: norm.cxf * w, cy: norm.cyf * h,
-      x2: norm.x2f * w, y2: norm.y2f * h
-    };
-  }
-
-  function normalizeArchArrow(arrow) {
-    const { w, h } = archStageSize();
-    return {
-      x1f: arrow.x1 / w, y1f: arrow.y1 / h,
-      cxf: arrow.cx / w, cyf: arrow.cy / h,
-      x2f: arrow.x2 / w, y2f: arrow.y2 / h
-    };
-  }
-
-  function syncArchArrowsFromAnchors() {
-    const computed = arrowsFromAnchors();
-    archArrowCoords = computed.length ? computed : null;
-  }
-
-  function reloadArchArrows() {
-    archArrowCoords = null;
-    syncArchArrowsFromAnchors();
-  }
-
-  function resolvedGuideArrows() {
-    if (!archArrowCoords) syncArchArrowsFromAnchors();
-    return archArrowCoords || [];
-  }
-
-  function syncArchDrawCanvas() {
-    if (!archDrawCanvas || !archFlowStage || !drawCtx) return;
-    const w = stageClientWidth();
-    const h = archFlowStage.offsetHeight;
-    if (!w || !h) return;
-    if (archDrawCanvas.width !== w || archDrawCanvas.height !== h) {
-      archDrawCanvas.width = w;
-      archDrawCanvas.height = h;
-      drawCtx.lineCap = 'round';
-      drawCtx.lineJoin = 'round';
-      drawCtx.lineWidth = 3;
-      drawCtx.strokeStyle = '#0EA5E9';
-    }
-    redrawAllArrows();
-  }
-
-  function arrowPath(x1, y1, x2, y2, cx, cy) {
-    drawCtx.beginPath();
-    drawCtx.moveTo(x1, y1);
-    if (cx != null && cy != null) {
-      drawCtx.quadraticCurveTo(cx, cy, x2, y2);
-    } else {
-      drawCtx.lineTo(x2, y2);
-    }
-  }
-
-  function arrowEndAngle(x1, y1, x2, y2, cx, cy) {
-    if (cx != null && cy != null) return Math.atan2(y2 - cy, x2 - cx);
-    return Math.atan2(y2 - y1, x2 - x1);
-  }
-
-  function drawArrowShape(x1, y1, x2, y2, alpha = 1, label = null, cx = null, cy = null) {
-    const curved = cx != null && cy != null;
-    const angle = arrowEndAngle(x1, y1, x2, y2, cx, cy);
-    const head = 13;
-    drawCtx.globalAlpha = alpha;
-    drawCtx.strokeStyle = '#fff';
-    drawCtx.lineWidth = 5.5;
-    arrowPath(x1, y1, x2, y2, cx, cy);
-    drawCtx.stroke();
-    drawCtx.strokeStyle = '#0EA5E9';
-    drawCtx.lineWidth = 3;
-    arrowPath(x1, y1, x2, y2, cx, cy);
-    drawCtx.stroke();
-    drawCtx.fillStyle = '#0EA5E9';
-    drawCtx.beginPath();
-    drawCtx.moveTo(x2, y2);
-    drawCtx.lineTo(x2 - head * Math.cos(angle - Math.PI / 7), y2 - head * Math.sin(angle - Math.PI / 7));
-    drawCtx.lineTo(x2 - head * Math.cos(angle + Math.PI / 7), y2 - head * Math.sin(angle + Math.PI / 7));
-    drawCtx.closePath();
-    drawCtx.fill();
-    drawCtx.beginPath();
-    drawCtx.arc(x1, y1, 5, 0, Math.PI * 2);
-    drawCtx.fill();
-    if (label != null) {
-      const mx = curved ? 0.25 * x1 + 0.5 * cx + 0.25 * x2 : (x1 + x2) / 2;
-      const my = (curved ? 0.25 * y1 + 0.5 * cy + 0.25 * y2 : (y1 + y2) / 2) - 10;
-      drawCtx.font = 'bold 11px Plus Jakarta Sans, sans-serif';
-      drawCtx.textAlign = 'center';
-      drawCtx.fillStyle = '#fff';
-      drawCtx.fillText(String(label), mx + 1, my + 1);
-      drawCtx.fillStyle = '#0891B2';
-      drawCtx.fillText(String(label), mx, my);
-    }
-    drawCtx.globalAlpha = 1;
-  }
-
-  function redrawAllArrows() {
-    if (!drawCtx || !archDrawCanvas) return;
-    drawCtx.clearRect(0, 0, archDrawCanvas.width, archDrawCanvas.height);
-    resolvedGuideArrows().forEach(a => drawArrowShape(a.x1, a.y1, a.x2, a.y2, 1, null, a.cx, a.cy));
-  }
-
-  function openNexevoArch() {
-    nav.classList.add('solid');
-    syncArchModalOffset();
-    resetArchLayoutFromCode();
-    archFlowStage?.classList.remove('is-layout-ready');
-    nexevoArchModal.classList.add('is-open');
-    nexevoArchModal.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
-    requestAnimationFrame(() => {
-      syncArchModalOffset();
-      ensureArchFreeLayout();
-      whenArchFlowImagesReady(() => {
-        requestAnimationFrame(commitArchLayoutToView);
-      });
-    });
-    archFlowStage?.querySelectorAll('img').forEach(img => {
-      if (!img.complete) {
-        img.addEventListener('load', () => commitArchLayoutToView(), { once: true });
-      }
-    });
-    nexevoArchModal.querySelector('.arch-modal-close').focus();
-  }
-
-  function closeNexevoArch() {
-    nexevoArchModal.classList.remove('is-open');
-    nexevoArchModal.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
-    nav.classList.toggle('solid', scrollY > 60);
-    nexevoArchOpen.focus();
-  }
-
-  nexevoArchOpen.addEventListener('click', openNexevoArch);
-  nexevoArchModal.querySelectorAll('[data-arch-close]').forEach(el => {
-    el.addEventListener('click', closeNexevoArch);
-  });
-  document.addEventListener('keydown', e => {
-    if (e.key === 'Escape' && nexevoArchModal.classList.contains('is-open')) closeNexevoArch();
-  });
-  window.addEventListener('resize', () => {
-    if (nexevoArchModal.classList.contains('is-open')) {
-      syncArchModalOffset();
-      ensureArchFreeLayout();
-      reloadArchArrows();
-      syncArchDrawCanvas();
-    }
-  });
-
-  if (archFlowStage && typeof ResizeObserver !== 'undefined') {
-    new ResizeObserver(() => {
-      if (nexevoArchModal.classList.contains('is-open')) syncArchDrawCanvas();
-    }).observe(archFlowStage);
-    const archTrack = archFlowStage.querySelector('.arch-flow-track');
-    if (archTrack) {
-      new ResizeObserver(() => {
-        if (nexevoArchModal.classList.contains('is-open')) syncArchDrawCanvas();
-      }).observe(archTrack);
-    }
-  }
-
-  const archModalPanel = nexevoArchModal?.querySelector('.arch-modal-panel');
-  archModalPanel?.addEventListener('scroll', () => {
-    if (nexevoArchModal.classList.contains('is-open')) redrawAllArrows();
-  }, { passive: true });
-
-  window.matchMedia('(max-width: 900px)').addEventListener('change', () => {
-    if (nexevoArchModal.classList.contains('is-open')) {
-      ensureArchFreeLayout();
-      reloadArchArrows();
-      syncArchDrawCanvas();
-    }
-  });
-
-  window.__archExportLayout = () => {
-    if (!archFlowTrack?.classList.contains('is-free-layout')) return null;
-    const trackW = archFlowTrack.clientWidth || 1;
-    const nodes = {};
-    archFlowTrack.querySelectorAll('.arch-flow-node').forEach(node => {
-      const id = archSlotIdForNode(node);
-      if (!id) return;
-      nodes[id] = {
-        left: (node.offsetLeft / trackW) * 100,
-        top: node.offsetTop,
-        width: (node.offsetWidth / trackW) * 100
-      };
-    });
-    syncArchArrowsFromAnchors();
-    return {
-      nodes,
-      arrows: (archArrowCoords || []).map(normalizeArchArrow)
-    };
-  };
-
-</script>
+<script src="js/main.js"></script>
 </body>
 </html>
+
+
