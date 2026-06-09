@@ -100,23 +100,7 @@ document.addEventListener('keydown', e => {
 
 window.addEventListener('resize', syncNavHeight, { passive: true });
 
-// ── FORMULARIO DE CONTACTO ──
-const contactForm = document.getElementById('contactForm');
-contactForm?.addEventListener('submit', e => {
-  e.preventDefault();
-  const nombre   = document.getElementById('cf-name')?.value.trim()    || '';
-  const email    = document.getElementById('cf-email')?.value.trim()   || '';
-  const proyecto = document.getElementById('cf-project')?.value        || 'general';
-  const mensaje  = document.getElementById('cf-msg')?.value.trim()     || '';
-  const subject  = encodeURIComponent(`[Dito Labs] Contacto — ${proyecto}`);
-  const body     = encodeURIComponent(
-    `Nombre: ${nombre}\nCorreo: ${email}\nProyecto de interés: ${proyecto}\n\nMensaje:\n${mensaje}`
-  );
-  window.location.href = `mailto:contacto@ditolabs.cl?subject=${subject}&body=${body}`;
-  contactForm.reset();
-  const btn = contactForm.querySelector('.contact-submit-btn');
-  if (btn) { btn.textContent = '¡Listo! Abriendo tu correo…'; setTimeout(() => { btn.textContent = 'Enviar mensaje →'; }, 3500); }
-});
+// ── FORMULARIO DE CONTACTO (Google Forms iframe — sin lógica JS necesaria) ──
 
 // ── FLOW TOOLTIPS (tap en móvil) ──
 const flowImgs = document.querySelectorAll('.flow-card-img');
