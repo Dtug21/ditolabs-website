@@ -552,18 +552,6 @@
       gap: 8px 16px;
     }
     .arch-modal-head-text { flex: 1 1 200px; min-width: 0; }
-    .arch-draw-tools { display: flex; gap: 8px; flex-shrink: 0; }
-    .arch-draw-btn {
-      font-size: .75rem; font-weight: 600;
-      padding: 6px 12px; border-radius: 8px;
-      border: 1px solid var(--border); background: var(--white);
-      color: var(--text); cursor: pointer; font-family: inherit;
-      transition: background .2s, color .2s, border-color .2s;
-    }
-    .arch-draw-btn:hover { border-color: rgba(14, 165, 233, 0.35); color: var(--nexevo); }
-    .arch-draw-btn.is-active {
-      background: var(--nexevo); color: #fff; border-color: var(--nexevo);
-    }
     .arch-modal-head::after {
       content: '';
       position: absolute;
@@ -594,7 +582,7 @@
       background-size: 32px 32px, 32px 32px, 100% 100%;
       border: none;
       border-radius: 0;
-      padding: 20px 32px 24px;
+      padding: 20px 32px 80px;
     }
     .arch-flow-track {
       display: grid;
@@ -605,6 +593,51 @@
       max-width: 1200px;
       margin: 0 auto;
     }
+    .arch-flow-track.is-free-layout {
+      display: block;
+      position: relative;
+    }
+    .arch-flow-track.is-free-layout .arch-flow-node {
+      position: absolute;
+      margin: 0;
+      box-sizing: border-box;
+      z-index: 1;
+      touch-action: none;
+    }
+    .arch-flow-track.is-free-layout .arch-flow-node.is-dragging {
+      z-index: 12;
+      opacity: 0.94;
+    }
+    .arch-flow-track.is-free-layout .arch-flow-node-head,
+    .arch-flow-track.is-free-layout .arch-flow-slot {
+      cursor: grab;
+    }
+    .arch-flow-track.is-free-layout .arch-flow-node.is-dragging .arch-flow-node-head,
+    .arch-flow-track.is-free-layout .arch-flow-node.is-dragging .arch-flow-slot {
+      cursor: grabbing;
+    }
+    .arch-flow-track.is-free-layout .arch-flow-node-head--over-pair {
+      position: static;
+      width: auto;
+      margin-bottom: 12px;
+      justify-content: flex-start;
+    }
+    .arch-flow-track.is-free-layout .arch-flow-node--pair-lead .arch-flow-slot,
+    .arch-flow-track.is-free-layout .arch-flow-node--pair-follow .arch-flow-slot {
+      margin-top: 0;
+    }
+    .arch-flow-track.is-free-layout .arch-flow-slot img,
+    .arch-flow-track.is-free-layout .arch-flow-slot video {
+      -webkit-user-drag: none;
+      user-select: none;
+      pointer-events: none;
+    }
+    .arch-flow-hint {
+      margin: 0 0 10px;
+      font-size: .72rem;
+      color: var(--muted);
+      text-align: center;
+    }
     .arch-flow-node {
       display: flex;
       flex-direction: column;
@@ -613,12 +646,41 @@
       display: flex; align-items: center; gap: 10px;
       margin-bottom: 12px;
     }
-    .arch-step-num {
-      width: 36px; height: 36px; border-radius: 10px;
-      background: rgba(14, 165, 233, 0.14); color: var(--nexevo);
-      border: 1px solid rgba(14, 165, 233, 0.24);
-      display: flex; align-items: center; justify-content: center;
-      font-size: .75rem; font-weight: 800; flex-shrink: 0;
+    .arch-flow-node--pair-lead {
+      position: relative;
+    }
+    .arch-flow-node-head--over-pair {
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 2;
+      width: calc(200% + 16px);
+      margin-bottom: 0;
+      justify-content: center;
+    }
+    .arch-flow-node--pair-follow .arch-flow-node-head {
+      visibility: hidden;
+      height: 0;
+      margin: 0;
+      overflow: hidden;
+    }
+    .arch-flow-node--pair-lead .arch-flow-slot,
+    .arch-flow-node--pair-follow .arch-flow-slot {
+      margin-top: 48px;
+    }
+    .arch-flow-node--pair-row-align {
+      align-self: center;
+    }
+    .arch-flow-node--col-3 {
+      grid-column: 3;
+    }
+    .arch-flow-node--col-3 .arch-flow-node-head {
+      display: none;
+    }
+    .arch-flow-node--center {
+      grid-column: 1 / -1;
+      justify-self: center;
+      width: min(375px, 100%);
     }
     .arch-step-label {
       font-size: .8rem;
@@ -652,6 +714,17 @@
       border-radius: 10px;
       box-shadow: 0 6px 20px rgba(11, 110, 132, 0.1);
     }
+    .arch-flow-slot--tall {
+      align-items: flex-start;
+      overflow: visible;
+    }
+    .arch-flow-slot--tall img {
+      width: 100%;
+      max-width: min(88%, 300px);
+      height: auto;
+      max-height: none;
+      object-fit: contain;
+    }
     .arch-flow-slot--half-top .arch-flow-half-frame,
     .arch-flow-slot--half .arch-flow-half-frame {
       overflow: hidden;
@@ -674,39 +747,15 @@
     .arch-flow-slot--half .arch-flow-half-frame img {
       transform: translateY(-50%);
     }
-    .arch-flow-svg {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 3;
-      overflow: visible;
-    }
-    .arch-flow-path {
-      fill: none;
-      stroke: var(--nexevo);
-      stroke-width: 2.5;
-      stroke-linecap: round;
-      opacity: 0.9;
-    }
-    .arch-flow-dot {
-      fill: var(--nexevo);
-      opacity: 0.9;
-    }
     .arch-draw-canvas {
       position: absolute;
       inset: 0;
       z-index: 10;
       pointer-events: none;
     }
-    .arch-flow-stage.is-drawing .arch-draw-canvas {
+    .arch-flow-stage.is-arrow-edit .arch-draw-canvas {
       pointer-events: auto;
-      cursor: crosshair;
-    }
-    .arch-flow-stage.is-drawing .arch-flow-track,
-    .arch-flow-stage.is-drawing .arch-flow-svg {
-      pointer-events: none;
+      cursor: default;
     }
     .arch-modal-foot {
       margin: 0;
@@ -730,8 +779,36 @@
       .arch-modal-head { padding: 12px 60px 12px 16px; }
       .arch-modal-close { right: 14px; }
       .arch-flow-track { grid-template-columns: 1fr; gap: 18px; }
+      .arch-flow-node-head--over-pair {
+        position: static;
+        width: auto;
+        margin-bottom: 12px;
+        justify-content: flex-start;
+      }
+      .arch-flow-node--pair-follow .arch-flow-node-head {
+        visibility: visible;
+        height: auto;
+        overflow: visible;
+      }
+      .arch-flow-node--pair-lead .arch-flow-slot,
+      .arch-flow-node--pair-follow .arch-flow-slot {
+        margin-top: 0;
+      }
+      .arch-flow-node--pair-row-align {
+        align-self: auto;
+      }
+      .arch-flow-node--col-3 {
+        grid-column: auto;
+      }
+      .arch-flow-node--center {
+        grid-column: auto;
+        justify-self: stretch;
+        width: auto;
+      }
       .arch-flow-stage { padding: 20px 16px 8px; }
-      .arch-flow-svg { display: none; }
+      .arch-flow-slot--tall img {
+        max-width: min(92%, 320px);
+      }
       .arch-flow-slot img,
       .arch-flow-slot video { max-width: min(78%, 300px); }
       .arch-modal-foot { padding: 16px 16px 24px; }
@@ -1079,148 +1156,110 @@
         <h2 class="arch-modal-title" id="nexevoArchTitle">Flujo de la aplicación</h2>
         <p class="arch-modal-lead">Recorrido del pipeline clínico asistido por IA — desde la captura en turno hasta la telemetría de gestión. Alineado a normativa chilena (D.S. N° 41 y MINSAL).</p>
       </div>
-      <div class="arch-draw-tools">
-        <button type="button" class="arch-draw-btn" id="archDrawToggle" aria-pressed="false">✏️ Dibujar</button>
-        <button type="button" class="arch-draw-btn" id="archDrawClear" hidden>Limpiar</button>
-      </div>
     </header>
     <div class="arch-flow-stage" id="nexevoAppFlow">
-      <svg class="arch-flow-svg" id="archFlowSvg" aria-hidden="true">
-        <defs>
-          <marker id="archArrowHead" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto">
-            <path d="M0,0 L8,4 L0,8 Z" fill="var(--nexevo)"/>
-          </marker>
-        </defs>
-        <circle id="archLink0203Dot" class="arch-flow-dot" r="4"/>
-        <path id="archLink0203" class="arch-flow-path" marker-end="url(#archArrowHead)"/>
-      </svg>
       <canvas class="arch-draw-canvas" id="archDrawCanvas" aria-hidden="true"></canvas>
+      <p class="arch-flow-hint" id="archFlowHint">Arrastra los recuadros para ubicarlos. Arrastra los puntos de las flechas (inicio, curva, fin) para ajustarlas.</p>
       <ol class="arch-flow-track">
         <li class="arch-flow-node">
           <div class="arch-flow-node-head">
-            <span class="arch-step-num">01</span>
+            <span class="arch-step-label">Pantalla Inicio NexEvo</span>
           </div>
-          <div class="arch-flow-slot">
+          <div class="arch-flow-slot" data-slot="splash">
             <img src="img/nexevo-splash.png" alt="NexEvo — pantalla de inicio">
           </div>
         </li>
         <li class="arch-flow-node">
           <div class="arch-flow-node-head">
-            <span class="arch-step-num">02</span>
             <span class="arch-step-label">Pantalla principal NexEvo.</span>
           </div>
-          <div class="arch-flow-slot">
+          <div class="arch-flow-slot" data-slot="camas">
             <img src="img/nexevo-camas.png" alt="NexEvo — listado de camas y notas clínicas">
           </div>
         </li>
         <li class="arch-flow-node">
           <div class="arch-flow-node-head">
-            <span class="arch-step-num">03</span>
+            <span class="arch-step-label">Ayuda en la valoración clínica</span>
           </div>
-          <div class="arch-flow-slot">
+          <div class="arch-flow-slot" data-slot="asistente">
             <img src="img/nexevo-asistente-valoracion.png" alt="NexEvo — asistente de valoración clínica">
           </div>
         </li>
         <li class="arch-flow-node">
           <div class="arch-flow-node-head">
-            <span class="arch-step-num">04</span>
+            <span class="arch-step-label">Pacientes con Notas activas</span>
           </div>
-          <div class="arch-flow-slot">
+          <div class="arch-flow-slot" data-slot="resumen-turno">
             <img src="img/nexevo-resumen-turno.png" alt="NexEvo — resumen de turno con pacientes activos">
           </div>
         </li>
         <li class="arch-flow-node">
           <div class="arch-flow-node-head">
-            <span class="arch-step-num">05</span>
+            <span class="arch-step-label">Configuraciones del sistema</span>
           </div>
-          <div class="arch-flow-slot">
+          <div class="arch-flow-slot" data-slot="ajustes">
             <img src="img/nexevo-ajustes.png" alt="NexEvo — ajustes y plantillas clínicas">
           </div>
         </li>
         <li class="arch-flow-node">
           <div class="arch-flow-node-head">
-            <span class="arch-step-num">06</span>
+            <span class="arch-step-label">Nota de voz rápida</span>
           </div>
-          <div class="arch-flow-slot">
+          <div class="arch-flow-slot" data-slot="nota-voz">
             <img src="img/nexevo-escuchando-nota.png" alt="NexEvo — modo capacitación escuchando nota clínica">
           </div>
         </li>
-        <li class="arch-flow-node">
-          <div class="arch-flow-node-head">
-            <span class="arch-step-num">07</span>
+        <li class="arch-flow-node arch-flow-node--pair-lead">
+          <div class="arch-flow-node-head arch-flow-node-head--over-pair">
+            <span class="arch-step-label">Centro Inteligente de notas turno</span>
           </div>
-          <div class="arch-flow-slot">
+          <div class="arch-flow-slot" data-slot="trayectoria">
             <img src="img/nexevo-trayectoria.png" alt="NexEvo — trayectoria del turno y generar evolución">
           </div>
         </li>
-        <li class="arch-flow-node">
-          <div class="arch-flow-node-head">
-            <span class="arch-step-num">08</span>
-          </div>
-          <div class="arch-flow-slot">
+        <li class="arch-flow-node arch-flow-node--pair-follow">
+          <div class="arch-flow-slot" data-slot="cama-22b">
             <img src="img/nexevo-cama-22b.png" alt="NexEvo — trayectoria del turno Cama 22-B">
           </div>
         </li>
         <li class="arch-flow-node">
           <div class="arch-flow-node-head">
-            <span class="arch-step-num">09</span>
+            <span class="arch-step-label">Centro Inteligente Notas Pendientes</span>
           </div>
-          <div class="arch-flow-slot arch-flow-slot--half-top">
+          <div class="arch-flow-slot arch-flow-slot--half-top" data-slot="notas-pendientes">
             <div class="arch-flow-half-frame">
               <img src="img/nexevo-notas-pendientes.png" alt="NexEvo — notas pendientes con sugerencia de cama">
             </div>
           </div>
         </li>
+        <li class="arch-flow-node arch-flow-node--col-3">
+          <div class="arch-flow-slot arch-flow-slot--half-top" data-slot="estadisticas">
+            <div class="arch-flow-half-frame">
+              <img src="img/nexevo-estadisticas.png" alt="NexEvo — estadísticas e impacto del turno">
+            </div>
+          </div>
+        </li>
         <li class="arch-flow-node">
           <div class="arch-flow-node-head">
-            <span class="arch-step-num">10</span>
+            <span class="arch-step-label">Evolución generada formato SOAPIE</span>
           </div>
-          <div class="arch-flow-slot">
+          <div class="arch-flow-slot" data-slot="evolucion-soapie">
             <img src="img/nexevo-evolucion-systems.png" alt="NexEvo — evolución SYSTEMS Cama 22-B">
           </div>
         </li>
         <li class="arch-flow-node">
           <div class="arch-flow-node-head">
-            <span class="arch-step-num">11</span>
+            <span class="arch-step-label">Evolución generada formato Sistemas</span>
           </div>
-          <div class="arch-flow-slot">
+          <div class="arch-flow-slot" data-slot="evolucion-sistemas">
             <img src="img/nexevo-evolucion.png" alt="NexEvo — evolución MINSAL con borrador CDSS">
           </div>
         </li>
-        <li class="arch-flow-node">
-          <div class="arch-flow-node-head">
-            <span class="arch-step-num">12</span>
-          </div>
-          <div class="arch-flow-slot">
-            <img src="img/nexevo-estadisticas.png" alt="NexEvo — estadísticas e impacto del turno">
-          </div>
-        </li>
-        <li class="arch-flow-node">
-          <div class="arch-flow-node-head">
-            <span class="arch-step-num">13</span>
-          </div>
-          <div class="arch-flow-slot arch-flow-slot--half">
+        <li class="arch-flow-node arch-flow-node--center">
+          <div class="arch-flow-slot arch-flow-slot--half" data-slot="evolucion-guardar">
             <div class="arch-flow-half-frame">
               <img src="img/nexevo-evolucion-guardar.png" alt="NexEvo — evolución MINSAL y guardar en resumen de turno">
             </div>
-          </div>
-        </li>
-        <li class="arch-flow-node">
-          <div class="arch-flow-node-head">
-            <span class="arch-step-num">14</span>
-          </div>
-          <div class="arch-flow-slot arch-flow-slot--half">
-            <div class="arch-flow-half-frame">
-              <img src="img/nexevo-evolucion-systems-guardar.png" alt="NexEvo — evolución SYSTEMS y guardar en resumen de turno">
-            </div>
-          </div>
-        </li>
-        <li class="arch-flow-node">
-          <div class="arch-flow-node-head">
-            <span class="arch-step-num">15</span>
-          </div>
-          <div class="arch-flow-slot">
-            <img src="img/nexevo-estadisticas-sbar.png" alt="NexEvo — eficiencia de turno y resumen traspaso SBAR">
           </div>
         </li>
       </ol>
@@ -1312,146 +1351,573 @@
     document.documentElement.style.setProperty('--nav-height', `${nav.offsetHeight}px`);
   }
 
-  function rectInStage(el, stage) {
-    const er = el.getBoundingClientRect();
-    const sr = stage.getBoundingClientRect();
+  const archFlowStage = document.getElementById('nexevoAppFlow');
+  const archFlowTrack = archFlowStage?.querySelector('.arch-flow-track');
+  const archFlowHint = document.getElementById('archFlowHint');
+  const archDrawCanvas = document.getElementById('archDrawCanvas');
+  const drawCtx = archDrawCanvas?.getContext('2d');
+  const ARCH_FLOW_LAYOUT_KEY = 'nexevo-arch-flow-layout-v2';
+  const ARCH_ARROWS_LAYOUT_KEY = 'nexevo-arch-arrows-v1';
+  const ARCH_LAYOUT_BUILTIN = {"nodes":{"splash":{"left":0,"top":0,"width":32.416666666666664},"camas":{"left":33.75,"top":0,"width":32.416666666666664},"asistente":{"left":67.58333333333333,"top":0,"width":32.416666666666664},"resumen-turno":{"left":0,"top":640,"width":32.416666666666664},"ajustes":{"left":33.75,"top":640,"width":32.416666666666664},"nota-voz":{"left":67.58333333333333,"top":640,"width":32.416666666666664},"trayectoria":{"left":0,"top":1280,"width":32.416666666666664},"cama-22b":{"left":33.75,"top":1280,"width":32.416666666666664},"notas-pendientes":{"left":67.58333333333333,"top":1280,"width":32.416666666666664},"estadisticas":{"left":67.58333333333333,"top":1939,"width":32.416666666666664},"evolucion-soapie":{"left":0,"top":2270,"width":32.416666666666664},"evolucion-sistemas":{"left":33.75,"top":2270,"width":32.416666666666664},"evolucion-guardar":{"left":34.416666666666664,"top":2910,"width":31.25}},"arrows":[{"x1f":0.5840340222167969,"y1f":0.054773061497326206,"cxf":0.6440757189941406,"cyf":0.04959128045157457,"x2f":0.7486186938476562,"y2f":0.07395718675727866},{"x1f":0.575426220703125,"y1f":0.17205696672608436,"cxf":0.6247812500000001,"cyf":0.18437361853832443,"x2f":0.81666259765625,"y2f":0.20125519904931669},{"x1f":0.19774860595703125,"y1f":0.35310204991087346,"cxf":0.12730454833984375,"cyf":0.36009306298276883,"x2f":0.2803276684570312,"y2f":0.37696977124183007},{"x1f":0.7878572436523438,"y1f":0.2812106924019608,"cxf":0.662375,"cyf":0.32716633986928106,"x2f":0.6669781762695313,"y2f":0.3863097927807487}]};
+  let archFlowLayoutReady = false;
+  let archFlowLayoutLocked = false;
+  let archDragState = null;
+  let archArrowCoords = null;
+  let archArrowDragState = null;
+  const ARCH_ARROW_HIT_RADIUS = 14;
+
+  function archFreeLayoutEnabled() {
+    return window.matchMedia('(min-width: 901px)').matches;
+  }
+
+  function archSlotIdForNode(node) {
+    return node?.querySelector('.arch-flow-slot[data-slot]')?.dataset.slot || null;
+  }
+
+  function captureArchNodeLayout() {
+    if (!archFlowTrack) return {};
+    const trackRect = archFlowTrack.getBoundingClientRect();
+    const trackW = trackRect.width || 1;
+    const layout = {};
+    archFlowTrack.querySelectorAll('.arch-flow-node').forEach(node => {
+      const id = archSlotIdForNode(node);
+      if (!id) return;
+      const r = node.getBoundingClientRect();
+      layout[id] = {
+        left: ((r.left - trackRect.left) / trackW) * 100,
+        top: r.top - trackRect.top,
+        width: (r.width / trackW) * 100
+      };
+    });
+    return layout;
+  }
+
+  function applyArchNodeLayout(layout) {
+    if (!archFlowTrack || !layout) return;
+    archFlowTrack.classList.add('is-free-layout');
+    archFlowTrack.querySelectorAll('.arch-flow-node').forEach(node => {
+      const pos = layout[archSlotIdForNode(node)];
+      if (!pos) return;
+      node.style.left = `${pos.left}%`;
+      node.style.top = `${pos.top}px`;
+      node.style.width = `${pos.width}%`;
+    });
+    syncArchTrackMinHeight();
+  }
+
+  function syncArchTrackMinHeight() {
+    if (!archFlowTrack?.classList.contains('is-free-layout')) return;
+    let maxBottom = 0;
+    archFlowTrack.querySelectorAll('.arch-flow-node').forEach(node => {
+      maxBottom = Math.max(maxBottom, node.offsetTop + node.offsetHeight);
+    });
+    archFlowTrack.style.minHeight = `${maxBottom + 32}px`;
+    syncArchDrawCanvas();
+  }
+
+  function saveArchNodeLayout() {
+    if (!archFlowTrack?.classList.contains('is-free-layout')) return;
+    const trackW = archFlowTrack.clientWidth || 1;
+    const layout = {};
+    archFlowTrack.querySelectorAll('.arch-flow-node').forEach(node => {
+      const id = archSlotIdForNode(node);
+      if (!id) return;
+      layout[id] = {
+        left: (node.offsetLeft / trackW) * 100,
+        top: node.offsetTop,
+        width: (node.offsetWidth / trackW) * 100
+      };
+    });
+    try {
+      localStorage.setItem(ARCH_FLOW_LAYOUT_KEY, JSON.stringify(layout));
+    } catch (_) {}
+  }
+
+  function loadArchNodeLayout() {
+    try {
+      const raw = localStorage.getItem(ARCH_FLOW_LAYOUT_KEY);
+      if (raw) return JSON.parse(raw);
+    } catch (_) {}
+    return ARCH_LAYOUT_BUILTIN?.nodes || null;
+  }
+
+  function clearArchFreeLayoutStyles() {
+    if (!archFlowTrack) return;
+    archFlowTrack.classList.remove('is-free-layout');
+    archFlowTrack.style.minHeight = '';
+    archFlowTrack.querySelectorAll('.arch-flow-node').forEach(node => {
+      node.style.left = '';
+      node.style.top = '';
+      node.style.width = '';
+      node.classList.remove('is-dragging');
+    });
+    archFlowLayoutReady = false;
+    archFlowLayoutLocked = false;
+  }
+
+  function lockArchFreeLayout() {
+    if (!archFlowTrack?.classList.contains('is-free-layout') || archFlowLayoutLocked) return;
+    archFlowLayoutLocked = true;
+    archFlowLayoutReady = true;
+    if (!loadArchNodeLayout()) saveArchNodeLayout();
+  }
+
+  function whenArchFlowImagesReady(callback) {
+    const imgs = archFlowTrack?.querySelectorAll('img') || [];
+    let pending = 0;
+    imgs.forEach(img => { if (!img.complete) pending++; });
+    if (!pending) {
+      callback();
+      return;
+    }
+    const done = () => {
+      pending--;
+      if (pending <= 0) callback();
+    };
+    imgs.forEach(img => {
+      if (!img.complete) {
+        img.addEventListener('load', done, { once: true });
+        img.addEventListener('error', done, { once: true });
+      }
+    });
+  }
+
+  function ensureArchFreeLayout() {
+    if (!archFlowTrack) return;
+    if (!archFreeLayoutEnabled()) {
+      clearArchFreeLayoutStyles();
+      archFlowStage?.classList.remove('is-arrow-edit');
+      if (archFlowHint) archFlowHint.hidden = true;
+      return;
+    }
+    if (archFlowHint) archFlowHint.hidden = false;
+    archFlowStage?.classList.add('is-arrow-edit');
+    const saved = loadArchNodeLayout();
+    if (archFlowLayoutLocked) {
+      if (saved) applyArchNodeLayout(saved);
+      syncArchTrackMinHeight();
+      return;
+    }
+    if (saved) {
+      applyArchNodeLayout(saved);
+      archFlowLayoutLocked = true;
+      archFlowLayoutReady = true;
+      syncArchTrackMinHeight();
+      return;
+    }
+    applyArchNodeLayout(captureArchNodeLayout());
+    syncArchTrackMinHeight();
+  }
+
+  function onArchNodePointerDown(e) {
+    if (!archFlowTrack?.classList.contains('is-free-layout') || e.button !== 0) return;
+    if (archArrowDragState) return;
+    const node = e.target.closest('.arch-flow-node');
+    if (!node || !archFlowTrack.contains(node)) return;
+    e.preventDefault();
+    archDragState = {
+      node,
+      pointerId: e.pointerId,
+      startX: e.clientX,
+      startY: e.clientY,
+      origLeft: node.offsetLeft,
+      origTop: node.offsetTop
+    };
+    node.classList.add('is-dragging');
+    node.setPointerCapture(e.pointerId);
+  }
+
+  function onArchNodePointerMove(e) {
+    if (!archDragState || e.pointerId !== archDragState.pointerId) return;
+    const dx = e.clientX - archDragState.startX;
+    const dy = e.clientY - archDragState.startY;
+    archDragState.node.style.left = `${archDragState.origLeft + dx}px`;
+    archDragState.node.style.top = `${archDragState.origTop + dy}px`;
+    syncArchTrackMinHeight();
+  }
+
+  function finishArchNodeDrag(e) {
+    if (!archDragState || e.pointerId !== archDragState.pointerId) return;
+    const { node } = archDragState;
+    node.classList.remove('is-dragging');
+    node.releasePointerCapture(e.pointerId);
+    const trackW = archFlowTrack.clientWidth || 1;
+    node.style.left = `${(node.offsetLeft / trackW) * 100}%`;
+    archDragState = null;
+    saveArchNodeLayout();
+    syncArchDrawCanvas();
+  }
+
+  archFlowTrack?.addEventListener('pointerdown', onArchNodePointerDown);
+  archFlowTrack?.addEventListener('pointermove', onArchNodePointerMove);
+  archFlowTrack?.addEventListener('pointerup', finishArchNodeDrag);
+  archFlowTrack?.addEventListener('pointercancel', finishArchNodeDrag);
+
+  const ARCH_GUIDE_ARROWS = [
+    {
+      from: { slot: 'camas', fx: 0.7763, fy: 0.1873 },
+      curve: { slot: 'camas', fx: 0.9737, fy: 0.1578 },
+      to: { slot: 'asistente', fx: 0.2763, fy: 0.2965 }
+    },
+    {
+      from: { slot: 'camas', fx: 0.748, fy: 0.855 },
+      curve: { trackFx: 0.6331, trackFy: 0.1776 },
+      to: { slotHead: 'nota-voz', fx: 0.5, fy: -0.45 }
+    },
+    {
+      from: { slot: 'resumen-turno', fx: 0.5474, fy: 0.8034 },
+      curve: { slot: 'resumen-turno', fx: 0.3158, fy: 0.8432 },
+      to: { slotHead: 'cama-22b', fx: -0.2222, fy: -0.0946 }
+    },
+    {
+      from: { slot: 'nota-voz', fx: 0.4053, fy: 0.3941 },
+      curve: { trackFx: 0.6732, trackFy: 0.3259 },
+      to: { slot: 'nota-voz', fx: 0.0079, fy: 0.9924 }
+    }
+  ];
+
+  function stageClientWidth() {
+    return archFlowStage?.clientWidth || archFlowStage?.offsetWidth || 0;
+  }
+
+  function flowSlotById(slotId) {
+    if (!archFlowStage || !slotId) return null;
+    return archFlowStage.querySelector(`.arch-flow-slot[data-slot="${slotId}"]`);
+  }
+
+  function flowCellBySlot(slotId) {
+    return flowSlotById(slotId)?.closest('.arch-flow-node') || null;
+  }
+
+  function resolveAnchor(anchor) {
+    if (!anchor || !archFlowStage) return null;
+    const sr = archFlowStage.getBoundingClientRect();
+
+    if (anchor.slot != null) {
+      const slot = flowSlotById(anchor.slot);
+      if (!slot) return null;
+      const r = slot.getBoundingClientRect();
+      return {
+        x: (r.left - sr.left) + anchor.fx * r.width,
+        y: (r.top - sr.top) + anchor.fy * r.height
+      };
+    }
+
+    if (anchor.slotHead != null) {
+      const cell = flowCellBySlot(anchor.slotHead);
+      const target = cell?.querySelector('.arch-flow-node-head') || flowSlotById(anchor.slotHead);
+      if (!target) return null;
+      const r = target.getBoundingClientRect();
+      return {
+        x: (r.left - sr.left) + anchor.fx * r.width,
+        y: (r.top - sr.top) + anchor.fy * r.height
+      };
+    }
+
+    if (anchor.trackFx != null) {
+      const track = archFlowStage.querySelector('.arch-flow-track');
+      if (!track) return null;
+      const r = track.getBoundingClientRect();
+      return {
+        x: (r.left - sr.left) + anchor.trackFx * r.width,
+        y: (r.top - sr.top) + anchor.trackFy * r.height
+      };
+    }
+
+    if (anchor.spx != null) {
+      const w = stageClientWidth();
+      return { x: anchor.spx * w, y: anchor.spy * archFlowStage.offsetHeight };
+    }
+
+    return null;
+  }
+
+  function anchorsToArrow(anchors) {
+    const from = resolveAnchor(anchors.from);
+    const curve = resolveAnchor(anchors.curve);
+    const to = resolveAnchor(anchors.to);
+    if (!from || !curve || !to) return null;
+    return { x1: from.x, y1: from.y, cx: curve.x, cy: curve.y, x2: to.x, y2: to.y };
+  }
+
+  function arrowsFromAnchors() {
+    return ARCH_GUIDE_ARROWS.map(anchorsToArrow).filter(Boolean);
+  }
+
+  function archStagePoint(clientX, clientY) {
+    const sr = archFlowStage.getBoundingClientRect();
+    return { x: clientX - sr.left, y: clientY - sr.top };
+  }
+
+  function archStageSize() {
     return {
-      left: er.left - sr.left,
-      right: er.right - sr.left,
-      top: er.top - sr.top,
-      width: er.width,
-      height: er.height
+      w: stageClientWidth() || 1,
+      h: archFlowStage?.offsetHeight || 1
     };
   }
 
-  function syncArchFlowArrows() {
-    const stage = document.getElementById('nexevoAppFlow');
-    const svg = document.getElementById('archFlowSvg');
-    const path = document.getElementById('archLink0203');
-    const dot = document.getElementById('archLink0203Dot');
-    const nodes = stage?.querySelectorAll('.arch-flow-node');
-    if (!stage || !svg || !path || !dot || !nodes || nodes.length < 3) return;
-    if (window.innerWidth <= 900) {
-      path.setAttribute('d', '');
-      dot.setAttribute('cx', '-100');
-      return;
-    }
-
-    const fromSlot = nodes[1].querySelector('.arch-flow-slot');
-    const toSlot = nodes[2].querySelector('.arch-flow-slot');
-    if (!fromSlot || !toSlot) return;
-
-    const from = rectInStage(fromSlot, stage);
-    const to = rectInStage(toSlot, stage);
-    const w = stage.offsetWidth;
-    const h = stage.offsetHeight;
-
-    const x1 = from.right - 4;
-    const y1 = from.top + from.height * 0.25;
-    const x2 = to.left + 4;
-    const y2 = to.top + to.height * 0.11;
-    const cx = (x1 + x2) / 2;
-
-    svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
-    path.setAttribute('d', `M ${x1} ${y1} Q ${cx} ${y1} ${x2} ${y2}`);
-    dot.setAttribute('cx', x1);
-    dot.setAttribute('cy', y1);
+  function normalizeArchArrow(arrow) {
+    const { w, h } = archStageSize();
+    return {
+      x1f: arrow.x1 / w, y1f: arrow.y1 / h,
+      cxf: arrow.cx / w, cyf: arrow.cy / h,
+      x2f: arrow.x2 / w, y2f: arrow.y2 / h
+    };
   }
 
-  const archFlowStage = document.getElementById('nexevoAppFlow');
-  const archDrawCanvas = document.getElementById('archDrawCanvas');
-  const archDrawToggle = document.getElementById('archDrawToggle');
-  const archDrawClear = document.getElementById('archDrawClear');
-  const drawCtx = archDrawCanvas?.getContext('2d');
-  let drawStroke = false;
-  let drawMode = false;
-  let drawLastX = 0;
-  let drawLastY = 0;
+  function denormalizeArchArrow(norm) {
+    const { w, h } = archStageSize();
+    return {
+      x1: norm.x1f * w, y1: norm.y1f * h,
+      cx: norm.cxf * w, cy: norm.cyf * h,
+      x2: norm.x2f * w, y2: norm.y2f * h
+    };
+  }
+
+  function saveArchArrows() {
+    if (!archArrowCoords?.length) return;
+    try {
+      localStorage.setItem(
+        ARCH_ARROWS_LAYOUT_KEY,
+        JSON.stringify(archArrowCoords.map(normalizeArchArrow))
+      );
+    } catch (_) {}
+  }
+
+  function loadArchArrows() {
+    try {
+      const raw = localStorage.getItem(ARCH_ARROWS_LAYOUT_KEY);
+      if (raw) return JSON.parse(raw);
+    } catch (_) {}
+    return ARCH_LAYOUT_BUILTIN?.arrows || null;
+  }
+
+  function syncArchArrowsFromStorage() {
+    const saved = loadArchArrows();
+    if (saved?.length) {
+      archArrowCoords = saved.map(denormalizeArchArrow);
+      return;
+    }
+    if (ARCH_LAYOUT_BUILTIN?.arrows?.length) {
+      archArrowCoords = ARCH_LAYOUT_BUILTIN.arrows.map(denormalizeArchArrow);
+      return;
+    }
+    if (!archArrowCoords?.length) {
+      archArrowCoords = arrowsFromAnchors();
+    }
+  }
+
+  function initArchArrowsAfterLayout() {
+    syncArchArrowsFromStorage();
+  }
+
+  function getArchArrows() {
+    if (!archArrowCoords) syncArchArrowsFromStorage();
+    return archArrowCoords || [];
+  }
+
+  function archArrowDist(ax, ay, bx, by) {
+    return Math.hypot(ax - bx, ay - by);
+  }
+
+  function hitTestArchArrow(px, py) {
+    const arrows = getArchArrows();
+    for (let i = arrows.length - 1; i >= 0; i--) {
+      const a = arrows[i];
+      if (archArrowDist(px, py, a.x2, a.y2) <= ARCH_ARROW_HIT_RADIUS) return { index: i, handle: 'to' };
+      if (archArrowDist(px, py, a.cx, a.cy) <= ARCH_ARROW_HIT_RADIUS) return { index: i, handle: 'curve' };
+      if (archArrowDist(px, py, a.x1, a.y1) <= ARCH_ARROW_HIT_RADIUS) return { index: i, handle: 'from' };
+    }
+    return null;
+  }
+
+  function setArchArrowPoint(index, handle, x, y) {
+    const arrows = getArchArrows();
+    const a = arrows[index];
+    if (!a) return;
+    if (handle === 'from') { a.x1 = x; a.y1 = y; }
+    else if (handle === 'curve') { a.cx = x; a.cy = y; }
+    else if (handle === 'to') { a.x2 = x; a.y2 = y; }
+  }
+
+  function onArchCanvasPointerDown(e) {
+    if (!archFlowStage?.classList.contains('is-arrow-edit') || e.button !== 0) return;
+    const pt = archStagePoint(e.clientX, e.clientY);
+    const hit = hitTestArchArrow(pt.x, pt.y);
+    if (!hit) {
+      archDrawCanvas.style.pointerEvents = 'none';
+      const below = document.elementFromPoint(e.clientX, e.clientY);
+      archDrawCanvas.style.pointerEvents = 'auto';
+      below?.dispatchEvent(new PointerEvent('pointerdown', {
+        bubbles: true,
+        clientX: e.clientX,
+        clientY: e.clientY,
+        button: e.button,
+        pointerId: e.pointerId,
+        pointerType: e.pointerType,
+        isPrimary: e.isPrimary
+      }));
+      return;
+    }
+    e.preventDefault();
+    archArrowDragState = {
+      index: hit.index,
+      handle: hit.handle,
+      pointerId: e.pointerId
+    };
+    archDrawCanvas.setPointerCapture(e.pointerId);
+    archDrawCanvas.style.cursor = 'grabbing';
+  }
+
+  function onArchCanvasPointerMove(e) {
+    if (!archArrowDragState || e.pointerId !== archArrowDragState.pointerId) return;
+    const pt = archStagePoint(e.clientX, e.clientY);
+    setArchArrowPoint(archArrowDragState.index, archArrowDragState.handle, pt.x, pt.y);
+    redrawAllArrows();
+  }
+
+  function finishArchCanvasDrag(e) {
+    if (!archArrowDragState || e.pointerId !== archArrowDragState.pointerId) return;
+    archDrawCanvas.releasePointerCapture(e.pointerId);
+    archDrawCanvas.style.cursor = 'default';
+    archArrowDragState = null;
+    saveArchArrows();
+    redrawAllArrows();
+  }
+
+  archDrawCanvas?.addEventListener('pointerdown', onArchCanvasPointerDown);
+  archDrawCanvas?.addEventListener('pointermove', onArchCanvasPointerMove);
+  archDrawCanvas?.addEventListener('pointerup', finishArchCanvasDrag);
+  archDrawCanvas?.addEventListener('pointercancel', finishArchCanvasDrag);
+
+  function resolvedGuideArrows() {
+    return getArchArrows();
+  }
 
   function syncArchDrawCanvas() {
     if (!archDrawCanvas || !archFlowStage || !drawCtx) return;
-    const w = archFlowStage.offsetWidth;
+    const w = stageClientWidth();
     const h = archFlowStage.offsetHeight;
-    if (archDrawCanvas.width === w && archDrawCanvas.height === h) return;
-    const snapshot = archDrawCanvas.width ? archDrawCanvas.toDataURL() : '';
-    archDrawCanvas.width = w;
-    archDrawCanvas.height = h;
-    drawCtx.lineCap = 'round';
-    drawCtx.lineJoin = 'round';
-    drawCtx.lineWidth = 2.5;
-    drawCtx.strokeStyle = '#0EA5E9';
-    if (snapshot) {
-      const img = new Image();
-      img.onload = () => drawCtx.drawImage(img, 0, 0, w, h);
-      img.src = snapshot;
+    if (!w || !h) return;
+    if (archDrawCanvas.width !== w || archDrawCanvas.height !== h) {
+      archDrawCanvas.width = w;
+      archDrawCanvas.height = h;
+      drawCtx.lineCap = 'round';
+      drawCtx.lineJoin = 'round';
+      drawCtx.lineWidth = 3;
+      drawCtx.strokeStyle = '#0EA5E9';
+    }
+    redrawAllArrows();
+  }
+
+  function arrowPath(x1, y1, x2, y2, cx, cy) {
+    drawCtx.beginPath();
+    drawCtx.moveTo(x1, y1);
+    if (cx != null && cy != null) {
+      drawCtx.quadraticCurveTo(cx, cy, x2, y2);
+    } else {
+      drawCtx.lineTo(x2, y2);
     }
   }
 
-  function setArchDrawMode(on) {
-    drawMode = on;
-    archFlowStage?.classList.toggle('is-drawing', on);
-    archDrawToggle?.classList.toggle('is-active', on);
-    archDrawToggle?.setAttribute('aria-pressed', on ? 'true' : 'false');
-    if (archDrawClear) archDrawClear.hidden = !on;
+  function arrowEndAngle(x1, y1, x2, y2, cx, cy) {
+    if (cx != null && cy != null) return Math.atan2(y2 - cy, x2 - cx);
+    return Math.atan2(y2 - y1, x2 - x1);
   }
 
-  function drawPos(e) {
-    const rect = archDrawCanvas.getBoundingClientRect();
-    const x = (e.touches ? e.touches[0].clientX : e.clientX) - rect.left;
-    const y = (e.touches ? e.touches[0].clientY : e.clientY) - rect.top;
-    return { x, y };
-  }
-
-  function drawStart(e) {
-    if (!drawMode || !drawCtx) return;
-    e.preventDefault();
-    drawStroke = true;
-    const p = drawPos(e);
-    drawLastX = p.x;
-    drawLastY = p.y;
-  }
-
-  function drawMove(e) {
-    if (!drawStroke || !drawCtx) return;
-    e.preventDefault();
-    const p = drawPos(e);
-    drawCtx.beginPath();
-    drawCtx.moveTo(drawLastX, drawLastY);
-    drawCtx.lineTo(p.x, p.y);
+  function drawArrowShape(x1, y1, x2, y2, alpha = 1, label = null, cx = null, cy = null) {
+    const curved = cx != null && cy != null;
+    const angle = arrowEndAngle(x1, y1, x2, y2, cx, cy);
+    const head = 13;
+    drawCtx.globalAlpha = alpha;
+    drawCtx.strokeStyle = '#fff';
+    drawCtx.lineWidth = 5.5;
+    arrowPath(x1, y1, x2, y2, cx, cy);
     drawCtx.stroke();
-    drawLastX = p.x;
-    drawLastY = p.y;
+    drawCtx.strokeStyle = '#0EA5E9';
+    drawCtx.lineWidth = 3;
+    arrowPath(x1, y1, x2, y2, cx, cy);
+    drawCtx.stroke();
+    drawCtx.fillStyle = '#0EA5E9';
+    drawCtx.beginPath();
+    drawCtx.moveTo(x2, y2);
+    drawCtx.lineTo(x2 - head * Math.cos(angle - Math.PI / 7), y2 - head * Math.sin(angle - Math.PI / 7));
+    drawCtx.lineTo(x2 - head * Math.cos(angle + Math.PI / 7), y2 - head * Math.sin(angle + Math.PI / 7));
+    drawCtx.closePath();
+    drawCtx.fill();
+    drawCtx.beginPath();
+    drawCtx.arc(x1, y1, 5, 0, Math.PI * 2);
+    drawCtx.fill();
+    if (archFlowStage?.classList.contains('is-arrow-edit')) {
+      drawCtx.fillStyle = '#fff';
+      drawCtx.strokeStyle = '#0EA5E9';
+      drawCtx.lineWidth = 2;
+      [[x1, y1], [cx, cy], [x2, y2]].forEach(([hx, hy]) => {
+        if (hx == null || hy == null) return;
+        drawCtx.beginPath();
+        drawCtx.arc(hx, hy, 7, 0, Math.PI * 2);
+        drawCtx.fill();
+        drawCtx.stroke();
+      });
+      drawCtx.fillStyle = '#0EA5E9';
+    }
+    if (label != null) {
+      const mx = curved ? 0.25 * x1 + 0.5 * cx + 0.25 * x2 : (x1 + x2) / 2;
+      const my = (curved ? 0.25 * y1 + 0.5 * cy + 0.25 * y2 : (y1 + y2) / 2) - 10;
+      drawCtx.font = 'bold 11px Plus Jakarta Sans, sans-serif';
+      drawCtx.textAlign = 'center';
+      drawCtx.fillStyle = '#fff';
+      drawCtx.fillText(String(label), mx + 1, my + 1);
+      drawCtx.fillStyle = '#0891B2';
+      drawCtx.fillText(String(label), mx, my);
+    }
+    drawCtx.globalAlpha = 1;
   }
 
-  function drawEnd() {
-    drawStroke = false;
-  }
-
-  archDrawToggle?.addEventListener('click', () => setArchDrawMode(!drawMode));
-  archDrawClear?.addEventListener('click', () => {
+  function redrawAllArrows() {
     if (!drawCtx || !archDrawCanvas) return;
     drawCtx.clearRect(0, 0, archDrawCanvas.width, archDrawCanvas.height);
-  });
-  archDrawCanvas?.addEventListener('mousedown', drawStart);
-  archDrawCanvas?.addEventListener('mousemove', drawMove);
-  archDrawCanvas?.addEventListener('mouseup', drawEnd);
-  archDrawCanvas?.addEventListener('mouseleave', drawEnd);
-  archDrawCanvas?.addEventListener('touchstart', drawStart, { passive: false });
-  archDrawCanvas?.addEventListener('touchmove', drawMove, { passive: false });
-  archDrawCanvas?.addEventListener('touchend', drawEnd);
+    resolvedGuideArrows().forEach((a, i) => drawArrowShape(a.x1, a.y1, a.x2, a.y2, 1, i + 1, a.cx, a.cy));
+  }
 
   function openNexevoArch() {
     nav.classList.add('solid');
     syncArchModalOffset();
     requestAnimationFrame(() => {
       syncArchModalOffset();
-      syncArchFlowArrows();
+      ensureArchFreeLayout();
+      initArchArrowsAfterLayout();
       syncArchDrawCanvas();
       requestAnimationFrame(() => {
         syncArchModalOffset();
-        syncArchFlowArrows();
+        ensureArchFreeLayout();
+        initArchArrowsAfterLayout();
         syncArchDrawCanvas();
       });
+    });
+    whenArchFlowImagesReady(() => {
+      if (!loadArchNodeLayout() && !archFlowLayoutLocked) {
+        applyArchNodeLayout(captureArchNodeLayout());
+      } else if (loadArchNodeLayout()) {
+        applyArchNodeLayout(loadArchNodeLayout());
+        archFlowLayoutLocked = true;
+        archFlowLayoutReady = true;
+      }
+      lockArchFreeLayout();
+      syncArchTrackMinHeight();
+      initArchArrowsAfterLayout();
+      syncArchDrawCanvas();
+    });
+    archFlowStage?.querySelectorAll('img').forEach(img => {
+      if (!img.complete) {
+        img.addEventListener('load', () => {
+          if (!loadArchNodeLayout() && !archFlowLayoutLocked) {
+            applyArchNodeLayout(captureArchNodeLayout());
+            syncArchTrackMinHeight();
+          }
+          syncArchDrawCanvas();
+        }, { once: true });
+      }
     });
     nexevoArchModal.classList.add('is-open');
     nexevoArchModal.setAttribute('aria-hidden', 'false');
@@ -1460,7 +1926,8 @@
   }
 
   function closeNexevoArch() {
-    setArchDrawMode(false);
+    saveArchNodeLayout();
+    saveArchArrows();
     nexevoArchModal.classList.remove('is-open');
     nexevoArchModal.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
@@ -1468,25 +1935,73 @@
     nexevoArchOpen.focus();
   }
 
+  window.addEventListener('beforeunload', () => {
+    if (nexevoArchModal?.classList.contains('is-open')) {
+      saveArchNodeLayout();
+      saveArchArrows();
+    }
+  });
+
   nexevoArchOpen.addEventListener('click', openNexevoArch);
   nexevoArchModal.querySelectorAll('[data-arch-close]').forEach(el => {
     el.addEventListener('click', closeNexevoArch);
   });
   document.addEventListener('keydown', e => {
-    if (e.key !== 'Escape' || !nexevoArchModal.classList.contains('is-open')) return;
-    if (drawMode) { setArchDrawMode(false); return; }
-    closeNexevoArch();
+    if (e.key === 'Escape' && nexevoArchModal.classList.contains('is-open')) closeNexevoArch();
   });
   window.addEventListener('resize', () => {
     if (nexevoArchModal.classList.contains('is-open')) {
       syncArchModalOffset();
-      syncArchFlowArrows();
+      ensureArchFreeLayout();
+      if (loadArchArrows()?.length) {
+        syncArchArrowsFromStorage();
+      }
       syncArchDrawCanvas();
     }
   });
-  nexevoArchModal.querySelector('.arch-modal-panel')?.addEventListener('scroll', () => {
-    if (nexevoArchModal.classList.contains('is-open')) syncArchFlowArrows();
+
+  if (archFlowStage && typeof ResizeObserver !== 'undefined') {
+    new ResizeObserver(() => {
+      if (nexevoArchModal.classList.contains('is-open')) syncArchDrawCanvas();
+    }).observe(archFlowStage);
+    const archTrack = archFlowStage.querySelector('.arch-flow-track');
+    if (archTrack) {
+      new ResizeObserver(() => {
+        if (nexevoArchModal.classList.contains('is-open')) syncArchDrawCanvas();
+      }).observe(archTrack);
+    }
+  }
+
+  const archModalPanel = nexevoArchModal?.querySelector('.arch-modal-panel');
+  archModalPanel?.addEventListener('scroll', () => {
+    if (nexevoArchModal.classList.contains('is-open')) redrawAllArrows();
   }, { passive: true });
+
+  window.matchMedia('(max-width: 900px)').addEventListener('change', () => {
+    if (nexevoArchModal.classList.contains('is-open')) {
+      ensureArchFreeLayout();
+      syncArchDrawCanvas();
+    }
+  });
+
+  window.__archExportLayout = () => ({
+    nodes: (() => {
+      if (!archFlowTrack?.classList.contains('is-free-layout')) return null;
+      const trackW = archFlowTrack.clientWidth || 1;
+      const layout = {};
+      archFlowTrack.querySelectorAll('.arch-flow-node').forEach(node => {
+        const id = archSlotIdForNode(node);
+        if (!id) return;
+        layout[id] = {
+          left: (node.offsetLeft / trackW) * 100,
+          top: node.offsetTop,
+          width: (node.offsetWidth / trackW) * 100
+        };
+      });
+      return layout;
+    })(),
+    arrows: getArchArrows().map(normalizeArchArrow)
+  });
 </script>
 </body>
 </html>
