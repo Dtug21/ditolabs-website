@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Política de Privacidad — NexEvo · Dito Labs</title>
+  <meta name="description" content="Política de Privacidad y Protección de Datos de NexEvo, aplicación desarrollada por Dito Labs SpA conforme a las Leyes 19.628 y 20.584 de Chile.">
+  <meta name="robots" content="index, follow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="icon" type="image/png" href="assets/favicon-32.png" sizes="32x32">
+  <link rel="icon" type="image/png" href="assets/favicon-16.png" sizes="16x16">
+</head>
+<body class="legal-body">
+
+<nav id="nav" class="solid">
+  <div class="container nav-inner">
+    <div class="nav-start">
+      <a href="index.html" class="logo">
+        <span class="logo-mark">D</span>
+        <span>Dito Labs</span>
+      </a>
+    </div>
+    <ul class="nav-links">
+      <li><a href="index.html">← Volver al sitio</a></li>
+    </ul>
+  </div>
+</nav>
+
+<main class="legal-main">
+  <div class="container legal-container">
+    <header class="legal-header">
+      <span class="s-tag">NexEvo · Documento legal</span>
+      <h1 class="legal-title">Política de Privacidad y Protección de Datos</h1>
+      <p class="legal-meta">Última actualización: 02 de junio de 2026 · Dito Labs SpA · Chile</p>
+    </header>
+
+    <div class="legal-summary">
+      <strong>🔒 En resumen, antes de leer todo:</strong>
+      <p>NexEvo no tiene base de datos de pacientes. No sabe quiénes son tus pacientes. Toda la información clínica que ingresas vive cifrada en tu teléfono y se borra automáticamente al cerrar el turno. Nunca la vemos ni la almacenamos.</p>
+    </div>
+
+    <section class="legal-section">
+      <h2>1. Quiénes somos y marco normativo</h2>
+      <p>NexEvo es una aplicación móvil desarrollada por Dito Labs SpA, sociedad legalmente constituida en la República de Chile. Esta Política de Privacidad aplica al uso de la aplicación NexEvo en dispositivos iOS y Android, y ha sido redactada en cumplimiento de:</p>
+      <ul>
+        <li>Ley N° 19.628 sobre Protección de la Vida Privada.</li>
+        <li>Ley N° 20.584 sobre Derechos y Deberes en Atención en Salud.</li>
+        <li>Decreto Supremo N° 41 del Ministerio de Salud (trazabilidad de registros clínicos).</li>
+      </ul>
+    </section>
+
+    <section class="legal-section">
+      <h2>2. Cifrado local y naturaleza efímera de los datos</h2>
+      <p>NexEvo ha sido diseñada bajo el principio de <strong>Privacidad por Diseño</strong>. La aplicación no utiliza bases de datos centralizadas ni servidores en la nube para el almacenamiento de información de pacientes. Toda la información ingresada (notas, textos clínicos y métricas del turno) se cifra con el estándar <strong>AES-GCM 256 bits</strong> mediante una llave maestra única generada en tu dispositivo y almacenada en el almacenamiento seguro del sistema operativo (SecureStore / Keychain). Dito Labs SpA no tiene acceso técnico a esa llave ni a los datos que protege.</p>
+    </section>
+
+    <section class="legal-section">
+      <h2>3. Purga automática (14 horas)</h2>
+      <p>Para garantizar el cumplimiento normativo en materia de protección de datos de salud, NexEvo integra un sistema de purga automática. Toda la información clínica de la sesión se elimina de forma permanente e irrecuperable del dispositivo en cualquiera de estos eventos:</p>
+      <ul>
+        <li>Al cerrar voluntariamente el turno desde la pantalla de Fin de Turno.</li>
+        <li>Transcurridas 14 horas desde el inicio de la sesión activa.</li>
+        <li>Al eliminar la cuenta desde Ajustes → Eliminar cuenta (destruye también la llave de cifrado).</li>
+      </ul>
+      <p>Por diseño, no existen copias de respaldo de los datos clínicos en ningún servidor. Este proceso es irreversible.</p>
+    </section>
+
+    <section class="legal-section">
+      <h2>4. Anonimización antes del procesamiento con Inteligencia Artificial</h2>
+      <p>Para generar evoluciones clínicas estructuradas (SOAPIE, SBAR) y reportes de turno, el texto de tus notas se envía de forma temporal a nuestro servidor de procesamiento (Supabase Edge Functions). Antes de este envío, la aplicación aplica un filtro automático de anonimización que detecta y reemplaza nombres propios, RUT y otros identificadores directos por la etiqueta <strong>[DATO PROTEGIDO]</strong>.</p>
+      <p>El procesamiento de lenguaje natural es realizado por la API de Google Gemini. El texto transmitido no incluye identificadores de pacientes y viaja bajo protocolo HTTPS cifrado. Dito Labs SpA no almacena el contenido de las evoluciones generadas en ningún servidor propio. La transmisión es efímera: los datos se procesan y se descartan.</p>
+    </section>
+
+    <section class="legal-section">
+      <h2>5. Permiso de micrófono</h2>
+      <p>NexEvo requiere acceso al micrófono del dispositivo exclusivamente para habilitar la función de dictado de voz. Este permiso:</p>
+      <ul>
+        <li>Se activa solo cuando el usuario presiona manualmente el botón de grabación.</li>
+        <li>No opera en segundo plano ni en modo pasivo.</li>
+        <li>No almacena archivos de audio en el dispositivo ni en servidores externos.</li>
+      </ul>
+      <p>Solo se procesa y utiliza la transcripción de texto resultante del dictado.</p>
+    </section>
+
+    <section class="legal-section">
+      <h2>6. Análisis de uso y telemetría — Requiere tu autorización</h2>
+      <p>Con tu autorización previa y explícita, recopilamos métricas técnicas anónimas para mejorar la estabilidad de la aplicación: errores, cierres inesperados y estadísticas de uso de funcionalidades. Este servicio es provisto por PostHog.</p>
+      <div class="legal-note">
+        <strong>⚠️ Importante:</strong> Esta telemetría es completamente opcional. La primera vez que uses NexEvo, la aplicación te preguntará si deseas activarla. Puedes cambiar tu decisión en cualquier momento desde Ajustes → Privacidad → Telemetría, sin afectar ninguna funcionalidad.
+      </div>
+      <p>Ningún dato de telemetría contiene información clínica, nombres de pacientes, contenido de evoluciones ni datos sensibles de ningún tipo.</p>
+    </section>
+
+    <section class="legal-section">
+      <h2>7. Compras y suscripciones (RevenueCat)</h2>
+      <p>Las compras del Pase Fundador (licencia de pago único) se gestionan a través de RevenueCat en conjunto con Google Play Store y Apple App Store. Las transacciones son procesadas directamente por cada plataforma. Dito Labs SpA no accede, almacena ni procesa datos bancarios, números de tarjeta de crédito ni información de pago de ningún tipo.</p>
+    </section>
+
+    <section class="legal-section">
+      <h2>8. Lo que NexEvo nunca recopila ni ve</h2>
+      <ul class="legal-never-list">
+        <li>✕ Nombres, RUT ni datos identificatorios de pacientes.</li>
+        <li>✕ Contenido de evoluciones clínicas o notas de turno.</li>
+        <li>✕ Grabaciones de audio.</li>
+        <li>✕ Historial clínico de ninguna persona.</li>
+        <li>✕ Datos de geolocalización.</li>
+        <li>✕ Información bancaria o de pago.</li>
+      </ul>
+    </section>
+
+    <section class="legal-section">
+      <h2>9. Tus derechos como usuario (Ley N° 19.628)</h2>
+      <p>Como usuario de NexEvo, tienes derecho a:</p>
+      <ul>
+        <li><strong>Acceso:</strong> solicitar información sobre los datos de tu cuenta registrados por Dito Labs SpA.</li>
+        <li><strong>Rectificación:</strong> corregir datos de cuenta inexactos en cualquier momento desde Ajustes.</li>
+        <li><strong>Cancelación:</strong> solicitar la eliminación completa de tu cuenta y todos los datos asociados.</li>
+        <li><strong>Oposición:</strong> revocar la telemetría de uso en cualquier momento desde Ajustes → Privacidad.</li>
+      </ul>
+      <p>Para ejercer estos derechos, escríbenos a <a href="mailto:contacto@ditolabs.tech">contacto@ditolabs.tech</a>. Respondemos en un plazo máximo de 15 días hábiles.</p>
+    </section>
+
+    <section class="legal-section">
+      <h2>10. Cambios a esta Política</h2>
+      <p>Dito Labs SpA se reserva el derecho de actualizar esta Política de Privacidad. Cualquier cambio relevante será notificado dentro de la aplicación con al menos 15 días de anticipación a su entrada en vigencia. El uso continuado de NexEvo tras la notificación implica la aceptación de la política actualizada.</p>
+    </section>
+
+    <section class="legal-section">
+      <h2>11. Contacto</h2>
+      <table class="legal-table">
+        <tr><td>Privacidad y datos</td><td><a href="mailto:contacto@ditolabs.tech">contacto@ditolabs.tech</a></td></tr>
+        <tr><td>Empresa</td><td>Dito Labs SpA — Chile</td></tr>
+        <tr><td>Jurisdicción</td><td>República de Chile — Leyes N° 19.628 y N° 20.584</td></tr>
+      </table>
+    </section>
+
+    <footer class="legal-doc-footer">
+      <p>Esta Política de Privacidad debe revisarse anualmente o ante cambios normativos relevantes.</p>
+      <p>Dito Labs SpA · NexEvo · Junio 2026</p>
+    </footer>
+  </div>
+</main>
+
+<footer>
+  <div class="container footer-inner">
+    <div class="footer-brand">
+      <span class="logo-mark">D</span>
+      <span>Dito Labs</span>
+    </div>
+    <p class="footer-legal">© 2026 Dito Labs SpA · RUT 78.424.665-5 · Santiago, Chile</p>
+    <div class="footer-links">
+      <a href="politica-privacidad.html" class="footer-link">Política de Privacidad</a>
+      <span class="footer-sep">·</span>
+      <a href="terminos-condiciones.html" class="footer-link">Términos y Condiciones</a>
+      <span class="footer-sep">·</span>
+      <a href="https://www.linkedin.com/in/diegoulloagonzalez" target="_blank" rel="noopener" class="footer-link">LinkedIn</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
