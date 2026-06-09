@@ -752,7 +752,20 @@ h1.hero-title {
   color: var(--muted);
   font-size: .92rem;
   line-height: 1.75;
-  margin-bottom: 28px;
+  margin-bottom: 16px;
+}
+.contact-email-link {
+  display: inline-block;
+  color: var(--primary);
+  font-size: 0.95rem;
+  font-weight: 600;
+  text-decoration: none;
+  margin-bottom: 1.25rem;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.2s;
+}
+.contact-email-link:hover {
+  border-bottom-color: var(--primary);
 }
 .contact-pilots {
   display: flex;
@@ -885,6 +898,57 @@ footer { background: var(--text); color: rgba(255,255,255,.5); padding: 40px 0; 
 .footer-brand .logo-mark { background: rgba(255,255,255,.15); font-size: .85rem; width: 30px; height: 30px; }
 .footer-brand span:last-child { color: rgba(255,255,255,.7); font-weight: 600; font-size: .9rem; }
 .footer-legal { font-size: .78rem; }
+.footer-links {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-top: 6px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+.footer-link {
+  font-size: 0.78rem;
+  color: rgba(255,255,255,.5);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+.footer-link:hover { color: var(--primary-h); }
+.footer-sep { font-size: 0.78rem; color: rgba(255,255,255,.5); }
+
+/* ── FRANJA DE CUMPLIMIENTO NORMATIVO ── */
+.compliance-strip {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 2.5rem;
+  padding: 1.25rem 1.5rem;
+  background: var(--bg-alt);
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+.compliance-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+  min-width: 200px;
+}
+.compliance-icon { font-size: 1.2rem; }
+.compliance-label {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.2;
+}
+.compliance-desc {
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+.compliance-item > div {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
 
 /* ── REVEAL ANIMATIONS ── */
 .rv { opacity: 0; transform: translateY(24px); transition: opacity .65s ease, transform .65s ease; }
@@ -905,10 +969,10 @@ footer { background: var(--text); color: rgba(255,255,255,.5); padding: 40px 0; 
 
 /* ── FLOW GRID (imágenes flotantes) ── */
 .flow-grid-wrap {
-  padding: 28px 32px 56px;
+  padding: 20px 24px 40px;
   display: flex;
   flex-direction: column;
-  gap: 52px;
+  gap: 36px;
   background:
     linear-gradient(rgba(8,145,178,0.04) 1px, transparent 1px),
     linear-gradient(90deg, rgba(8,145,178,0.04) 1px, transparent 1px),
@@ -929,8 +993,8 @@ footer { background: var(--text); color: rgba(255,255,255,.5); padding: 40px 0; 
 .flow-grid {
   list-style: none;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 28px 24px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px 16px;
 }
 /* Tarjeta: completamente transparente, sólo la imagen flota */
 .flow-card {
@@ -1288,8 +1352,8 @@ footer { background: var(--text); color: rgba(255,255,255,.5); padding: 40px 0; 
 
 /* ── RESPONSIVE ── */
 @media (max-width: 900px) {
-  .flow-grid { grid-template-columns: repeat(2, 1fr); }
-  .flow-grid-wrap { padding: 20px 16px 32px; gap: 36px; }
+  .flow-grid { grid-template-columns: repeat(3, 1fr); }
+  .flow-grid-wrap { padding: 16px 12px 28px; gap: 28px; }
   .hero-inner, .about-content, .grid-2, .vision-grid, .card-featured { grid-template-columns: 1fr; }
   .hero-visual { display: none; }
   .nav-links { display: none; }
@@ -1323,5 +1387,5 @@ footer { background: var(--text); color: rgba(255,255,255,.5); padding: 40px 0; 
   .values-row { grid-template-columns: 1fr; }
   h1.hero-title { font-size: 2.4rem; }
   .hero { padding-top: 68px; }
-  .flow-grid { grid-template-columns: 1fr; }
+  .flow-grid { grid-template-columns: repeat(2, 1fr); }
 }
