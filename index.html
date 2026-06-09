@@ -597,46 +597,37 @@
       display: block;
       position: relative;
     }
+    @media (min-width: 901px) {
+      .arch-flow-track:not(.is-free-layout) {
+        visibility: hidden;
+      }
+      .arch-flow-stage:not(.is-layout-ready) .arch-draw-canvas {
+        opacity: 0;
+      }
+    }
     .arch-flow-track.is-free-layout .arch-flow-node {
       position: absolute;
       margin: 0;
       box-sizing: border-box;
       z-index: 1;
-      touch-action: none;
-    }
-    .arch-flow-track.is-free-layout .arch-flow-node.is-dragging {
-      z-index: 12;
-      opacity: 0.94;
-    }
-    .arch-flow-track.is-free-layout .arch-flow-node-head,
-    .arch-flow-track.is-free-layout .arch-flow-slot {
-      cursor: grab;
-    }
-    .arch-flow-track.is-free-layout .arch-flow-node.is-dragging .arch-flow-node-head,
-    .arch-flow-track.is-free-layout .arch-flow-node.is-dragging .arch-flow-slot {
-      cursor: grabbing;
     }
     .arch-flow-track.is-free-layout .arch-flow-node-head--over-pair {
-      position: static;
-      width: auto;
-      margin-bottom: 12px;
-      justify-content: flex-start;
+      position: absolute;
+      top: 0;
+      z-index: 2;
+      margin-bottom: 0;
+      justify-content: center;
+      text-align: center;
     }
     .arch-flow-track.is-free-layout .arch-flow-node--pair-lead .arch-flow-slot,
     .arch-flow-track.is-free-layout .arch-flow-node--pair-follow .arch-flow-slot {
-      margin-top: 0;
+      margin-top: 36px;
     }
     .arch-flow-track.is-free-layout .arch-flow-slot img,
     .arch-flow-track.is-free-layout .arch-flow-slot video {
       -webkit-user-drag: none;
       user-select: none;
       pointer-events: none;
-    }
-    .arch-flow-hint {
-      margin: 0 0 10px;
-      font-size: .72rem;
-      color: var(--muted);
-      text-align: center;
     }
     .arch-flow-node {
       display: flex;
@@ -752,10 +743,6 @@
       inset: 0;
       z-index: 10;
       pointer-events: none;
-    }
-    .arch-flow-stage.is-arrow-edit .arch-draw-canvas {
-      pointer-events: auto;
-      cursor: default;
     }
     .arch-modal-foot {
       margin: 0;
@@ -1159,7 +1146,6 @@
     </header>
     <div class="arch-flow-stage" id="nexevoAppFlow">
       <canvas class="arch-draw-canvas" id="archDrawCanvas" aria-hidden="true"></canvas>
-      <p class="arch-flow-hint" id="archFlowHint">Arrastra los recuadros para ubicarlos. Arrastra los puntos de las flechas (inicio, curva, fin) para ajustarlas.</p>
       <ol class="arch-flow-track">
         <li class="arch-flow-node">
           <div class="arch-flow-node-head">
@@ -1353,18 +1339,14 @@
 
   const archFlowStage = document.getElementById('nexevoAppFlow');
   const archFlowTrack = archFlowStage?.querySelector('.arch-flow-track');
-  const archFlowHint = document.getElementById('archFlowHint');
   const archDrawCanvas = document.getElementById('archDrawCanvas');
   const drawCtx = archDrawCanvas?.getContext('2d');
-  const ARCH_FLOW_LAYOUT_KEY = 'nexevo-arch-flow-layout-v2';
-  const ARCH_ARROWS_LAYOUT_KEY = 'nexevo-arch-arrows-v1';
-  const ARCH_LAYOUT_BUILTIN = {"nodes":{"splash":{"left":0,"top":0,"width":32.416666666666664},"camas":{"left":33.75,"top":0,"width":32.416666666666664},"asistente":{"left":67.58333333333333,"top":0,"width":32.416666666666664},"resumen-turno":{"left":0,"top":640,"width":32.416666666666664},"ajustes":{"left":33.75,"top":640,"width":32.416666666666664},"nota-voz":{"left":67.58333333333333,"top":640,"width":32.416666666666664},"trayectoria":{"left":0,"top":1280,"width":32.416666666666664},"cama-22b":{"left":33.75,"top":1280,"width":32.416666666666664},"notas-pendientes":{"left":67.58333333333333,"top":1280,"width":32.416666666666664},"estadisticas":{"left":67.58333333333333,"top":1939,"width":32.416666666666664},"evolucion-soapie":{"left":0,"top":2270,"width":32.416666666666664},"evolucion-sistemas":{"left":33.75,"top":2270,"width":32.416666666666664},"evolucion-guardar":{"left":34.416666666666664,"top":2910,"width":31.25}},"arrows":[{"x1f":0.5840340222167969,"y1f":0.054773061497326206,"cxf":0.6440757189941406,"cyf":0.04959128045157457,"x2f":0.7486186938476562,"y2f":0.07395718675727866},{"x1f":0.575426220703125,"y1f":0.17205696672608436,"cxf":0.6247812500000001,"cyf":0.18437361853832443,"x2f":0.81666259765625,"y2f":0.20125519904931669},{"x1f":0.19774860595703125,"y1f":0.35310204991087346,"cxf":0.12730454833984375,"cyf":0.36009306298276883,"x2f":0.2803276684570312,"y2f":0.37696977124183007},{"x1f":0.7878572436523438,"y1f":0.2812106924019608,"cxf":0.662375,"cyf":0.32716633986928106,"x2f":0.6669781762695313,"y2f":0.3863097927807487}]};
-  let archFlowLayoutReady = false;
-  let archFlowLayoutLocked = false;
-  let archDragState = null;
+  const ARCH_LAYOUT_BUILTIN = {"nodes":{"splash":{"left":-0.17286084701815038,"top":16,"width":32.4114088159032},"camas":{"left":33.96715643906656,"top":16,"width":32.4114088159032},"asistente":{"left":69.40363007778738,"top":16,"width":32.4114088159032},"resumen-turno":{"left":-0.08643042350907519,"top":655,"width":32.4114088159032},"ajustes":{"left":33.88072601555748,"top":656,"width":32.4114088159032},"nota-voz":{"left":69.57649092480554,"top":654,"width":32.4114088159032},"trayectoria":{"left":0,"top":1296,"width":32.4114088159032},"cama-22b":{"left":33.96715643906656,"top":1324,"width":32.4114088159032},"notas-pendientes":{"left":69.57649092480554,"top":1433,"width":32.4114088159032},"estadisticas":{"left":69.83578219533275,"top":1964,"width":32.4114088159032},"evolucion-soapie":{"left":-0.25929127052722556,"top":1937,"width":32.4114088159032},"evolucion-sistemas":{"left":33.62143474503025,"top":1936,"width":32.4114088159032},"evolucion-guardar":{"left":16.681071737251514,"top":2606,"width":31.287813310285223}},"arrows":[{"x1f":0.5864739928849304,"y1f":0.05654755017343904,"cxf":0.6470980024058149,"cyf":0.051003813594317805,"x2f":0.7687208704443079,"y2f":0.07706877167988106},{"x1f":0.5777827088452089,"y1f":0.18202392013544766,"cxf":0.6261234234234234,"cyf":0.17834000660720184,"x2f":0.8390471437346437,"y2f":0.22019119590353484},{"x1f":0.19351521038083536,"y1f":0.38342717831185996,"cxf":0.12238795300982802,"cyf":0.3909065246118269,"x2f":0.27982215141277644,"y2f":0.43811938594317806},{"x1f":0.8099635890151515,"y1f":0.3061798222249752,"cxf":0.6641215397215398,"cyf":0.3217407664354146,"x2f":0.687917077446765,"y2f":0.41861431698050877}]};
   let archArrowCoords = null;
-  let archArrowDragState = null;
-  const ARCH_ARROW_HIT_RADIUS = 14;
+
+  function resetArchLayoutFromCode() {
+    archArrowCoords = null;
+  }
 
   function archFreeLayoutEnabled() {
     return window.matchMedia('(min-width: 901px)').matches;
@@ -1372,24 +1354,6 @@
 
   function archSlotIdForNode(node) {
     return node?.querySelector('.arch-flow-slot[data-slot]')?.dataset.slot || null;
-  }
-
-  function captureArchNodeLayout() {
-    if (!archFlowTrack) return {};
-    const trackRect = archFlowTrack.getBoundingClientRect();
-    const trackW = trackRect.width || 1;
-    const layout = {};
-    archFlowTrack.querySelectorAll('.arch-flow-node').forEach(node => {
-      const id = archSlotIdForNode(node);
-      if (!id) return;
-      const r = node.getBoundingClientRect();
-      layout[id] = {
-        left: ((r.left - trackRect.left) / trackW) * 100,
-        top: r.top - trackRect.top,
-        width: (r.width / trackW) * 100
-      };
-    });
-    return layout;
   }
 
   function applyArchNodeLayout(layout) {
@@ -1405,8 +1369,21 @@
     syncArchTrackMinHeight();
   }
 
+  function syncPairLeadHead() {
+    if (!archFlowTrack?.classList.contains('is-free-layout')) return;
+    const lead = flowCellBySlot('trayectoria');
+    const follow = flowCellBySlot('cama-22b');
+    const head = lead?.querySelector('.arch-flow-node-head--over-pair');
+    if (!lead || !follow || !head) return;
+    const spanLeft = Math.min(lead.offsetLeft, follow.offsetLeft);
+    const spanRight = Math.max(lead.offsetLeft + lead.offsetWidth, follow.offsetLeft + follow.offsetWidth);
+    head.style.left = `${spanLeft - lead.offsetLeft}px`;
+    head.style.width = `${spanRight - spanLeft}px`;
+  }
+
   function syncArchTrackMinHeight() {
     if (!archFlowTrack?.classList.contains('is-free-layout')) return;
+    syncPairLeadHead();
     let maxBottom = 0;
     archFlowTrack.querySelectorAll('.arch-flow-node').forEach(node => {
       maxBottom = Math.max(maxBottom, node.offsetTop + node.offsetHeight);
@@ -1415,51 +1392,30 @@
     syncArchDrawCanvas();
   }
 
-  function saveArchNodeLayout() {
-    if (!archFlowTrack?.classList.contains('is-free-layout')) return;
-    const trackW = archFlowTrack.clientWidth || 1;
-    const layout = {};
-    archFlowTrack.querySelectorAll('.arch-flow-node').forEach(node => {
-      const id = archSlotIdForNode(node);
-      if (!id) return;
-      layout[id] = {
-        left: (node.offsetLeft / trackW) * 100,
-        top: node.offsetTop,
-        width: (node.offsetWidth / trackW) * 100
-      };
-    });
-    try {
-      localStorage.setItem(ARCH_FLOW_LAYOUT_KEY, JSON.stringify(layout));
-    } catch (_) {}
-  }
-
-  function loadArchNodeLayout() {
-    try {
-      const raw = localStorage.getItem(ARCH_FLOW_LAYOUT_KEY);
-      if (raw) return JSON.parse(raw);
-    } catch (_) {}
-    return ARCH_LAYOUT_BUILTIN?.nodes || null;
-  }
-
   function clearArchFreeLayoutStyles() {
     if (!archFlowTrack) return;
     archFlowTrack.classList.remove('is-free-layout');
     archFlowTrack.style.minHeight = '';
+    archFlowStage?.classList.remove('is-layout-ready');
     archFlowTrack.querySelectorAll('.arch-flow-node').forEach(node => {
       node.style.left = '';
       node.style.top = '';
       node.style.width = '';
-      node.classList.remove('is-dragging');
+      const head = node.querySelector('.arch-flow-node-head--over-pair');
+      if (head) {
+        head.style.left = '';
+        head.style.width = '';
+      }
     });
-    archFlowLayoutReady = false;
-    archFlowLayoutLocked = false;
   }
 
-  function lockArchFreeLayout() {
-    if (!archFlowTrack?.classList.contains('is-free-layout') || archFlowLayoutLocked) return;
-    archFlowLayoutLocked = true;
-    archFlowLayoutReady = true;
-    if (!loadArchNodeLayout()) saveArchNodeLayout();
+  function commitArchLayoutToView() {
+    if (!archFlowTrack || !archFreeLayoutEnabled()) return;
+    applyArchNodeLayout(ARCH_LAYOUT_BUILTIN.nodes);
+    syncArchTrackMinHeight();
+    reloadArchArrows();
+    syncArchDrawCanvas();
+    archFlowStage?.classList.add('is-layout-ready');
   }
 
   function whenArchFlowImagesReady(callback) {
@@ -1486,72 +1442,23 @@
     if (!archFlowTrack) return;
     if (!archFreeLayoutEnabled()) {
       clearArchFreeLayoutStyles();
-      archFlowStage?.classList.remove('is-arrow-edit');
-      if (archFlowHint) archFlowHint.hidden = true;
       return;
     }
-    if (archFlowHint) archFlowHint.hidden = false;
-    archFlowStage?.classList.add('is-arrow-edit');
-    const saved = loadArchNodeLayout();
-    if (archFlowLayoutLocked) {
-      if (saved) applyArchNodeLayout(saved);
-      syncArchTrackMinHeight();
-      return;
-    }
-    if (saved) {
-      applyArchNodeLayout(saved);
-      archFlowLayoutLocked = true;
-      archFlowLayoutReady = true;
-      syncArchTrackMinHeight();
-      return;
-    }
-    applyArchNodeLayout(captureArchNodeLayout());
-    syncArchTrackMinHeight();
+    commitArchLayoutToView();
   }
 
-  function onArchNodePointerDown(e) {
-    if (!archFlowTrack?.classList.contains('is-free-layout') || e.button !== 0) return;
-    if (archArrowDragState) return;
-    const node = e.target.closest('.arch-flow-node');
-    if (!node || !archFlowTrack.contains(node)) return;
-    e.preventDefault();
-    archDragState = {
-      node,
-      pointerId: e.pointerId,
-      startX: e.clientX,
-      startY: e.clientY,
-      origLeft: node.offsetLeft,
-      origTop: node.offsetTop
-    };
-    node.classList.add('is-dragging');
-    node.setPointerCapture(e.pointerId);
+  function stageClientWidth() {
+    return archFlowStage?.clientWidth || archFlowStage?.offsetWidth || 0;
   }
 
-  function onArchNodePointerMove(e) {
-    if (!archDragState || e.pointerId !== archDragState.pointerId) return;
-    const dx = e.clientX - archDragState.startX;
-    const dy = e.clientY - archDragState.startY;
-    archDragState.node.style.left = `${archDragState.origLeft + dx}px`;
-    archDragState.node.style.top = `${archDragState.origTop + dy}px`;
-    syncArchTrackMinHeight();
+  function flowSlotById(slotId) {
+    if (!archFlowStage || !slotId) return null;
+    return archFlowStage.querySelector(`.arch-flow-slot[data-slot="${slotId}"]`);
   }
 
-  function finishArchNodeDrag(e) {
-    if (!archDragState || e.pointerId !== archDragState.pointerId) return;
-    const { node } = archDragState;
-    node.classList.remove('is-dragging');
-    node.releasePointerCapture(e.pointerId);
-    const trackW = archFlowTrack.clientWidth || 1;
-    node.style.left = `${(node.offsetLeft / trackW) * 100}%`;
-    archDragState = null;
-    saveArchNodeLayout();
-    syncArchDrawCanvas();
+  function flowCellBySlot(slotId) {
+    return flowSlotById(slotId)?.closest('.arch-flow-node') || null;
   }
-
-  archFlowTrack?.addEventListener('pointerdown', onArchNodePointerDown);
-  archFlowTrack?.addEventListener('pointermove', onArchNodePointerMove);
-  archFlowTrack?.addEventListener('pointerup', finishArchNodeDrag);
-  archFlowTrack?.addEventListener('pointercancel', finishArchNodeDrag);
 
   const ARCH_GUIDE_ARROWS = [
     {
@@ -1575,19 +1482,6 @@
       to: { slot: 'nota-voz', fx: 0.0079, fy: 0.9924 }
     }
   ];
-
-  function stageClientWidth() {
-    return archFlowStage?.clientWidth || archFlowStage?.offsetWidth || 0;
-  }
-
-  function flowSlotById(slotId) {
-    if (!archFlowStage || !slotId) return null;
-    return archFlowStage.querySelector(`.arch-flow-slot[data-slot="${slotId}"]`);
-  }
-
-  function flowCellBySlot(slotId) {
-    return flowSlotById(slotId)?.closest('.arch-flow-node') || null;
-  }
 
   function resolveAnchor(anchor) {
     if (!anchor || !archFlowStage) return null;
@@ -1624,11 +1518,6 @@
       };
     }
 
-    if (anchor.spx != null) {
-      const w = stageClientWidth();
-      return { x: anchor.spx * w, y: anchor.spy * archFlowStage.offsetHeight };
-    }
-
     return null;
   }
 
@@ -1644,24 +1533,10 @@
     return ARCH_GUIDE_ARROWS.map(anchorsToArrow).filter(Boolean);
   }
 
-  function archStagePoint(clientX, clientY) {
-    const sr = archFlowStage.getBoundingClientRect();
-    return { x: clientX - sr.left, y: clientY - sr.top };
-  }
-
   function archStageSize() {
     return {
       w: stageClientWidth() || 1,
       h: archFlowStage?.offsetHeight || 1
-    };
-  }
-
-  function normalizeArchArrow(arrow) {
-    const { w, h } = archStageSize();
-    return {
-      x1f: arrow.x1 / w, y1f: arrow.y1 / h,
-      cxf: arrow.cx / w, cyf: arrow.cy / h,
-      x2f: arrow.x2 / w, y2f: arrow.y2 / h
     };
   }
 
@@ -1674,124 +1549,28 @@
     };
   }
 
-  function saveArchArrows() {
-    if (!archArrowCoords?.length) return;
-    try {
-      localStorage.setItem(
-        ARCH_ARROWS_LAYOUT_KEY,
-        JSON.stringify(archArrowCoords.map(normalizeArchArrow))
-      );
-    } catch (_) {}
-  }
-
-  function loadArchArrows() {
-    try {
-      const raw = localStorage.getItem(ARCH_ARROWS_LAYOUT_KEY);
-      if (raw) return JSON.parse(raw);
-    } catch (_) {}
-    return ARCH_LAYOUT_BUILTIN?.arrows || null;
-  }
-
-  function syncArchArrowsFromStorage() {
-    const saved = loadArchArrows();
-    if (saved?.length) {
-      archArrowCoords = saved.map(denormalizeArchArrow);
-      return;
-    }
-    if (ARCH_LAYOUT_BUILTIN?.arrows?.length) {
-      archArrowCoords = ARCH_LAYOUT_BUILTIN.arrows.map(denormalizeArchArrow);
-      return;
-    }
-    if (!archArrowCoords?.length) {
-      archArrowCoords = arrowsFromAnchors();
-    }
-  }
-
-  function initArchArrowsAfterLayout() {
-    syncArchArrowsFromStorage();
-  }
-
-  function getArchArrows() {
-    if (!archArrowCoords) syncArchArrowsFromStorage();
-    return archArrowCoords || [];
-  }
-
-  function archArrowDist(ax, ay, bx, by) {
-    return Math.hypot(ax - bx, ay - by);
-  }
-
-  function hitTestArchArrow(px, py) {
-    const arrows = getArchArrows();
-    for (let i = arrows.length - 1; i >= 0; i--) {
-      const a = arrows[i];
-      if (archArrowDist(px, py, a.x2, a.y2) <= ARCH_ARROW_HIT_RADIUS) return { index: i, handle: 'to' };
-      if (archArrowDist(px, py, a.cx, a.cy) <= ARCH_ARROW_HIT_RADIUS) return { index: i, handle: 'curve' };
-      if (archArrowDist(px, py, a.x1, a.y1) <= ARCH_ARROW_HIT_RADIUS) return { index: i, handle: 'from' };
-    }
-    return null;
-  }
-
-  function setArchArrowPoint(index, handle, x, y) {
-    const arrows = getArchArrows();
-    const a = arrows[index];
-    if (!a) return;
-    if (handle === 'from') { a.x1 = x; a.y1 = y; }
-    else if (handle === 'curve') { a.cx = x; a.cy = y; }
-    else if (handle === 'to') { a.x2 = x; a.y2 = y; }
-  }
-
-  function onArchCanvasPointerDown(e) {
-    if (!archFlowStage?.classList.contains('is-arrow-edit') || e.button !== 0) return;
-    const pt = archStagePoint(e.clientX, e.clientY);
-    const hit = hitTestArchArrow(pt.x, pt.y);
-    if (!hit) {
-      archDrawCanvas.style.pointerEvents = 'none';
-      const below = document.elementFromPoint(e.clientX, e.clientY);
-      archDrawCanvas.style.pointerEvents = 'auto';
-      below?.dispatchEvent(new PointerEvent('pointerdown', {
-        bubbles: true,
-        clientX: e.clientX,
-        clientY: e.clientY,
-        button: e.button,
-        pointerId: e.pointerId,
-        pointerType: e.pointerType,
-        isPrimary: e.isPrimary
-      }));
-      return;
-    }
-    e.preventDefault();
-    archArrowDragState = {
-      index: hit.index,
-      handle: hit.handle,
-      pointerId: e.pointerId
+  function normalizeArchArrow(arrow) {
+    const { w, h } = archStageSize();
+    return {
+      x1f: arrow.x1 / w, y1f: arrow.y1 / h,
+      cxf: arrow.cx / w, cyf: arrow.cy / h,
+      x2f: arrow.x2 / w, y2f: arrow.y2 / h
     };
-    archDrawCanvas.setPointerCapture(e.pointerId);
-    archDrawCanvas.style.cursor = 'grabbing';
   }
 
-  function onArchCanvasPointerMove(e) {
-    if (!archArrowDragState || e.pointerId !== archArrowDragState.pointerId) return;
-    const pt = archStagePoint(e.clientX, e.clientY);
-    setArchArrowPoint(archArrowDragState.index, archArrowDragState.handle, pt.x, pt.y);
-    redrawAllArrows();
+  function syncArchArrowsFromAnchors() {
+    const computed = arrowsFromAnchors();
+    archArrowCoords = computed.length ? computed : null;
   }
 
-  function finishArchCanvasDrag(e) {
-    if (!archArrowDragState || e.pointerId !== archArrowDragState.pointerId) return;
-    archDrawCanvas.releasePointerCapture(e.pointerId);
-    archDrawCanvas.style.cursor = 'default';
-    archArrowDragState = null;
-    saveArchArrows();
-    redrawAllArrows();
+  function reloadArchArrows() {
+    archArrowCoords = null;
+    syncArchArrowsFromAnchors();
   }
-
-  archDrawCanvas?.addEventListener('pointerdown', onArchCanvasPointerDown);
-  archDrawCanvas?.addEventListener('pointermove', onArchCanvasPointerMove);
-  archDrawCanvas?.addEventListener('pointerup', finishArchCanvasDrag);
-  archDrawCanvas?.addEventListener('pointercancel', finishArchCanvasDrag);
 
   function resolvedGuideArrows() {
-    return getArchArrows();
+    if (!archArrowCoords) syncArchArrowsFromAnchors();
+    return archArrowCoords || [];
   }
 
   function syncArchDrawCanvas() {
@@ -1848,19 +1627,6 @@
     drawCtx.beginPath();
     drawCtx.arc(x1, y1, 5, 0, Math.PI * 2);
     drawCtx.fill();
-    if (archFlowStage?.classList.contains('is-arrow-edit')) {
-      drawCtx.fillStyle = '#fff';
-      drawCtx.strokeStyle = '#0EA5E9';
-      drawCtx.lineWidth = 2;
-      [[x1, y1], [cx, cy], [x2, y2]].forEach(([hx, hy]) => {
-        if (hx == null || hy == null) return;
-        drawCtx.beginPath();
-        drawCtx.arc(hx, hy, 7, 0, Math.PI * 2);
-        drawCtx.fill();
-        drawCtx.stroke();
-      });
-      drawCtx.fillStyle = '#0EA5E9';
-    }
     if (label != null) {
       const mx = curved ? 0.25 * x1 + 0.5 * cx + 0.25 * x2 : (x1 + x2) / 2;
       const my = (curved ? 0.25 * y1 + 0.5 * cy + 0.25 * y2 : (y1 + y2) / 2) - 10;
@@ -1877,70 +1643,39 @@
   function redrawAllArrows() {
     if (!drawCtx || !archDrawCanvas) return;
     drawCtx.clearRect(0, 0, archDrawCanvas.width, archDrawCanvas.height);
-    resolvedGuideArrows().forEach((a, i) => drawArrowShape(a.x1, a.y1, a.x2, a.y2, 1, i + 1, a.cx, a.cy));
+    resolvedGuideArrows().forEach(a => drawArrowShape(a.x1, a.y1, a.x2, a.y2, 1, null, a.cx, a.cy));
   }
 
   function openNexevoArch() {
     nav.classList.add('solid');
     syncArchModalOffset();
-    requestAnimationFrame(() => {
-      syncArchModalOffset();
-      ensureArchFreeLayout();
-      initArchArrowsAfterLayout();
-      syncArchDrawCanvas();
-      requestAnimationFrame(() => {
-        syncArchModalOffset();
-        ensureArchFreeLayout();
-        initArchArrowsAfterLayout();
-        syncArchDrawCanvas();
-      });
-    });
-    whenArchFlowImagesReady(() => {
-      if (!loadArchNodeLayout() && !archFlowLayoutLocked) {
-        applyArchNodeLayout(captureArchNodeLayout());
-      } else if (loadArchNodeLayout()) {
-        applyArchNodeLayout(loadArchNodeLayout());
-        archFlowLayoutLocked = true;
-        archFlowLayoutReady = true;
-      }
-      lockArchFreeLayout();
-      syncArchTrackMinHeight();
-      initArchArrowsAfterLayout();
-      syncArchDrawCanvas();
-    });
-    archFlowStage?.querySelectorAll('img').forEach(img => {
-      if (!img.complete) {
-        img.addEventListener('load', () => {
-          if (!loadArchNodeLayout() && !archFlowLayoutLocked) {
-            applyArchNodeLayout(captureArchNodeLayout());
-            syncArchTrackMinHeight();
-          }
-          syncArchDrawCanvas();
-        }, { once: true });
-      }
-    });
+    resetArchLayoutFromCode();
+    archFlowStage?.classList.remove('is-layout-ready');
     nexevoArchModal.classList.add('is-open');
     nexevoArchModal.setAttribute('aria-hidden', 'false');
     document.body.style.overflow = 'hidden';
+    requestAnimationFrame(() => {
+      syncArchModalOffset();
+      ensureArchFreeLayout();
+      whenArchFlowImagesReady(() => {
+        requestAnimationFrame(commitArchLayoutToView);
+      });
+    });
+    archFlowStage?.querySelectorAll('img').forEach(img => {
+      if (!img.complete) {
+        img.addEventListener('load', () => commitArchLayoutToView(), { once: true });
+      }
+    });
     nexevoArchModal.querySelector('.arch-modal-close').focus();
   }
 
   function closeNexevoArch() {
-    saveArchNodeLayout();
-    saveArchArrows();
     nexevoArchModal.classList.remove('is-open');
     nexevoArchModal.setAttribute('aria-hidden', 'true');
     document.body.style.overflow = '';
     nav.classList.toggle('solid', scrollY > 60);
     nexevoArchOpen.focus();
   }
-
-  window.addEventListener('beforeunload', () => {
-    if (nexevoArchModal?.classList.contains('is-open')) {
-      saveArchNodeLayout();
-      saveArchArrows();
-    }
-  });
 
   nexevoArchOpen.addEventListener('click', openNexevoArch);
   nexevoArchModal.querySelectorAll('[data-arch-close]').forEach(el => {
@@ -1953,9 +1688,7 @@
     if (nexevoArchModal.classList.contains('is-open')) {
       syncArchModalOffset();
       ensureArchFreeLayout();
-      if (loadArchArrows()?.length) {
-        syncArchArrowsFromStorage();
-      }
+      reloadArchArrows();
       syncArchDrawCanvas();
     }
   });
@@ -1980,28 +1713,31 @@
   window.matchMedia('(max-width: 900px)').addEventListener('change', () => {
     if (nexevoArchModal.classList.contains('is-open')) {
       ensureArchFreeLayout();
+      reloadArchArrows();
       syncArchDrawCanvas();
     }
   });
 
-  window.__archExportLayout = () => ({
-    nodes: (() => {
-      if (!archFlowTrack?.classList.contains('is-free-layout')) return null;
-      const trackW = archFlowTrack.clientWidth || 1;
-      const layout = {};
-      archFlowTrack.querySelectorAll('.arch-flow-node').forEach(node => {
-        const id = archSlotIdForNode(node);
-        if (!id) return;
-        layout[id] = {
-          left: (node.offsetLeft / trackW) * 100,
-          top: node.offsetTop,
-          width: (node.offsetWidth / trackW) * 100
-        };
-      });
-      return layout;
-    })(),
-    arrows: getArchArrows().map(normalizeArchArrow)
-  });
+  window.__archExportLayout = () => {
+    if (!archFlowTrack?.classList.contains('is-free-layout')) return null;
+    const trackW = archFlowTrack.clientWidth || 1;
+    const nodes = {};
+    archFlowTrack.querySelectorAll('.arch-flow-node').forEach(node => {
+      const id = archSlotIdForNode(node);
+      if (!id) return;
+      nodes[id] = {
+        left: (node.offsetLeft / trackW) * 100,
+        top: node.offsetTop,
+        width: (node.offsetWidth / trackW) * 100
+      };
+    });
+    syncArchArrowsFromAnchors();
+    return {
+      nodes,
+      arrows: (archArrowCoords || []).map(normalizeArchArrow)
+    };
+  };
+
 </script>
 </body>
 </html>
