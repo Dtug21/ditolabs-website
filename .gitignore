@@ -1,0 +1,4 @@
+node_modules/
+.claude/
+scripts/
+img/arch-layout-*.png
