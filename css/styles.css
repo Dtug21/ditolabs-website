@@ -1407,7 +1407,7 @@ footer { background: var(--text); color: rgba(255,255,255,.5); padding: 56px 0 2
 .flow-grid {
   list-style: none;
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 18px 16px;
 }
 /* Tarjeta: completamente transparente, sólo la imagen flota */
@@ -1766,8 +1766,11 @@ footer { background: var(--text); color: rgba(255,255,255,.5); padding: 56px 0 2
 
 /* ── RESPONSIVE ── */
 @media (max-width: 900px) {
-  .flow-grid { grid-template-columns: repeat(3, 1fr); }
+  .flow-grid { grid-template-columns: repeat(2, 1fr); }
   .flow-grid-wrap { padding: 16px 12px 28px; gap: 28px; }
+  /* La card 12 ocupa fila completa para que 13 quede siempre junto al recuadro ROI */
+  .flow-card--12 { grid-column: span 2; justify-self: center; width: min(100%, 320px); }
+  .flow-roi-note { grid-column: span 1; padding: 20px 18px; }
   .timeline { grid-template-columns: 1fr; gap: 24px; }
   .timeline::before {
     top: 4px; bottom: 4px; left: 7px; right: auto;
@@ -1811,4 +1814,5 @@ footer { background: var(--text); color: rgba(255,255,255,.5); padding: 56px 0 2
   h1.hero-title { font-size: 2.4rem; }
   .hero { padding-top: 68px; }
   .flow-grid { grid-template-columns: repeat(2, 1fr); }
+  .flow-roi-value { font-size: .9rem; }
 }
