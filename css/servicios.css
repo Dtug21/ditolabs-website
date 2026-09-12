@@ -55,5 +55,13 @@ h2 { font-size:clamp(2rem, 4vw, 3.65rem); line-height:1.05; letter-spacing:-.06e
 .button-light { background:var(--lime); color:var(--ink); }.button-light span { color:var(--ink); }.contact-note { margin:38px 0 0; font-size:.82rem; color:#8f9db1; }
 .footer { min-height:84px; display:flex; justify-content:space-between; align-items:center; gap:16px; color:#607088; font-size:.8rem; }
 @keyframes spin { to { transform:rotate(360deg); } }
+.clinic-offer { border-top:1px solid var(--line); padding:40px 0 80px; display:flex; align-items:center; gap:32px; }
+.clinic-offer>div { flex:1; min-width:0; }
+.clinic-offer h2 { font-size:clamp(1.8rem,3vw,2.6rem); margin-bottom:16px; }
+.clinic-offer p:not(.eyebrow) { color:var(--slate); max-width:620px; margin-bottom:0; }
+.clinic-offer .button { flex-shrink:0; max-width:100%; }
+@media (max-width:900px) { .clinic-offer { flex-direction:column; align-items:flex-start; padding-bottom:60px; } .clinic-offer .button { text-align:left; } }
 @media (max-width:720px) { .shell{width:min(100% - 32px,1160px)} .nav{padding-top:17px}.hero{padding:68px 0 54px}.split-layout{grid-template-columns:1fr;gap:13px}.problem,.services,.workflow,.contact{padding:76px 0}.service-grid{grid-template-columns:1fr}.service-card{min-height:215px}.fit{grid-template-columns:1fr;gap:36px;padding:76px 0}.fit-visual{min-height:280px}.footer{padding:20px 0;align-items:flex-start;flex-direction:column}.signal-row{gap:8px 18px}.steps li{grid-template-columns:48px 1fr} }
 
+
+@media(max-width:720px){h1 em{white-space:normal;}}
