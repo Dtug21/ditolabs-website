@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="es-CL">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Enfermería a domicilio en Santiago con Diego Ulloa. Solicita una visita programada, sujeta a evaluación y confirmación personal.">
+<link rel="canonical" href="https://ditolabs.tech/enfermeria-domicilio/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="es_CL">
+<meta property="og:title" content="Enfermería a Domicilio · Diego Ulloa">
+<meta property="og:description" content="Atención de enfermería domiciliaria programada en Santiago, sujeta a evaluación y confirmación personal.">
+<title>Enfermería a Domicilio · Diego Ulloa</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:opsz,wght@6..72,400;6..72,500;6..72,600&family=Newsreader:ital,opsz,wght@1,6..72,400&family=Figtree:wght@400;500;600;700&display=swap">
+<style>
+  :root{
+    --ground:#F3F6EF;
+    --surface:#FFFFFF;
+    --surface-warm:#E6EEE1;
+    --ink:#172420;
+    --ink-soft:#516158;
+    --line:#D5DECC;
+    --teal:#1E5C4C;
+    --teal-bright:#2C7A63;
+    --clay:#C98A25;
+    --clay-soft:#DBA646;
+    --focus:#C98A25;
+    --shadow:24px 24px 60px -30px rgba(23,36,32,.28);
+    --maxw:64rem;
+  }
+  @media (prefers-color-scheme:dark){
+    :root:not([data-theme="light"]){
+      --ground:#10150F;
+      --surface:#181F19;
+      --surface-warm:#1F291F;
+      --ink:#E9EEE3;
+      --ink-soft:#A1AF9E;
+      --line:#2D3A2E;
+      --teal:#7BCBB0;
+      --teal-bright:#95DCC2;
+      --clay:#E9B458;
+      --clay-soft:#D9A03D;
+      --focus:#E9B458;
+      --shadow:24px 24px 60px -30px rgba(0,0,0,.6);
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#10150F;
+    --surface:#181F19;
+    --surface-warm:#1F291F;
+    --ink:#E9EEE3;
+    --ink-soft:#A1AF9E;
+    --line:#2D3A2E;
+    --teal:#7BCBB0;
+    --teal-bright:#95DCC2;
+    --clay:#E9B458;
+    --clay-soft:#D9A03D;
+    --focus:#E9B458;
+    --shadow:24px 24px 60px -30px rgba(0,0,0,.6);
+  }
+
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    background:var(--ground);
+    color:var(--ink);
+    font-family:"Figtree",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 1.5rem}
+  h1,h2,h3{font-family:"Newsreader","Iowan Old Style",Georgia,serif;font-weight:500;text-wrap:balance;line-height:1.12;letter-spacing:-.01em}
+  h2{font-size:clamp(1.7rem,3.6vw,2.5rem);margin:0 0 .6rem}
+  h3{font-size:1.28rem;margin:0 0 .35rem;font-weight:600}
+  p{margin:0 0 1rem;max-width:60ch}
+  a{color:inherit}
+  .eyebrow{font-size:.78rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--clay);margin:0 0 1rem}
+
+  /* --- top bar --- */
+  .bar{border-bottom:1px solid var(--line);background:color-mix(in srgb,var(--ground) 88%,transparent);position:sticky;top:0;z-index:20;backdrop-filter:blur(8px)}
+  .bar .wrap{display:flex;align-items:center;justify-content:space-between;padding-top:.9rem;padding-bottom:.9rem}
+  .mark{font-family:"Newsreader",serif;font-size:1.05rem;font-weight:600;letter-spacing:-.01em}
+  .mark span{color:var(--clay)}
+  .bar a.cta{font-size:.9rem}
+
+  .btn{
+    display:inline-flex;align-items:center;gap:.5rem;
+    background:var(--teal);color:var(--ground);
+    padding:.8rem 1.35rem;border-radius:999px;
+    font-weight:600;font-size:.98rem;text-decoration:none;
+    border:1px solid transparent;transition:transform .15s ease, background .15s ease;
+  }
+  .btn:hover{transform:translateY(-1px);background:var(--teal-bright)}
+  .btn.ghost{background:transparent;color:var(--ink);border-color:var(--line)}
+  .btn.ghost:hover{background:var(--surface-warm)}
+  .btn.clay{background:var(--clay)}
+  .btn.clay:hover{background:var(--clay-soft)}
+  a:focus-visible,button:focus-visible{outline:3px solid var(--focus);outline-offset:3px;border-radius:4px}
+
+  /* --- hero --- */
+  .hero{padding:clamp(3rem,8vw,6rem) 0 clamp(2.5rem,6vw,4rem)}
+  .hero h1{font-size:clamp(2.4rem,6vw,4rem);margin:0 0 1.2rem}
+  .hero .lede{font-size:clamp(1.1rem,2vw,1.3rem);color:var(--ink-soft);max-width:44ch}
+  .hero-actions{display:flex;flex-wrap:wrap;gap:.8rem;margin-top:1.8rem}
+  .trust{margin-top:2.4rem;display:flex;flex-wrap:wrap;gap:.6rem 1.6rem;font-size:.86rem;color:var(--ink-soft)}
+  .trust span{display:flex;align-items:center;gap:.45rem}
+  .dot{width:.42rem;height:.42rem;border-radius:50%;background:var(--teal-bright);flex:none}
+
+  section{padding:clamp(2.6rem,6vw,4.2rem) 0;border-top:1px solid var(--line)}
+
+  /* situations */
+  .sits{display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:1.1rem;margin-top:1.8rem}
+  .sit{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:1.3rem 1.4rem;display:flex;flex-direction:column;gap:.7rem}
+  .sit h3{font-family:"Figtree",sans-serif;font-size:1rem;font-weight:700;margin:0}
+  .sit p{font-size:.92rem;color:var(--ink-soft);margin:0}
+
+  /* services list */
+  .svc{display:grid;grid-template-columns:1fr;gap:0;margin-top:1.6rem;border:1px solid var(--line);border-radius:14px;overflow:hidden;background:var(--surface)}
+  .svc-row{display:grid;grid-template-columns:2.6rem 9.5rem 1fr;gap:1.1rem;padding:1.15rem 1.4rem;align-items:start}
+  .svc-row+.svc-row{border-top:1px solid var(--line)}
+  .svc-row dt{font-weight:700;font-size:.95rem;color:var(--teal);margin:0;padding-top:.35rem}
+  .svc-row dd{margin:0;font-size:.95rem;color:var(--ink-soft);padding-top:.35rem}
+  @media(max-width:34rem){.svc-row{grid-template-columns:2.4rem 1fr;grid-template-areas:"icon title" ". desc";gap:.2rem .9rem}.svc-row .icon-circle{grid-area:icon}.svc-row dt{grid-area:title;padding-top:.1rem}.svc-row dd{grid-area:desc}}
+
+  /* steps */
+  .steps{counter-reset:s;display:grid;grid-template-columns:repeat(auto-fit,minmax(15rem,1fr));gap:1.8rem;margin-top:2rem}
+  .step{position:relative;padding-top:2.8rem}
+  .step::before{counter-increment:s;content:counter(s);position:absolute;top:0;left:0;font-family:"Newsreader",serif;font-size:1.5rem;color:var(--clay);width:2rem;height:2rem;border:1px solid var(--clay-soft);border-radius:50%;display:grid;place-items:center}
+  .step h3{font-family:"Figtree",sans-serif;font-size:1.02rem;font-weight:700}
+  .step p{font-size:.93rem;color:var(--ink-soft);margin:0}
+
+  /* about */
+  .about{display:grid;grid-template-columns:8rem 1fr;gap:1.8rem;background:var(--surface-warm);border-radius:18px;padding:clamp(1.6rem,4vw,2.6rem);align-items:start}
+  .avatar{width:8rem;height:8rem;border-radius:50%;background:var(--teal);color:var(--surface-warm);display:grid;place-items:center;font-family:"Newsreader",serif;font-size:2.6rem;font-weight:500}
+  .about .quote{font-family:"Newsreader",serif;font-style:italic;font-size:1.25rem;color:var(--ink);border-left:2px solid var(--clay);padding-left:1.1rem;margin:.4rem 0 0}
+  @media(max-width:32rem){.about{grid-template-columns:1fr;text-align:left}.avatar{margin-bottom:.4rem}}
+
+  /* coverage */
+  .cov{display:flex;flex-wrap:wrap;gap:.5rem;margin:1.2rem 0 0}
+  .chip{font-size:.85rem;padding:.35rem .8rem;border:1px solid var(--line);border-radius:999px;background:var(--surface)}
+  .note{font-size:.9rem;color:var(--ink-soft);margin-top:1.1rem}
+
+  /* faq */
+  details{border-top:1px solid var(--line);padding:1.05rem 0}
+  details:last-of-type{border-bottom:1px solid var(--line)}
+  summary{font-weight:600;cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:1rem;font-size:1.02rem}
+  summary::-webkit-details-marker{display:none}
+  summary::after{content:"+";color:var(--clay);font-size:1.3rem;line-height:1;flex:none}
+  details[open] summary::after{content:"–"}
+  details p{margin:.8rem 0 0;font-size:.96rem;color:var(--ink-soft)}
+
+  /* contact */
+  .contact{text-align:center;background:var(--teal);color:var(--ground);border-radius:22px;padding:clamp(2.2rem,6vw,3.6rem) 1.5rem;margin-bottom:1rem}
+  .contact h2{color:var(--ground)}
+  .contact .eyebrow{color:var(--clay-soft)}
+  .contact p{margin-left:auto;margin-right:auto;color:var(--ground);opacity:.82}
+  .contact .btn{background:var(--ground);color:var(--teal);margin-top:.6rem}
+  .contact .btn:hover{background:var(--surface)}
+
+  footer{padding:2.5rem 0 3.5rem;font-size:.85rem;color:var(--ink-soft);text-align:center}
+
+  /* icons */
+  .icon{width:1.35rem;height:1.35rem;flex:none;stroke:currentColor;fill:none;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+  .icon-circle{width:2.6rem;height:2.6rem;border-radius:50%;background:var(--surface-warm);color:var(--teal);display:grid;place-items:center;flex:none}
+  :root[data-theme="dark"] .icon-circle,
+  :root:not([data-theme="light"]) .icon-circle{color:var(--teal-bright)}
+
+  /* hero */
+  .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(1.5rem,5vw,3rem);align-items:center}
+  .hero-art{background:var(--surface-warm);border-radius:24px;padding:1.5rem;aspect-ratio:1/1;display:grid;place-items:center}
+  .hero-art svg{width:100%;height:100%}
+  @media(max-width:46rem){.hero-grid{grid-template-columns:1fr}.hero-art{max-width:20rem;margin:0 auto;aspect-ratio:4/3}}
+
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-bandage" viewBox="0 0 24 24"><path d="M7 17 17 7"/><rect x="3.5" y="13.5" width="6" height="6" rx="2" transform="rotate(-45 6.5 16.5)"/><rect x="14.5" y="4.5" width="6" height="6" rx="2" transform="rotate(-45 17.5 7.5)"/><path d="M10 14a1.4 1.4 0 0 0 2 0M12 10a1.4 1.4 0 0 1 2 0"/></symbol>
+    <symbol id="i-pulse" viewBox="0 0 24 24"><path d="M3 12h4l2 7 4-14 2 7h6"/></symbol>
+    <symbol id="i-drop" viewBox="0 0 24 24"><path d="M12 3s6 7 6 11.5A6 6 0 0 1 6 14.5C6 10 12 3 12 3Z"/></symbol>
+    <symbol id="i-tube" viewBox="0 0 24 24"><circle cx="12" cy="6" r="2.6"/><path d="M12 8.6V15q0 3-3 3H7"/><path d="M4.5 21 7 18"/></symbol>
+    <symbol id="i-iv" viewBox="0 0 24 24"><path d="M9 3h6l-1 5h2l-5 8 1-5H9l1-5Z" transform="translate(0,-1)"/><path d="M12 15v6"/></symbol>
+    <symbol id="i-hands" viewBox="0 0 24 24"><path d="M12 20s-6-3.6-8.5-7.8C2 9.7 3.3 7 6 7c1.4 0 2.4.8 3 1.6"/><path d="M12 20s6-3.6 8.5-7.8C22 9.7 20.7 7 18 7c-1.4 0-2.4.8-3 1.6"/><path d="M9 8.5C9 6 10.4 4 12 4s3 2 3 4.5"/></symbol>
+    <symbol id="i-house" viewBox="0 0 24 24"><path d="M4 11 12 4l8 7"/><path d="M6 10v9h12v-9"/><path d="M10 19v-5h4v5"/></symbol>
+    <symbol id="i-clip" viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1"/><path d="M8.5 12l2.2 2.2L15.5 10"/></symbol>
+    <symbol id="i-person" viewBox="0 0 24 24"><circle cx="12" cy="7" r="3.4"/><path d="M5 21c0-4 3.2-6.5 7-6.5S19 17 19 21"/></symbol>
+  </defs>
+</svg>
+
+<header class="bar">
+  <div class="wrap">
+    <span class="mark">Diego Ulloa <span>·</span> Enfermería a domicilio</span>
+    <a class="btn clay" href="#contacto" style="padding:.55rem 1.1rem;font-size:.88rem">Agendar visita</a>
+  </div>
+</header>
+
+<main>
+  <div class="wrap hero">
+    <div class="hero-grid">
+      <div>
+        <p class="eyebrow">Enfermero de cuidados intensivos · Santiago</p>
+        <h1>El estándar de una UCI, en la pieza de tu casa.</h1>
+        <p class="lede">Curaciones, medicación, sondas, control de pacientes crónicos y cuidado post-operatorio a domicilio. Atiende siempre un enfermero titulado — nunca un reemplazo de última hora.</p>
+        <div class="hero-actions">
+          <a class="btn" href="#contacto">Escríbeme por WhatsApp</a>
+          <a class="btn ghost" href="#servicios">Ver qué atiendo</a>
+        </div>
+        <div class="trust">
+          <span><i class="dot"></i>Enfermero titulado, inscrito en el RNPI</span>
+          <span><i class="dot"></i>5 años en UCI y unidades de paciente crítico</span>
+          <span><i class="dot"></i>Boleta de honorarios por cada atención</span>
+        </div>
+      </div>
+      <div class="hero-art" aria-hidden="true">
+        <svg viewBox="0 0 320 320" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="160" cy="160" r="128" fill="none" stroke="var(--line)" stroke-width="1"/>
+          <path d="M60 176 100 176 112 148 128 204 144 168 156 176 260 176" fill="none" stroke="var(--clay)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <g fill="none" stroke="var(--teal)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M96 120 160 68 224 120"/>
+            <path d="M108 112 108 196 212 196 212 112"/>
+            <path d="M142 196 142 156 178 156 178 196"/>
+          </g>
+          <circle cx="160" cy="68" r="5" fill="var(--clay)" stroke="none"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+
+  <section id="situaciones">
+    <div class="wrap">
+      <p class="eyebrow">Cuándo llamar</p>
+      <h2>Situaciones que resuelvo sin que tengas que trasladar al paciente.</h2>
+      <div class="sits">
+        <div class="sit"><span class="icon-circle"><svg class="icon"><use href="#i-bandage"/></svg></span><h3>Volvió de una operación</h3><p>Control de herida operatoria, retiro de puntos o corchetes, manejo del dolor y pesquisa temprana de infección.</p></div>
+        <div class="sit"><span class="icon-circle"><svg class="icon"><use href="#i-person"/></svg></span><h3>Un adulto mayor que ya no debería salir tanto</h3><p>Control de presión y glicemia, revisión de medicamentos, prevención de escaras y coordinación con su médico tratante.</p></div>
+        <div class="sit"><span class="icon-circle"><svg class="icon"><use href="#i-drop"/></svg></span><h3>Herida que no cierra</h3><p>Curación avanzada de úlceras por presión, pie diabético y heridas crónicas con material adecuado, no parche y gasa.</p></div>
+        <div class="sit"><span class="icon-circle"><svg class="icon"><use href="#i-tube"/></svg></span><h3>Sondas y ostomías en casa</h3><p>Cambio de sonda Foley, aseo y educación de gastrostomía, colostomía e ileostomía para el paciente y su cuidador.</p></div>
+        <div class="sit"><span class="icon-circle"><svg class="icon"><use href="#i-iv"/></svg></span><h3>Tratamiento endovenoso indicado</h3><p>Instalación de vía, administración de antibiótico o suero según receta médica y vigilancia de la infusión.</p></div>
+        <div class="sit"><span class="icon-circle"><svg class="icon"><use href="#i-hands"/></svg></span><h3>El cuidador está agotado y con miedo</h3><p>Una visita para ordenar el cuidado, enseñar las maniobras y dejar por escrito qué hacer y cuándo pedir ayuda.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="servicios">
+    <div class="wrap">
+      <p class="eyebrow">Servicios</p>
+      <h2>Qué incluye una atención.</h2>
+      <p>Toda prestación que requiera indicación médica se realiza con la receta o la orden a la vista. Si algo se escapa de lo que corresponde a enfermería, te lo digo y te derivo.</p>
+      <dl class="svc">
+        <div class="svc-row"><span class="icon-circle"><svg class="icon"><use href="#i-bandage"/></svg></span><dt>Curaciones</dt><dd>Simples y avanzadas, heridas operatorias, úlceras por presión, pie diabético, quemaduras menores. Retiro de puntos y corchetes.</dd></div>
+        <div class="svc-row"><span class="icon-circle"><svg class="icon"><use href="#i-iv"/></svg></span><dt>Medicamentos</dt><dd>Administración intramuscular, subcutánea y endovenosa. Educación en insulina y en tratamiento anticoagulante oral (TACO).</dd></div>
+        <div class="svc-row"><span class="icon-circle"><svg class="icon"><use href="#i-tube"/></svg></span><dt>Sondas y drenajes</dt><dd>Instalación y cambio de sonda vesical, manejo de sonda nasogástrica y gastrostomía, cuidado de drenajes.</dd></div>
+        <div class="svc-row"><span class="icon-circle"><svg class="icon"><use href="#i-clip"/></svg></span><dt>Ostomías</dt><dd>Cambio de dispositivo, cuidado de la piel periestomal y entrenamiento del paciente y su familia.</dd></div>
+        <div class="svc-row"><span class="icon-circle"><svg class="icon"><use href="#i-pulse"/></svg></span><dt>Control y seguimiento</dt><dd>Signos vitales, glicemia capilar, control de paciente crónico, hipertenso y diabético. Informe escrito para el médico tratante.</dd></div>
+        <div class="svc-row"><span class="icon-circle"><svg class="icon"><use href="#i-house"/></svg></span><dt>Post-operatorio</dt><dd>Acompañamiento las primeras semanas tras el alta, pesquisa de complicaciones y coordinación de controles.</dd></div>
+        <div class="svc-row"><span class="icon-circle"><svg class="icon"><use href="#i-hands"/></svg></span><dt>Educación al cuidador</dt><dd>Movilización segura, prevención de escaras, alimentación por sonda, preparación de medicamentos y señales de alarma.</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section id="como">
+    <div class="wrap">
+      <p class="eyebrow">Cómo funciona</p>
+      <h2>Tres pasos, sin letra chica.</h2>
+      <div class="steps">
+        <div class="step"><h3>Hablamos por WhatsApp</h3><p>Me cuentas qué pasa, qué indicó el médico y en qué comuna están. Te digo de inmediato si es algo que me corresponde y cuánto vale.</p></div>
+        <div class="step"><h3>Primera visita de evaluación</h3><p>Voy, reviso al paciente, hago la prestación del día y armamos juntos el plan: qué se necesita, cada cuánto y quién hace qué.</p></div>
+        <div class="step"><h3>Seguimiento acordado</h3><p>Visitas puntuales o un plan semanal. Cada atención queda con registro escrito y boleta. Si algo cambia, lo ajustamos.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="quien">
+    <div class="wrap">
+      <p class="eyebrow">Quién te atiende</p>
+      <div class="about">
+        <span class="avatar" aria-hidden="true">DU</span>
+        <div>
+          <h2 style="margin-bottom:.4rem">Diego Ulloa González</h2>
+          <p>Soy enfermero titulado. Trabajé cinco años en unidades de cuidados intensivos y de paciente crítico, donde el margen de error es cero y todo queda registrado. Ese es el estándar con el que llego a tu casa: chequeo doble de los medicamentos, técnica estéril de verdad y un informe que tu médico puede leer.</p>
+          <p>Además desarrollo herramientas clínicas de seguridad del paciente, así que la parte de "qué fármaco no va con cuál" y "qué vigilar" la tengo muy presente en cada visita.</p>
+          <p class="quote">No entrego una atención a medias. Vengo de la medicina crítica: los cuidados incompletos no son una opción.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="cobertura">
+    <div class="wrap">
+      <p class="eyebrow">Cobertura y valores</p>
+      <h2>Sector oriente y centro de Santiago.</h2>
+      <div class="cov">
+        <span class="chip">Providencia</span><span class="chip">Ñuñoa</span><span class="chip">La Reina</span>
+        <span class="chip">Las Condes</span><span class="chip">Macul</span><span class="chip">Peñalolén</span>
+        <span class="chip">San Joaquín</span><span class="chip">Santiago Centro</span>
+      </div>
+      <p class="note">¿Otra comuna? Pregunta igual — depende del horario y del traslado.</p>
+      <p class="note">El valor de cada prestación se confirma antes de la visita, según lo que se necesita y la frecuencia. Los insumos se cotizan aparte y con transparencia. Se emite boleta de honorarios electrónica por cada atención, útil para reembolso de isapre o seguro complementario.</p>
+    </div>
+  </section>
+
+  <section id="solicitud"><div class="wrap">
+<p class="eyebrow">Solicitar una visita</p><h2>Déjame tus datos para coordinar contigo.</h2>
+<p>Esta solicitud no reserva una hora. Revisaré personalmente el motivo y la comuna para acordar disponibilidad, valor e indicación médica cuando corresponda.</p>
+<p>No ingreses diagnósticos ni transcribas recetas. Este formulario no es un canal de urgencias.</p>
+<iframe src="https://api.leadconnectorhq.com/widget/form/Ua7Ss5T4LHjsDoBywuX7" title="Solicitud de enfermería a domicilio" style="width:100%;height:1350px;border:0;border-radius:8px;background:#fff" loading="lazy"></iframe>
+<p class="note"><a href="https://api.leadconnectorhq.com/widget/form/Ua7Ss5T4LHjsDoBywuX7" target="_blank" rel="noopener">Abrir formulario en otra pestaña</a></p>
+</div></section>
+<section id="faq">
+    <div class="wrap">
+      <p class="eyebrow">Preguntas frecuentes</p>
+      <h2>Antes de escribir.</h2>
+      <details><summary>¿Necesito una orden médica?</summary><p>Para curaciones simples, control de signos y educación, no. Para administrar medicamentos, instalar vías o manejar sondas y drenajes, sí necesito la receta o la indicación médica a la vista. Si no la tienes clara, escríbeme y lo revisamos.</p></details>
+      <details><summary>¿Atienden urgencias?</summary><p>No. Esto es cuidado domiciliario programado. Ante una urgencia —dolor en el pecho, dificultad para respirar, compromiso de conciencia, sangrado que no cede— llama al SAMU 131 o acude a un servicio de urgencia.</p></details>
+      <details><summary>¿Con cuánta anticipación agendo?</summary><p>Idealmente con 24 a 48 horas. Para curaciones y controles a veces hay cupo el mismo día; conviene preguntar.</p></details>
+      <details><summary>¿Trabajas con un solo paciente o también con instituciones?</summary><p>Ambos. Atiendo familias directamente y también tomo derivaciones de médicos, kinesiólogos y residencias de adultos mayores del sector.</p></details>
+      <details><summary>¿Puedes coordinarte con el médico tratante?</summary><p>Sí, y es lo que recomiendo. Cada visita queda con un registro escrito que el médico puede revisar en el siguiente control.</p></details>
+    </div>
+  </section>
+
+  <div class="wrap">
+    <div class="contact" id="contacto">
+      <p class="eyebrow">Contacto</p>
+      <h2>Coordinemos tu atención.</h2>
+<p><a class="btn" href="#solicitud">Solicitar una visita</a></p>
+      <p>Respondo personalmente. Escríbeme con la situación, la comuna y lo que indicó el médico, y te digo si es algo que me corresponde y cuánto vale — sin compromiso.</p>
+      <p style="margin-top:1.4rem">
+        <a class="btn" href="https://wa.me/56950341505?text=Hola%20Diego%2C%20necesito%20una%20atenci%C3%B3n%20de%20enfermer%C3%ADa%20a%20domicilio">WhatsApp</a>
+      </p>
+      <p style="font-size:.9rem;margin-top:1rem;opacity:.82">o al correo <a href="mailto:enfermero.diegoulloa@gmail.com" style="color:var(--ground);text-decoration:underline">enfermero.diegoulloa@gmail.com</a></p>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    Diego Ulloa González · Enfermero · Santiago de Chile<br>
+    Cuidado domiciliario programado. No es un servicio de urgencia — ante una emergencia llama al 131.
+  </div>
+</footer>
+
+</body></html>
+
