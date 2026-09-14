@@ -66,6 +66,12 @@
   .steps .s .k{font-family:"DM Mono",monospace;font-size:.8rem;color:var(--signal)}
   .steps .s p{font-size:.92rem;color:var(--ink-soft);margin:.3rem 0 0}
 
+  .diagnostic-form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem 1.2rem;margin-top:1.8rem;max-width:52rem;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:clamp(1.2rem,3vw,1.8rem)}
+  .diagnostic-form label{display:grid;gap:.45rem;font-size:.85rem;font-weight:700}.diagnostic-form label span{font-weight:500;color:var(--ink-soft)}
+  .diagnostic-form input,.diagnostic-form select{width:100%;border:1px solid var(--line);border-radius:4px;background:var(--ground);color:var(--ink);padding:.75rem .8rem;font:inherit;font-weight:500}.diagnostic-form input:focus,.diagnostic-form select:focus{outline:3px solid #a5f4c866;outline-offset:1px;border-color:var(--signal)}
+  .diagnostic-form button{justify-self:start;grid-column:1/-1;margin-top:.3rem}.form-note{font-size:.82rem;color:var(--ink-soft);margin-top:.75rem}
+  @media(max-width:38rem){.diagnostic-form{grid-template-columns:1fr}.diagnostic-form button{width:100%;justify-content:center}}
+
   .cta{text-align:center;border:1px solid var(--line);border-radius:12px;background:var(--surface);padding:clamp(2.2rem,6vw,3.4rem) 1.5rem;margin-bottom:1rem}
   .cta p{margin-left:auto;margin-right:auto}
   .links{display:flex;flex-wrap:wrap;gap:.7rem;justify-content:center;margin-top:1.4rem}

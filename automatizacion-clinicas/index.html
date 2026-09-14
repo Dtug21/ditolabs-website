@@ -26,7 +26,7 @@
 <header class="bar">
   <div class="wrap">
     <a class="logo" href="/index.html" aria-label="Dito Labs, inicio"><span class="brand-mark" aria-hidden="true">D</span>Dito Labs</a>
-    <nav class="bar-links" aria-label="Navegación de automatización para clínicas"><a class="back-link" href="/servicios.html">Volver a Servicios</a><a class="btn signal sm" href="#contacto" data-track="clinicas_nav_contacto">Hablemos</a></nav>
+    <nav class="bar-links" aria-label="Navegación de automatización para clínicas"><a class="back-link" href="/servicios.html">Volver a Servicios</a><a class="btn signal sm" href="#diagnostico" data-track="clinicas_nav_diagnostico">Hablemos</a></nav>
   </div>
 </header>
 
@@ -36,7 +36,7 @@
     <h1>Una <span class="strike">silla vacía</span> te cuesta la hora completa.</h1>
     <p class="lede">Instalo el sistema que confirma, recuerda y recupera las horas de tu clínica — para que el que no llega deje de salir de tu bolsillo.</p>
     <div class="hero-actions">
-      <a class="btn signal" href="#contacto" data-track="clinicas_hero_diagnostico">Pedir diagnóstico</a>
+      <a class="btn signal" href="#diagnostico" data-track="clinicas_hero_diagnostico">Pedir diagnóstico</a>
       <a class="btn ghost" href="#flujo">Ver el flujo que instalo</a>
     </div>
   </div>
@@ -136,6 +136,22 @@
     </div>
   </section>
 
+  <section id="diagnostico">
+    <div class="wrap">
+      <p class="eyebrow">Diagnóstico inicial</p>
+      <h2>Cuéntame cómo funciona tu agenda hoy.</h2>
+      <p>Son cuatro datos para llegar a WhatsApp con una conversación útil. Te respondo personalmente con el flujo que tendría más sentido para tu clínica.</p>
+      <form class="diagnostic-form" id="diagnostic-form">
+        <label>Nombre de la clínica <span>(opcional)</span><input name="clinica" autocomplete="organization" placeholder="Ej. Centro Médico Norte"></label>
+        <label>Tipo de atención <select name="tipo" required><option value="" selected disabled>Selecciona una opción</option><option>Consulta médica</option><option>Clínica dental</option><option>Centro de kinesiología</option><option>Psicología o salud mental</option><option>Otro servicio de salud</option></select></label>
+        <label>Horas agendadas por semana <select name="volumen" required><option value="" selected disabled>Selecciona un rango</option><option>Menos de 20</option><option>20 a 50</option><option>51 a 100</option><option>Más de 100</option></select></label>
+        <label>¿Cómo manejan la agenda hoy? <select name="agenda" required><option value="" selected disabled>Selecciona una opción</option><option>WhatsApp y teléfono</option><option>Agenda digital, sin recordatorios</option><option>Agenda digital con recordatorios manuales</option><option>Otro sistema</option></select></label>
+        <button class="btn signal" type="submit">Abrir mi diagnóstico por WhatsApp <span aria-hidden="true">→</span></button>
+      </form>
+      <p class="form-note">No guardamos estas respuestas en esta página. Se incorporan al mensaje de WhatsApp que tú decides enviar.</p>
+    </div>
+  </section>
+
   <div class="wrap">
     <div class="cta" id="contacto">
       <p class="eyebrow">Contacto</p>
@@ -155,6 +171,16 @@
 <footer>
   <div class="wrap">Dito Labs SpA · Diego Ulloa · automatización de operaciones para clínicas · Santiago de Chile<div class="footer-links"><a href="/servicios.html">Servicios de Dito Labs</a><a href="/politica-privacidad.html">Privacidad</a><a href="/terminos-condiciones.html">Términos</a></div></div>
 </footer>
+<script>
+  document.getElementById('diagnostic-form').addEventListener('submit', function (event) {
+    event.preventDefault();
+    var data = new FormData(event.currentTarget);
+    var clinica = data.get('clinica') ? '\nClínica: ' + data.get('clinica') : '';
+    var message = 'Hola Diego, quiero un diagnóstico de automatización para mi clínica.' + clinica + '\nTipo de atención: ' + data.get('tipo') + '\nHoras por semana: ' + data.get('volumen') + '\nAgenda actual: ' + data.get('agenda');
+    if (window.gtag && localStorage.getItem('ditolabs_analytics_consent') === 'accepted') window.gtag('event', 'generate_lead', {lead_source: 'clinicas_diagnostico_enviado', page_location: window.location.pathname});
+    window.location.href = 'https://wa.me/56950341505?text=' + encodeURIComponent(message);
+  });
+</script>
 <script src="/js/analytics-consent.js" defer></script>
 </body>
 </html>
