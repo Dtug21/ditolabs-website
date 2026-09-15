@@ -135,6 +135,15 @@
   .prep-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-top:1.6rem}
   .prep-card{background:var(--surface);border:1px solid var(--line);border-radius:.8rem;padding:1.3rem}
   .prep-card strong{display:block;margin-bottom:.45rem;color:var(--teal)}
+
+  /* education */
+  .education-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1rem;margin-top:1.6rem}
+  .education-card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:1.35rem;display:flex;flex-direction:column;gap:.65rem}
+  .education-card h3{font-family:"Figtree",sans-serif;font-size:1rem;margin:0;color:var(--teal)}
+  .education-card p{font-size:.94rem;color:var(--ink-soft);margin:0}
+  .education-card a{color:var(--teal);font-size:.9rem;font-weight:600;text-decoration:none;margin-top:auto}
+  .education-card a:hover{text-decoration:underline}
+  .education-note{margin-top:1.2rem;padding:1rem 1.1rem;border-left:3px solid var(--clay);background:var(--surface-warm);font-size:.92rem;color:var(--ink-soft)}
   .btn.clay:hover{background:var(--clay-soft)}
   a:focus-visible,button:focus-visible{outline:3px solid var(--focus);outline-offset:3px;border-radius:4px}
 
@@ -210,7 +219,7 @@
   .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:clamp(1.5rem,5vw,3rem);align-items:center}
   .hero-art{background:var(--surface-warm);border-radius:24px;padding:1.5rem;aspect-ratio:1/1;display:grid;place-items:center}
   .hero-art svg{width:100%;height:100%}
-  @media(max-width:46rem){.hero-grid{grid-template-columns:1fr}.hero-art{max-width:20rem;margin:0 auto;aspect-ratio:4/3}.prep-grid{grid-template-columns:1fr}.whatsapp-float span{display:none}.whatsapp-float{padding:.9rem}}
+  @media(max-width:46rem){.hero-grid{grid-template-columns:1fr}.hero-art{max-width:20rem;margin:0 auto;aspect-ratio:4/3}.prep-grid,.education-grid{grid-template-columns:1fr}.whatsapp-float span{display:none}.whatsapp-float{padding:.9rem}}
 
   @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
@@ -326,6 +335,37 @@
           <p class="quote">Cada atención se planifica con calma, técnica y una comunicación clara con la familia.</p>
         </div>
       </div>
+    </div>
+  </section>
+
+  <section id="educacion">
+    <div class="wrap">
+      <p class="eyebrow">Educación en salud</p>
+      <h2>Información clara para cuidar mejor cada día.</h2>
+      <p>Comparto orientaciones útiles para pacientes y cuidadores, basadas en fuentes oficiales. Sirven para acompañar el cuidado cotidiano; las decisiones sobre diagnósticos, tratamientos y procedimientos se toman con el equipo tratante.</p>
+      <div class="education-grid">
+        <article class="education-card">
+          <h3>Alimentación y vida sana</h3>
+          <p>Priorizar alimentos frescos, agua, frutas, verduras y legumbres ayuda a cuidar la salud a lo largo de la vida. Los cambios se adaptan a cada persona, especialmente si hay diabetes, enfermedad renal o una indicación nutricional.</p>
+          <a href="https://saludresponde.minsal.cl/guias-alimentarias-para-chile/" target="_blank" rel="noopener noreferrer" data-track="educacion_guias_alimentarias">Ver guías alimentarias de MINSAL →</a>
+        </article>
+        <article class="education-card">
+          <h3>Movimiento y prevención de caídas</h3>
+          <p>Moverse de forma regular y segura favorece fuerza, equilibrio, descanso y autonomía. Tras una hospitalización, cirugía o caída reciente, el nivel de actividad debe acordarse de manera individual.</p>
+          <a href="https://redcronicas.minsal.cl/orientacion-tecnica-actividad-fisica-y-ejercicio-segun-curso-de-vida-y-comorbilidad/" target="_blank" rel="noopener noreferrer" data-track="educacion_actividad_fisica">Ver orientación de actividad física →</a>
+        </article>
+        <article class="education-card">
+          <h3>Uso seguro de medicamentos</h3>
+          <p>Una lista actualizada de medicamentos, dosis y horarios reduce confusiones en casa. No suspendas, dupliques ni cambies un tratamiento por cuenta propia; ante dudas, consulta a tu médico, químico farmacéutico o enfermero.</p>
+          <a href="#contacto" data-track="educacion_medicamentos_consulta">Consultar una duda de coordinación →</a>
+        </article>
+        <article class="education-card">
+          <h3>Cuidado de piel y heridas</h3>
+          <p>La piel requiere revisión frecuente, higiene suave, alivio de presión y un plan de curación definido cuando corresponde. Una herida que cambia, duele más, sangra o presenta secreción necesita evaluación profesional.</p>
+          <a href="#contacto" data-track="educacion_heridas_consulta">Coordinar una evaluación domiciliaria →</a>
+        </article>
+      </div>
+      <p class="education-note"><strong>Importante:</strong> este espacio no reemplaza una consulta clínica ni entrega indicaciones para urgencias. Si hay dificultad para respirar, dolor en el pecho, compromiso de conciencia, sangrado que no cede u otra emergencia, llama al 131 o acude a urgencias.</p>
     </div>
   </section>
 
